@@ -1,0 +1,105 @@
+                   89 - Modifier 2
+                 67 - Modifier 1
+               45 - Entity subtype |
+             23 - Entity type      | Function
+           01 - Entity             |
+---------- ----------
+0123456789 0123456789
+---------- ----------
+01 - Version (10)
+  2 - Context (Standard Identity 1)
+   3 - Affiliation (Standard Identity 2)
+    45 - Symbol Set
+      6 - Status
+       7 - HQ, TF, F/D
+        89 - Amplifier/Descriptor
+
+2 - Context (Standard Identity 1)
+---------------------------------
+0 - Reality
+1 - Exercise
+2 - Simulation
+
+3 - Affiliation (Standard Identity 2)
+-------------------------------------
+0 - Pending
+1 - Unknown
+2 - Assumed Friend
+3 - Friend
+4 - Neutral
+5 - Suspect/Joker
+6 - Hostile/Faker
+
+45 - Symbol Set
+---------------
+01 - Air
+02 - Air Missile
+05 - Space
+06 - Space Missile
+10 - Land Unit
+15 - Land Equipment
+20 - Land Installation
+25 - Control Measure
+30 - Sea Surface
+35 - Sea Subsurface
+36 - Mine Warfare
+40 - Activities
+45 - Atmospheric
+46 - Oceanographic
+47 - Meteorological Space
+50 - Signals Intelligence - Space
+51 - Signals Intelligence - Air
+52 - Signals Intelligence - Land
+53 - Signals Intelligence - Surface
+54 - Signals Intelligence - Subsurface
+60 - Cyberspace
+
+6 - Status
+----------
+0 - Present
+1 - Planned/Anticipated/Suspect
+2 - Present/Fully Capable
+3 - Present/Damaged
+4 - Present/Destroyed
+5 - Present/Full to Capacity
+
+7 - HQ, TF, F/D
+---------------
+1 - Feint/Dummy
+2 Headquarters
+3 - Feint/Dummy Headquarters
+4 - Task Force
+5 - Feint/Dummy Task Force
+6 - Task Force Headquarters
+7 - Feint/Dummy Task Force Headquarters
+
+89 - Amplifier/Descriptor
+-------------------------
+00 - Unknown (Modifier)
+11 - Team/Crew
+12 - Squad
+13 - Section
+14 - Platoon/Detachment
+15 - Company/Battery/Troop
+16 - Battalion/Squadron
+17 - Regiment/Group
+18 - Brigade
+21 - Division
+22 - Corps/MEF
+23 - Army
+24 - Army Group/Front
+25 - Region/Theater
+26 - Command
+31 - Wheeled limited cross country
+32 - Wheeled cross country
+33 - Tracked
+34 - Wheeled and tracked combination
+35 - Towed
+36 - Rail
+37 - Pack animals
+41 - Over snow (prime mover)
+42 - Sled
+51 - Barge
+52 - Amphibious
+61 - Short towed array
+62 - Long towed Array
