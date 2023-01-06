@@ -2,6 +2,7 @@ import * as Frame from './frame'
 import { Style } from './style'
 import * as BBox from './bbox'
 import { icon } from './icons'
+import * as Echelon from './echelon'
 import SIDC from './sidc'
 
 export const Symbol = function (options) {
@@ -20,19 +21,21 @@ Symbol.prototype.getSize = function () {
 Symbol.prototype.asSVG = function () {
   const { sidc: code, ...rest } = this.options
   const sidc = SIDC.of(code)
-  const { bbox: frameBBox, ...frameShape } = Frame.shape(sidc)
   const styles = Style.of(sidc, rest)
 
-  const styledBBox = BBox.resize([
-    styles.default['stroke-width'] + (styles.default['outline-width'] || 0),
-    styles.default['stroke-width'] + (styles.default['outline-width'] || 0),
-  ], frameBBox)
+  const fns = [
+    Frame.shape(sidc, rest),
+    icon(sidc),
+    Echelon.echelon(sidc),
+    styles.bbox.bind(styles)
+  ]
 
-  const [width, height] = BBox.extent(styledBBox)
+  const [children, bbox] = fns.reduce((acc, fn) => fn(acc), [[], BBox.NULL])
+  const [width, height] = BBox.extent(bbox)
   const viewBox = [
-    styledBBox[0],
-    styledBBox[1],
-    ...BBox.extent(styledBBox)
+    bbox[0],
+    bbox[1],
+    ...BBox.extent(bbox)
   ]
 
   const document = {
@@ -43,14 +46,14 @@ Symbol.prototype.asSVG = function () {
     width,
     height,
     viewBox,
-    fill: 'none',
-    children: [frameShape, ...icon(sidc)],
+    children,
     style: 'default'
   }
 
   const xml = document => {
     const { type, children, style, ...properties } = document
     const props = { ...properties, ...(styles[style] || {}) }
+
     const propertyList = Object.entries(props).map(([key, value]) => {
       const type = typeof value
       if (type === 'string') return `${key}="${value}"`
@@ -59,11 +62,12 @@ Symbol.prototype.asSVG = function () {
       else return ''
     }).join(' ')
 
+    const childList = type !== 'text'
+      ? (children || []).map(child => xml(child)).join('')
+      : properties.text
 
-    const childList = (children || []).map(child => xml(child)).join('')
     return `<${type} ${propertyList}>${childList}</${type}>`
   }
 
-  const svg = xml(document)
-  return svg
+  return xml(document)
 }

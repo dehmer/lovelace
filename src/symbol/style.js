@@ -1,4 +1,4 @@
-import * as R from 'ramda'
+import * as BBox from './bbox'
 
 const colors = {
   'FRAME-FILL+DARK': {
@@ -13,7 +13,13 @@ const colors = {
 export const Style = function (sidc, options) {
   this.sidc = sidc
   this.options = options
-  this.default = { 'stroke-width': 4, stroke: 'black' }
+  this.default = {
+    'stroke-width': 4,
+    stroke: 'black',
+    fill: 'none',
+    'font-family': 'Arial',
+    'font-weight': 'bold'
+  }
   this.frame = { fill: this.frameFill(options) }
 }
 
@@ -27,6 +33,15 @@ Style.prototype.frameFill = function () {
     : this.sidc.affiliation
 
   return FRAME_FILL[key][colorIndex]
+}
+
+Style.prototype.bbox = function ([children, bbox]) {
+  const styledBox = BBox.resize([
+    this.default['stroke-width'] + (this.default['outline-width'] || 0),
+    this.default['stroke-width'] + (this.default['outline-width'] || 0),
+  ], bbox)
+
+  return [children, styledBox]
 }
 
 const MODE = { dark: 0, medium: 1, light: 2 }

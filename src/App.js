@@ -17,30 +17,32 @@ const identities = [
   'HOSTILE'
 ]
 
-const codes = [
-  '10000100000000000000', // AIR, SPACE
-  '10001000000000000000', // UNIT (LAND), INSTALLATION (LAND), ACTIVITY/EVENT
-  '10001000001211020000',
-  // '10001000001613000000',
-  // '10001500000000000000', // EQUIPMENT (LAND), SEA SURFACE, UNKNOWN
-  '10001500001110000000',
-  '10001500001113000000',
-  '10003500000000000000', // SEA SUBSURFACE
-  '10002700001100000000', // DISMOUNTED (LAND)
-  '10000100001200000000'  // CIVILIAN
-]
-
 // const codes = [
-//   'SUAP------*****', // AIR/SPACE
-//   'SUGP------*****', // UNIT (LAND), INSTALLATION (LAND), ACTIVITY/EVENT
-//   'SFGPUCIZ--*****',
-//   // 'SFGPUSM---*****',
-//   'SFGPEWM---*****',
-//   'SFGPEWMS--*****',
-//   'SUGPE-----*****', // EQUIPMENT (LAND), SEA SURFACE, UNKNOWN
-//   'IUUP------*****', // SEA SUBSURFACE
-//   'SFAPC-----*****', // CIVILIAN
+//   // '10000100000000000000', // AIR, SPACE
+//   '10000100001100000000', // AIR, SPACE
+//   '10001000000000000000', // UNIT (LAND), INSTALLATION (LAND), ACTIVITY/EVENT
+//   '10001000001211020000',
+//   // '10001000001613000000',
+//   // '10001500000000000000', // EQUIPMENT (LAND), SEA SURFACE, UNKNOWN
+//   '10001500001110000000',
+//   '10001500001113000000',
+//   '10003500000000000000', // SEA SUBSURFACE
+//   '10002700001100000000', // DISMOUNTED (LAND)
+//   '10000100001200000000'  // CIVILIAN
 // ]
+
+const codes = [
+  // 'SUAP------*****', // AIR/SPACE
+  'S-APM-----*****', // AIR/SPACE
+  // 'S-GP------*****', // UNIT (LAND), INSTALLATION (LAND), ACTIVITY/EVENT
+  'S-GPUCIZ---E---',
+  'SFGPUSM---*****',
+  'S-FPA------D***',
+  'S-GPEWMS--*****',
+  // 'S-GPE-----*****', // EQUIPMENT (LAND), SEA SURFACE, UNKNOWN
+  'I-UP------*****', // SEA SUBSURFACE
+  'S-APC-----*****', // CIVILIAN
+]
 
 const formats = identities
   .map(identity => SIDC.format({ identity }))
@@ -49,7 +51,7 @@ console.time('symbols')
 const symbols = R
   .xprod(formats, codes)
   .map(([format, code]) => format(code))
-  .map(code => symbol({ sidc: code }))
+  .map(code => symbol({ sidc: code, frame: true }))
   .map(symbol => ({ ...symbol.getSize(), src: 'data:image/svg+xml;utf8,' + symbol.asSVG() }))
 console.timeEnd('symbols')
 

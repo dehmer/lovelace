@@ -1,6 +1,8 @@
+import air from './parts-air'
 import ground from './parts-ground'
 
 const icn = {
+  ...air,
   ...ground
 }
 

@@ -9,6 +9,7 @@ const SIDC = function (code) {
     dimension: code[2],
     status: code[3],
     function: code.substring(4, 10),
+    modifier11: code[11],
     modifiers: code.substring(10, 12)
   }
 
@@ -18,6 +19,11 @@ const SIDC = function (code) {
   this.faker = parts.identity === 'K'
   this.dimension = DIMENSION.find(([regex]) => code.match(regex))[1]
   this.civilian = CIVILIAN.some(regex => code.match(regex))
+  this.echelon = this.dimension === 'UNIT' && (() => {
+    const lookup = ([_, code]) => code === parts.modifier11
+    const echelon = Object.entries(ECHELON).find(lookup)
+    return echelon ? echelon[0] : false
+  })()
 }
 
 SIDC.format = function (options, code) {
@@ -54,15 +60,13 @@ const DIMENSION = [
   [/^..[AP]/, 'AIR'],
   [/^SFG.E/, 'EQUIPMENT'],
   [/^.FS/, 'EQUIPMENT'],
-  [/^..[FGSXZ]/, 'UNIT'],
+  [/^I.G/, 'EQUIPMENT'], // SIGINT
+  [/^E.O.(AB|AE|AF|BB|CB|CC|DB|D.B|E.)/, 'EQUIPMENT'], // EMS EQUIPMENT
+  [/^..[EFGOSXZ]/, 'UNIT'], // incl. SOF, EMS
   [/^..U/, 'SUBSURFACE' ]
 ]
 
-const CIVILIAN = [
-  /^..A.C/,
-  /^..G.EVC/,
-  /^..S.X/
-]
+const CIVILIAN = [/^..A.C/, /^..G.EVC/, /^..S.X/]
 
 const STATUS = {
   ANTICIPATED: 'A',
