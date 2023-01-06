@@ -2,7 +2,7 @@
 import * as R from 'ramda'
 import ms from 'milsymbol'
 import { Symbol } from './symbol'
-import * as SIDC from './symbol/sidc'
+import SIDC from './symbol/sidc'
 import './App.css'
 
 const legacy = false

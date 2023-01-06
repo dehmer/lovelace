@@ -1,5 +1,5 @@
               4 - Order of Battle
-            23 - Country Cpde
+            23 - Country Code
           01 - Symbol Modifier
 ---------------
 000000000011111

@@ -11,7 +11,7 @@
    3 - Affiliation (Standard Identity 2)
     45 - Symbol Set
       6 - Status
-       7 - HQ, TF, F/D
+       7 - HQ, TF, F/D (Indicator)
         89 - Amplifier/Descriptor
 
 2 - Context (Standard Identity 1)

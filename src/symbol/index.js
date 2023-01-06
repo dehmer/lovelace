@@ -2,6 +2,7 @@ import * as Frame from './frame'
 import { Style } from './style'
 import * as BBox from './bbox'
 import { icon } from './ground'
+import SIDC from './sidc'
 
 export const Symbol = function (options) {
   this.options = options
@@ -17,8 +18,10 @@ Symbol.prototype.getSize = function () {
 }
 
 Symbol.prototype.asSVG = function () {
-  const { bbox: frameBBox, ...frameShape } = Frame.shape(this.options)
-  const styles = Style.of(this.options)
+  const { sidc: code, ...rest } = this.options
+  const sidc = SIDC.of(code)
+  const { bbox: frameBBox, ...frameShape } = Frame.shape(sidc)
+  const styles = Style.of(sidc, rest)
 
   const styledBBox = BBox.resize([
     styles.default['stroke-width'] + (styles.default['outline-width'] || 0),
@@ -41,7 +44,7 @@ Symbol.prototype.asSVG = function () {
     height,
     viewBox,
     fill: 'none',
-    children: [frameShape, ...icon(this.options)],
+    children: [frameShape, ...icon(sidc)],
     style: 'default'
   }
 
