@@ -1,7 +1,7 @@
 import * as Frame from './frame'
 import { Style } from './style'
 import * as BBox from './bbox'
-import { icon } from './ground'
+import { icon } from './icons'
 import SIDC from './sidc'
 
 export const Symbol = function (options) {

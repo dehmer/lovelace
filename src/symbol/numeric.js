@@ -18,6 +18,7 @@ const SIDC = function (code) {
     modifier2: code.substring(18, 20)
   }
 
+  this.generic = parts.symbolSet + ':' + parts.function
   this.affiliation = AFFILIATION[parts.affiliation]
   this.context = CONTEXT[parts.context]
   this.dimension = DIMENSION.find(([regex]) => code.match(regex))[1]
