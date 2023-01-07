@@ -31,5 +31,5 @@
 * use simple layout framework for placement/alignment (CASSOWARY?)
 * use expression framework for text modifiers/amplifiers
 
-CANCELLED
+### CANCELLED
 * use XML library to generate SVG from JavaScript object (IMPRACTICAL)
