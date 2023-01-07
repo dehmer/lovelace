@@ -3,6 +3,7 @@ import { Style } from './style'
 import * as BBox from './bbox'
 import { icon } from './icons'
 import * as Echelon from './echelon'
+import * as Mobility from './mobility'
 import SIDC from './sidc'
 
 export const Symbol = function (options) {
@@ -27,16 +28,13 @@ Symbol.prototype.asSVG = function () {
     Frame.shape(sidc, rest),
     icon(sidc),
     Echelon.echelon(sidc),
+    Mobility.mobility(sidc),
     styles.bbox.bind(styles)
   ]
 
   const [children, bbox] = fns.reduce((acc, fn) => fn(acc), [[], BBox.NULL])
   const [width, height] = BBox.extent(bbox)
-  const viewBox = [
-    bbox[0],
-    bbox[1],
-    ...BBox.extent(bbox)
-  ]
+  const viewBox = [bbox[0], bbox[1], width, height]
 
   const document = {
     type: 'svg',

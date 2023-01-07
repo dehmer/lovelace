@@ -19,7 +19,17 @@ const SIDC = function (code) {
   this.faker = parts.identity === 'K'
   this.dimension = DIMENSION.find(([regex]) => code.match(regex))[1]
   this.civilian = CIVILIAN.some(regex => code.match(regex))
-  this.echelon = this.dimension === 'UNIT' && (() => {
+
+  // Mobility and echelon are mutually exclusive; try mobility first.
+  // TODO: limit to equipment
+
+  this.mobility = (() => {
+    const lookup = ([_, code]) => code === parts.modifiers
+    const mobility = Object.entries(MOBILITY).find(lookup)
+    return mobility ? mobility[0] : false
+  })()
+
+  this.echelon = !this.mobility && (() => {
     const lookup = ([_, code]) => code === parts.modifier11
     const echelon = Object.entries(ECHELON).find(lookup)
     return echelon ? echelon[0] : false

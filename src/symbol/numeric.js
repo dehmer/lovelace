@@ -23,6 +23,19 @@ const SIDC = function (code) {
   this.context = CONTEXT[parts.context]
   this.dimension = DIMENSION.find(([regex]) => code.match(regex))[1]
   this.civilian = CIVILIAN.some(regex => code.match(regex))
+
+  this.mobility = (() => {
+    const lookup = ([_, code]) => code === parts.amplifier
+    const mobility = Object.entries(MOBILITY).find(lookup)
+    return mobility ? mobility[0] : false
+  })()
+
+  this.echelon = !this.mobility && (() => {
+    const lookup = ([_, code]) => code === parts.amplifier
+    const echelon = Object.entries(ECHELON).find(lookup)
+    return echelon ? echelon[0] : false
+  })()
+
 }
 
 SIDC.format = function (options, code) {
