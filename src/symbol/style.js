@@ -1,4 +1,8 @@
 import * as BBox from './bbox'
+import charwidth from './charwidth.json'
+
+const defaulCharWidth = charwidth['W']
+const textWidth = s => [...s].reduce((acc, c) => acc + charwidth[c] || defaulCharWidth, 0)
 
 const colors = {
   'FRAME-FILL+DARK': {
@@ -18,8 +22,26 @@ export const Style = function (sidc, options) {
     stroke: 'black',
     fill: 'none',
     'font-family': 'Arial',
-    'font-weight': 'bold'
   }
+
+  this['style:text-amplifiers/left'] = {
+    'font-family': 'Arial',
+    'font-size': 40,
+    'text-anchor': 'end',
+    'stroke-width': 0,
+    fill: 'black'
+  }
+
+  this['style:text-amplifiers/right'] = {
+    'font-family': 'Arial',
+    'font-size': 40,
+    'text-anchor': 'start',
+    'stroke-width': 0,
+    fill: 'black'
+  }
+
+  this['style:text-amplifiers/bottom'] = {}
+
   this.frame = { fill: this.frameFill(options) }
 }
 
@@ -42,6 +64,14 @@ Style.prototype.bbox = function ([children, bbox]) {
   ], bbox)
 
   return [children, styledBox]
+}
+
+Style.prototype.textExtent = function (lines, styleId) {
+  const style = this[styleId]
+  const fontSize = style['font-size'] || 40
+  const factor = fontSize / 30
+  const widths = lines.map(line => textWidth(line) * factor)
+  return [Math.max(...widths), lines.length * fontSize]
 }
 
 const MODE = { dark: 0, medium: 1, light: 2 }

@@ -1,0 +1,22 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  version="1.2"
+  baseProfile="tiny"
+  width="548.6666666666666"
+  height="216"
+  viewBox="-167 -4 548.6666666666666 216"
+>
+  <path d="M25,50 l150,0 0,100 -150,0 z" stroke-width="4" stroke="black" fill="rgb(128,224,255)" fill-opacity="1" ></path>
+  <path d="M25,50 L175,150 M25,150 L175,50" stroke-width="4" stroke="black" fill="black" ></path>
+  <path d="M125,80 C150,80 150,120 125,120 L75,120 C50,120 50,80 75,80 Z" stroke-width="4" stroke="black" fill="none" ></path>
+  <text x="5" y="40" text-anchor="end" font-size="40" font-family="Arial" stroke-width="4" stroke="none" fill="black" >W</text>
+  <text x="5" y="80" text-anchor="end" font-size="40" font-family="Arial" stroke-width="4" stroke="none" fill="black" >X/Y</text>
+  <text x="5" y="120" text-anchor="end" font-size="40" font-family="Arial" stroke-width="4" stroke="none" fill="black" >V/AD/AE</text>
+  <text x="5" y="160" text-anchor="end" font-size="40" font-family="Arial" stroke-width="4" stroke="none" fill="black" >T</text>
+  <text x="5" y="200" text-anchor="end" font-size="40" font-family="Arial" stroke-width="4" stroke="none" fill="black" >Z</text>
+  <text x="195" y="40" text-anchor="start" font-size="40" font-family="Arial" stroke-width="4" stroke="none" fill="black" >F</text>
+  <text x="195" y="80" text-anchor="start" font-size="40" font-family="Arial" stroke-width="4" stroke="none" fill="black" >G</text>
+  <text x="195" y="120" text-anchor="start" font-size="40" font-family="Arial" stroke-width="4" stroke="none" fill="black" >H/AF</text>
+  <text x="195" y="160" text-anchor="start" font-size="40" font-family="Arial" stroke-width="4" stroke="none" fill="black" >M</text>
+  <text x="195" y="200" text-anchor="start" font-size="40" font-family="Arial" stroke-width="4" stroke="none" fill="black" >J/K/L/N/P</text>
+</svg>

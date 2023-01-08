@@ -1,0 +1,50 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  version="1.2"
+  baseProfile="tiny"
+  width="211.33333333333331"
+  height="216"
+  viewBox="41 -4 211.33333333333331 216"
+>
+  <path
+    d="M 155,150 C 155,50 115,30 100,30 85,30 45,50 45,150"
+    stroke-width="4"
+    stroke="black"
+    fill="rgb(128,224,255)"
+    fill-opacity="1"
+  />
+
+  <!-- <text
+    x="100"
+    y="115"
+    text-anchor="middle"
+    font-size="42"
+    font-family="Arial"
+    font-weight="bold"
+    stroke-width="4"
+    stroke="none"
+    fill="black">AA</text> -->
+
+  <!-- <text
+    x="100"
+    y="185"
+    text-anchor="middle"
+    font-size="35"
+    font-family="Arial"
+    font-weight="bold"
+    stroke-width="4"
+    stroke="none"
+    fill="black">AH</text> -->
+
+  <g transform="translate(175,40)"
+    font-size="40"
+    font-family="Arial"
+    text-anchor="start"
+  >
+    <text y="0">T</text>
+    <text y="40">P</text>
+    <text y="80">V</text>
+    <text y="120">Z/X</text>
+    <text y="160">G/H</text>
+  </g>
+</svg>
