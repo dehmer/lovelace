@@ -4,38 +4,49 @@ import * as BBox from './bbox'
 import { icon } from './icons'
 import * as Echelon from './echelon'
 import * as Mobility from './mobility'
-import * as Labels from './amplifiers-text'
+import * as Labels from './modifiers'
 import SIDC from './sidc'
+import { overlay, compose } from './layout'
 
 export const Symbol = function (options) {
-  this.options = options
-}
+  const sidc = SIDC.of(options.sidc)
 
-Symbol.of = (options) => new Symbol(options)
+  // Normalize options:
+  const effectiveOptions = {}
+  effectiveOptions.frame = options.frame === true || false
+  effectiveOptions.strokeWidth = options.strokeWidth || 4
+  effectiveOptions.strokeColor = options.strokeColor || 'black'
+  effectiveOptions.outlineWidth = options.outlineWidth || 0
+  effectiveOptions.outlineColor = options.outlineColor || false
+  effectiveOptions.outline = (options.outline === false || effectiveOptions.outlineWidth === 0 || !effectiveOptions.outlineColor)
+    ? false
+    : true
 
-Symbol.prototype.getSize = function () {
-  return {
-    width: 100,
-    height: 100
+  const styles = Style.of(sidc, effectiveOptions)
+  const context = {
+    ...options,
+    ...effectiveOptions,
+    styles,
+    sidc
   }
-}
-
-Symbol.prototype.asSVG = function () {
-  const { sidc: code, ...rest } = this.options
-  const sidc = SIDC.of(code)
-  const styles = Style.of(sidc, rest)
 
   const fns = [
-    Frame.shape(sidc, rest),
-    icon(sidc),
-    Labels.labels(sidc, rest, styles),
-    Echelon.echelon(sidc),
-    Mobility.mobility(sidc),
-    styles.bbox.bind(styles),
+    Frame.outline(context),
+    Frame.shape(context),
+    Frame.overlay(context),
+    icon(context),
+    overlay(
+      Echelon.outline(context),
+      Echelon.echelon(context),
+      Labels.modifiers(context),
+      Mobility.mobility(context),
+    )
   ]
 
-  const [children, bbox] = fns.reduce((acc, fn) => fn(acc), [[], BBox.NULL])
+  const [children, bbox] = compose(fns)
   const [width, height] = BBox.extent(bbox)
+  this.width = width
+  this.height = height
   const viewBox = [bbox[0], bbox[1], width, height]
 
   const document = {
@@ -70,5 +81,18 @@ Symbol.prototype.asSVG = function () {
     return `<${type} ${propertyList}>${childList}</${type}>`
   }
 
-  return xml(document)
+  this.svg = xml(document)
+}
+
+Symbol.of = (options) => new Symbol(options)
+
+Symbol.prototype.getSize = function () {
+  return {
+    width: this.width,
+    height: this.height
+  }
+}
+
+Symbol.prototype.asSVG = function () {
+  return this.svg
 }

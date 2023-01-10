@@ -15,14 +15,13 @@ const sId = {
   ...landequipment
 }
 
-export const icon = sidc => {
-  return ([children, bbox]) => {
+export const icon = ({ sidc }) => {
+  return bbox => {
     const { generic, affiliation } = sidc
     const fn = (acc, key) => acc || sId[key]
     const keys = [generic, `${affiliation}:${generic}`]
     const parts = keys.reduce(fn, null)
     const icon = (parts || []).flatMap(key => icn[key])
-    children.push(...icon)
-    return [children, bbox]
+    return [icon, bbox]
   }
 }

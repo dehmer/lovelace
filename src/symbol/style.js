@@ -17,16 +17,19 @@ const colors = {
 export const Style = function (sidc, options) {
   this.sidc = sidc
   this.options = options
+
+  const offWhite = 'rgb(239,239,239)'
+
   this.default = {
-    'stroke-width': 4,
-    stroke: 'black',
+    'stroke-width': options.strokeWidth,
+    stroke: options.strokeColor,
     fill: 'none',
     'font-family': 'Arial',
   }
 
   this['style:text-amplifiers/left'] = {
     'font-family': 'Arial',
-    'font-size': 40,
+    'font-size': 36,
     'text-anchor': 'end',
     'stroke-width': 0,
     fill: 'black'
@@ -34,7 +37,7 @@ export const Style = function (sidc, options) {
 
   this['style:text-amplifiers/right'] = {
     'font-family': 'Arial',
-    'font-size': 40,
+    'font-size': 36,
     'text-anchor': 'start',
     'stroke-width': 0,
     fill: 'black'
@@ -42,7 +45,39 @@ export const Style = function (sidc, options) {
 
   this['style:text-amplifiers/bottom'] = {}
 
-  this.frame = { fill: this.frameFill(options) }
+  this['style:frame/outline'] = {
+    'stroke': options.outlineColor,
+    'stroke-width': options.strokeWidth + options.outlineWidth * 2,
+    fill: 'none',
+    'stroke-linejoin': 'round'
+   }
+
+  this['style:frame/shape'] = {
+    'stroke-width': options.strokeWidth,
+    fill: this.frameFill(options)
+   }
+
+   this['style:frame/overlay'] = {
+    'stroke': offWhite,
+    'stroke-width': options.strokeWidth,
+    // pending state has precedence over planned status:
+    'stroke-dasharray': sidc.pending ? '4,4' : sidc.status === 'PLANNED' ? '8,12' : 'none'
+   }
+
+   this['style:echelon'] = {
+    'stroke': options.strokeColor,
+    'stroke-width': options.strokeWidth,
+    'fill': options.strokeColor
+   }
+
+   this['style:echelon/outline'] = {
+    'stroke': options.outlineColor,
+    'stroke-width': options.strokeWidth + options.outlineWidth * 2,
+    'fill': options.outlineColor,
+    'stroke-linejoin': 'round',
+    'stroke-linecap': 'round'
+   }
+
 }
 
 Style.of = (sidc, options) => new Style(sidc, options)
@@ -57,6 +92,9 @@ Style.prototype.frameFill = function () {
   return FRAME_FILL[key][colorIndex]
 }
 
+/**
+ * @deprecated
+ */
 Style.prototype.bbox = function ([children, bbox]) {
   const styledBox = BBox.resize([
     this.default['stroke-width'] + (this.default['outline-width'] || 0),
@@ -64,6 +102,12 @@ Style.prototype.bbox = function ([children, bbox]) {
   ], bbox)
 
   return [children, styledBox]
+}
+
+Style.prototype.padding = function (styleId) {
+  if (!this[styleId]) return [0, 0]
+  const width = this[styleId]['stroke-width'] || 0
+  return [width / 2, width / 2]
 }
 
 Style.prototype.textExtent = function (lines, styleId) {

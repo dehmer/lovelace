@@ -4,7 +4,8 @@
       "type": "circle",
       "cx": 100,
       "cy": -20,
-      "r": 15
+      "r": 15,
+      "fill": "none"
     },
     {
       "type": "path",
@@ -16,8 +17,7 @@
       "type": "circle",
       "cx": 100,
       "cy": -20,
-      "r": 7.5,
-      "fill": "black"
+      "r": 7.5
     }
   ],
   "SECTION": [
@@ -25,15 +25,13 @@
       "type": "circle",
       "cx": 115,
       "cy": -20,
-      "r": 7.5,
-      "fill": "black"
+      "r": 7.5
     },
     {
       "type": "circle",
       "cx": 85,
       "cy": -20,
-      "r": 7.5,
-      "fill": "black"
+      "r": 7.5
     }
   ],
   "PLATOON": [
@@ -41,22 +39,19 @@
       "type": "circle",
       "cx": 100,
       "cy": -20,
-      "r": 7.5,
-      "fill": "black"
+      "r": 7.5
     },
     {
       "type": "circle",
       "cx": 70,
       "cy": -20,
-      "r": 7.5,
-      "fill": "black"
+      "r": 7.5
     },
     {
       "type": "circle",
       "cx": 130,
       "cy": -20,
-      "r": 7.5,
-      "fill": "black"
+      "r": 7.5
     }
   ],
   "COMPANY": [

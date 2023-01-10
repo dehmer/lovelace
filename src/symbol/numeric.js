@@ -18,11 +18,15 @@ const SIDC = function (code) {
     modifier2: code.substring(18, 20)
   }
 
+  console.log(parts)
+
   this.generic = parts.symbolSet + ':' + parts.function
   this.affiliation = AFFILIATION[parts.affiliation]
   this.context = CONTEXT[parts.context]
+  this.status = Object.entries(STATUS).find(([_, code]) => code === parts.status)[0]
   this.dimension = DIMENSION.find(([regex]) => code.match(regex))[1]
   this.civilian = CIVILIAN.some(regex => code.match(regex))
+  this.pending = PENDING.includes(parts.affiliation)
 
   this.mobility = (() => {
     const lookup = ([_, code]) => code === parts.amplifier
@@ -57,6 +61,8 @@ const IDENTITY = {
   HOSTILE: '6', FAKER: '6'
 }
 
+const PENDING = ['0', '2', '5']
+
 const AFFILIATION = [
   'UNKNOWN', 'UNKNOWN',
   'FRIEND', 'FRIEND',
@@ -84,7 +90,7 @@ const CIVILIAN = [
 
 const STATUS = {
   PRESENT: '0',
-  ANTICIPATED: '1', PLANNED: '1',
+  PLANNED: '1', ANTICIPATED: '1',
   FULLY_CAPABLE: '2',
   DAMAGED: '3',
   DESTROYED: '4',

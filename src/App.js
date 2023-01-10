@@ -13,8 +13,11 @@ const symbol = legacy
 const identities = [
   'UNKNOWN',
   'FRIEND',
-  'NEUTRAL',
-  'HOSTILE'
+  // 'PENDING',
+  // 'ASSUMED_FRIEND',
+  // 'SUSPECT',
+  // 'NEUTRAL',
+  // 'HOSTILE'
 ]
 
 const modifierAliases = {
@@ -51,12 +54,12 @@ const codes = [
   // '10000100000000000000', // AIR, SPACE
   // '10000100001100000000', // AIR, SPACE
   // '10001000000000000000', // UNIT (LAND), INSTALLATION (LAND), ACTIVITY/EVENT
-  // '10001000141211020000', // MECHANIZED INFANTRY (WITH ECHELON)
-  '10001000001211020000', // MECHANIZED INFANTRY
+  // '10001000171211020000', // MECHANIZED INFANTRY (WITH ECHELON)
+  // '10001010001211020000', // MECHANIZED INFANTRY (PLANNED)
   // '10001000001613000000',
   // '10001500000000000000', // EQUIPMENT (LAND), SEA SURFACE, UNKNOWN
   // '10001500001110000000',
-  // '10001500341113000000',
+  '10001500341113000000', // WITH MOBILITY
   // '10003500000000000000', // SEA SUBSURFACE
   // '10002700001100000000', // DISMOUNTED (LAND)
   // '10000100001200000000'  // CIVILIAN
@@ -78,23 +81,31 @@ const codes = [
 const formats = identities
   .map(identity => SIDC.format({ identity }))
 
-// const textAmplifiers = {}
-const textAmplifiers = legacy
+const modifiers = legacy
   ? Object.entries(modifierAliases).reduce((acc, [key, value]) => { acc[key] = value; return acc })
   : Object.entries(modifierAliases).reduce((acc, [key, value]) => { acc[value] = value; return acc })
-
 console.time('symbols')
+
 const symbols = R
   .xprod(formats, codes)
   .map(([format, code]) => format(code))
-  .map(code => symbol({ sidc: code, frame: true, ...textAmplifiers }))
+  .map(code => symbol({
+    sidc: code,
+    frame: true,
+    outline: true,
+    outlineColor: 'red',
+    outlineWidth: 4, /* default 0 */
+    // strokeColor: 'yellow',
+    strokeWidth: 4, /* default 4 */
+    modifiers,
+  }))
   .map(symbol => ({ ...symbol.getSize(), src: 'data:image/svg+xml;utf8,' + symbol.asSVG() }))
 console.timeEnd('symbols')
 
 // console.log(symbols)
 
-const SymbolArray = () => symbols.map(({ height, src }, index) =>
-  <img width='220' key={index} src={src} className="symbol"/>
+const SymbolArray = () => symbols.map(({ width, height, src }, index) =>
+  <img key={index} src={src} className="symbol"/>
 )
 
 function App() {

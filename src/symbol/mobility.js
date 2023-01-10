@@ -14,12 +14,13 @@ const lookup = Object.entries(data).reduce((acc, [key, instructions]) => {
   return acc
 }, {})
 
-export const mobility = sidc => {
-  return ([children, bbox]) => {
-    if (!sidc.mobility) return [children, bbox]
+export const mobility = ({ sidc }) => {
+  if (!sidc.mobility) return bbox => [[], bbox]
+
+  return bbox => {
     const { bbox: box, offset, ...rest } = lookup[sidc.mobility]
     const dy = sidc.affiliation === 'NEUTRAL' ? bbox[3] + offset : bbox[3]
-    children.push({ ...rest, transform: `translate(0, ${dy})` })
-    return [children, BBox.merge(bbox, BBox.translate([0, dy], box))]
+    const instruction = { ...rest, transform: `translate(0, ${dy})` }
+    return [[instruction], BBox.merge(bbox, BBox.translate([0, dy], box))]
   }
 }
