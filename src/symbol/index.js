@@ -11,6 +11,7 @@ import SIDC from './sidc'
 import * as Layout from './layout'
 
 export const Symbol = function (options) {
+  performance.mark('[Symbol/CTOR:ENTER]')
   const sidc = SIDC.of(options.sidc)
 
   // Normalize options:
@@ -42,7 +43,6 @@ export const Symbol = function (options) {
     Frame.overlay(context),
     Frame.outline(context),
     icon(context),
-    // // bbox => [[styles.rect(bbox, 'style:debug')], bbox],
     Layout.overlay(
       Echelon.outline(context),
       Echelon.echelon(context),
@@ -50,9 +50,12 @@ export const Symbol = function (options) {
       Mobility.mobility(context),
       Modifiers.taskForce(context),
       Modifiers.feintDummy(context),
-      Modifiers.headquartersStaff(context)
+      Modifiers.headquartersStaff(context),
+      labels(context),
+      bbox => [bbox, styles.rect(bbox, 'style:debug')]
     ),
-    // Adjust bbox according stroke/outline width:
+    bbox => [bbox, styles.rect(bbox, 'style:debug')],
+    // // Adjust bbox according stroke/outline width:
     bbox => [BBox.resize([padding, padding], bbox), []]
   ])
 
@@ -72,14 +75,12 @@ export const Symbol = function (options) {
     height,
     viewBox,
     children,
-    style: 'style:default'
+    ...styles['style:default']
   }
 
   const xml = document => {
-    const { type, children, style, zIndex, ...properties } = document
-    const props = { ...properties, ...(styles[style] || {}) }
-
-    const propertyList = Object.entries(props).map(([key, value]) => {
+    const { type, children, zIndex, ...properties } = document
+    const propertyList = Object.entries(properties).map(([key, value]) => {
       if (key === 'text') return ''
       const type = typeof value
       if (type === 'string') return `${key}="${value}"`

@@ -1,40 +1,51 @@
 import * as BBox from './bbox'
 
-const templates = {
-  UNIT: {
-    left: [['W'], ['X', 'Y'], ['V', 'AD', 'AE'], ['T'], ['Z']],
-    right: [['F'], ['G'], ['H', 'AF'], ['M'], ['J', 'K', 'L', 'N', 'P']]
-  },
-  SEA: {
-    right: [['T'], ['P'], ['V'], ['Z', 'X'], ['G', 'H']]
-  }
+const templates = {}
+
+templates['AIR'] = {
+  right: [['T'], ['P'], ['V'], ['Z', 'X'], ['G', 'H']]
+}
+
+templates['UNIT'] = {
+  left: [['W'], ['X', 'Y'], ['V', 'AD', 'AF', 'AI'], ['T'], ['Z']],
+  right: [['AC'], ['G'], ['H'], ['M'], ['J', 'K', 'L', 'N', 'P']]
+}
+
+templates['EQUIPMENT'] = templates['UNIT']
+templates['DISMOUNTED'] = templates['UNIT']
+
+templates['SEA'] = {
+  right: [['T'], ['P'], ['V'], ['Z', 'X'], ['G', 'H']]
+}
+
+templates['SUBSURFACE'] = {
+  right: [['T'], ['V'], ['X'], ['G'], ['H']]
 }
 
 // TODO: also depends on label font size
 /* eslint-disable import/no-anonymous-default-export */
-export default ({ sidc, styles, modifiers }) => {
-  if (!modifiers) return box => [[], box]
+export default ({ dimension, styles, ...modifiers }) => {
+  if (!modifiers) return box => [box, []]
+  if (!templates[dimension]) return box => [box, []]
 
-  return bbox => {
-    if (!templates[sidc.dimension]) return [[], bbox]
-
+  return box => {
     const gap = 16
-    const [width, height] = BBox.extent(bbox)
+    const [width, height] = BBox.extent(box)
 
     const boxes = {
       left: extent => {
-        const right = bbox[0] - gap
+        const right = box[0] - gap
         const left = right - extent[0]
-        const top = bbox[1] + (height - extent[1]) / 2
+        const top = box[1] + (height - extent[1]) / 2
         const bottom = top + extent[1]
         return [left, top, right, bottom]
       },
       right: extent => {
-        const x1 = bbox[2] + gap
-        const x2 = x1 + extent[0]
-        const y1 = bbox[1] + (height - extent[1]) / 2
-        const y2 = y1 + extent[1]
-        return [x1, y1, x2, y2]
+        const right = box[2] + gap
+        const left = right + extent[0]
+        const top = box[1] + (height - extent[1]) / 2
+        const bottom = top + extent[1]
+        return [right, top, left, bottom]
       }
     }
 
@@ -47,25 +58,26 @@ export default ({ sidc, styles, modifiers }) => {
       type: 'g',
       children,
       transform: `translate(${box[0]},${box[1]})`,
-      style
+      ...styles[style]
     })
 
     const line = slots => slots.map(key => modifiers[key]).filter(Boolean).join('/')
-    const [instructions, box] = Object.entries(templates[sidc.dimension]).reduce((acc, [placement, slots]) => {
-      const lines = slots.map(line)
-      const style = `style:text-amplifiers/${placement}`
-      const extent = styles.textExtent(lines, style)
-      const box = boxes[placement](extent)
-      const x = placement === 'right' ? 0 : extent[0]
-      const dy = extent[1] / lines.length
-      const text = (line, index) => makeText(x, index * dy, line)
-      const children = lines.map(text)
-      acc[0].push(makeGroup(box, children, style))
-      return [acc[0], BBox.merge(acc[1], box)]
-    }, [[], BBox.NULL])
+    const [bbox, instructions] = Object
+      .entries(templates[dimension])
+      .reduce((acc, [placement, slots]) => {
+        const lines = slots.map(line)
+        const style = `style:text-amplifiers/${placement}`
+        const extent = styles.textExtent(lines, style)
+        const box = boxes[placement](extent)
+        const x = placement === 'right' ? 0 : extent[0]
+        const dy = extent[1] / lines.length
+        const text = (line, index) => makeText(x, index * dy, line)
+        const children = lines.map(text)
+        acc[1].push(makeGroup(box, children, style))
+        return [BBox.merge(acc[0], box), acc[1]]
+      }, [BBox.NULL, []])
 
-    const padding = 8
-    return [instructions, BBox.merge(bbox, BBox.resize([padding, padding], box))]
+    return [bbox, instructions]
   }
 }
 

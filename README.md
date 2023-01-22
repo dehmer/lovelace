@@ -28,8 +28,8 @@
 * abstract styling over letter and number SIDC (alpha/numeric)
 * fail fast (on invalid SIDCs), expose Error class to extensions
 * define and expose interface/pipeline for symbol parts and composition
-* use simple layout framework for placement/alignment (CASSOWARY?)
 * use expression framework for text modifiers/amplifiers
 
 ### CANCELLED
-* use XML library to generate SVG from JavaScript object (IMPRACTICAL)
+* IMPRACTICAL - use XML library to generate SVG from JavaScript object
+* OVER-ENGINEERED - use simple layout framework for placement/alignment

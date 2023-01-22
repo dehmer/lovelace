@@ -7,7 +7,7 @@ import * as Numeric from './symbol/numeric'
 import { aliases } from './symbol/labels'
 import './App.css'
 
-const legacy = true
+const legacy = false
 const symbol = legacy
   ? options => new ms.Symbol(options.sidc, options)
   : options => Symbol.of(options)
@@ -72,13 +72,13 @@ const installation = [
 ]
 
 const codes = [
-  // ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => SIDC.format(options, code)),
-  // ...xprod(dimensions, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
-  // ...xprod(installation, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
-  // ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
+  ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => SIDC.format(options, code)),
+  ...xprod(dimensions, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
+  ...xprod(installation, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
+  ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => SIDC.format(options, code)),
-  // ...assorted.map(code => SIDC.format({ identity: 'FRIEND' }, code))
-  // ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => SIDC.format(options, code)),
+  ...assorted.map(code => SIDC.format({ identity: 'FRIEND' }, code)),
+  ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => SIDC.format(options, code)),
 ]
 
 console.time('symbols')
@@ -90,8 +90,8 @@ const symbols = codes.map(sidc => symbol({
   outlineWidth: 0, /* default 0 */
   strokeWidth: 4, /* default 4 */
   strokeColor: 'black',
-  // ...modifiers,
-  fill: true
+  ...modifiers,
+  fill: true,
 })).map(symbol => ({ ...symbol.getSize(), src: 'data:image/svg+xml;utf8,' + symbol.asSVG() }))
 console.timeEnd('symbols')
 
