@@ -1,75 +1,39 @@
+import * as R from 'ramda'
 import * as BBox from './bbox'
-import { compose } from './layout'
-import geometries from './frame.json'
+import { NOOP } from './common'
+import FRAME from './frame.json'
 
-const shapes = Object.entries(geometries).reduce((acc, [key, value]) => {
-  const { open, ...instruction } = value
-  acc[key] = {
-    ...instruction,
-    bbox: BBox.of(instruction),
-    style: 'style:frame/shape'
-  }
-
+const frames = Object.entries(FRAME).reduce((acc, [key, frame]) => {
+  const { open, ...graphics } = frame
+  acc[key] = acc[key] || {}
+  acc[key].open = graphics
+  acc[key].closed = { ...graphics, d: graphics.d + ' z' }
+  acc[key].bbox = BBox.of(graphics)
   return acc
 }, {})
 
-const overlays = Object.entries(geometries).reduce((acc, [key, value]) => {
-  const { open, ...instruction } = value
-  acc[key] = {
-    ...instruction,
-    bbox: BBox.of(instruction),
-    style: 'style:frame/overlay'
-  }
+const instruction =
+  (type, style, zIndex = 0) =>
+    ({ dimension, affiliation, styles }) => {
+      // TODO: respect JOKER/FAKER -> FRIEND
+      const frame = frames[`${dimension}+${affiliation}`]
+      return () => [frame.bbox, { ...frame[type], ...styles[style], zIndex }]
+    }
 
-  return acc
-}, {})
+export const outline = R.ifElse(
+  ({ frame, outline }) => frame && outline,
+  instruction('closed', 'style:outline', -1),
+  NOOP
+)
 
-// Frames with closed paths.
-const outlines = Object.entries(geometries).reduce((acc, [key, value]) => {
-  const { open, ...rest } = value
-  const instruction = open ? { type: 'path', d: rest.d + ' Z' } : rest
+export const frame = R.ifElse(
+  ({ frame }) => frame,
+  instruction('open', 'style:frame/shape', 0),
+  NOOP
+)
 
-  acc[key] = {
-    ...instruction,
-    bbox: BBox.of(instruction),
-    style: 'style:frame/outline'
-  }
-
-  return acc
-}, {})
-
-export const outline = ({ sidc, frame, outline, styles }) => {
-  if (!frame || !outline) return bbox => [[], bbox]
-
-  return bbox => {
-    const key = `${sidc.dimension}+${sidc.affiliation}`
-    const { bbox: box, ...instruction } = outlines[key]
-    const padding = styles.padding(instruction.style)
-    const pbox = BBox.resize(padding, box)
-    return [[instruction], BBox.merge(bbox, pbox)]
-  }
-}
-
-export const shape = ({ sidc, styles }) => {
-  // TODO: no frame
-  return bbox => {
-    const key = `${sidc.dimension}+${sidc.affiliation}`
-    const { bbox: box, ...instruction } = shapes[key]
-    const padding = styles.padding(instruction.style)
-    const pbox = BBox.resize(padding, box)
-    return [[instruction], BBox.merge(bbox, pbox)]
-  }
-}
-
-export const overlay = ({ sidc, frame, styles }) => {
-  if (!frame) return bbox => [[], bbox]
-  if (sidc.status === 'PRESENT' && !sidc.pending) return bbox => [[], bbox]
-
-  return bbox => {
-    const key = `${sidc.dimension}+${sidc.affiliation}`
-    const { bbox: box, ...instruction } = overlays[key]
-    const padding = styles.padding(instruction.style)
-    const pbox = BBox.resize(padding, box)
-    return [[instruction], BBox.merge(bbox, pbox)]
-  }
-}
+export const overlay = R.ifElse(
+  ({ frame, status, pending }) => frame && (status !== 'PRESENT' || pending),
+  instruction('open', 'style:frame/overlay', 1),
+  NOOP
+)

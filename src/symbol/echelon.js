@@ -1,27 +1,34 @@
+import * as R from 'ramda'
 import * as BBox from './bbox'
-import data from './echelon.json'
+import ECHELON from './echelon.json'
 
-const groups = Object.entries(data).reduce((acc, [key, instructions]) => {
-  acc[key] = [instructions, BBox.of(instructions)]
-  return acc
-}, {})
+const echelons = Object.entries(ECHELON)
+  .reduce((acc, [key, children]) => {
+    acc[key] = [BBox.of(children), children]
+    return acc
+  }, {})
 
-const group = (sidc, styles, style) => bbox => {
-  const [children, box] = groups[sidc.echelon]
-  const transform = `translate(0, ${bbox[1]})`
-  const child = {  type: 'g', children, style, transform }
-  const padding = styles.padding(child.style)
-  const paddedBox = BBox.resize(padding, box)
-  const translatedBox = BBox.translate([0, bbox[1]], paddedBox)
-  return [[child], BBox.merge(bbox, translatedBox)]
-}
+const instruction =
+  (style, zIndex) =>
+    ({ echelon, styles }) =>
+      box => {
+        const [bbox, children] = echelons[echelon]
+        const translation = BBox.translate([0, box[1]], bbox)
+        const transform = `translate(0, ${box[1]})`
+        const group = { type: 'g', children, ...styles[style], transform, zIndex }
+        return [translation, group]
+      }
 
-export const outline = ({ sidc, echelon, outline, styles }) =>
-  echelon && outline
-    ? group(sidc, styles, 'style:echelon/outline')
-    : bbox => [[], bbox]
+// TODO: combine outline/echelon
 
-export const echelon = ({ sidc, styles }) =>
-  sidc.echelon
-    ? group(sidc, styles, 'style:echelon')
-    : bbox => [[], bbox]
+export const outline = R.ifElse(
+  ({ echelon }) => echelon,
+  instruction('style:outline', -1),
+  () => box => [box, []]
+)
+
+export const echelon = R.ifElse(
+  ({ echelon }) => echelon,
+  instruction('style:echelon'),
+  () => box => [box, []]
+)

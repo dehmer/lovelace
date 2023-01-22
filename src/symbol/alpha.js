@@ -2,23 +2,31 @@ import * as R from 'ramda'
 import { overlay } from './common'
 
 const SIDC = function (code) {
-  this.code = code
+  this.code = code.replaceAll('*', '-')
+  this.generic = this.code[0] + '-' + this.code[2] + '-' + (this.code.substring(4, 10) || '------')
+
   const parts = {
-    scheme: code[0],
-    identity: code[1],
-    dimension: code[2],
-    status: code[3],
-    function: code.substring(4, 10),
-    modifier11: code[11],
-    modifiers: code.substring(10, 12)
+    scheme: this.code[0],
+    identity: this.code[1],
+    dimension: this.code[2],
+    status: this.code[3],
+    function: this.code.substring(4, 10),
+    modifier10: this.code[10],
+    modifier11: this.code[11],
+    modifiers: this.code.substring(10, 12)
   }
 
-  this.generic = code[0] + '-' + code[2] + '-' + (code.substring(4, 10) || '------')
   this.affiliation = AFFILIATION[parts.identity]
   this.joker = parts.identity === 'J'
   this.faker = parts.identity === 'K'
-  this.dimension = DIMENSION.find(([regex]) => code.match(regex))[1]
-  this.civilian = CIVILIAN.some(regex => code.match(regex))
+  this.status = Object.entries(STATUS).find(([_, code]) => code === parts.status)[0]
+  this.dimension = DIMENSION.find(([regex]) => this.code.match(regex))[1]
+  this.civilian = CIVILIAN.some(regex => this.code.match(regex))
+  this.pending = PENDING.includes(parts.identity)
+  this.installation = this.dimension === 'UNIT' && parts.modifiers === 'H-'
+  this.taskForce = TASK_FORCE.includes(parts.modifier10)
+  this.headquarters = HEADQUARTERS.includes(parts.modifier10)
+  this.feintDummy = FEINT_DUMMY.includes(parts.modifier10)
 
   // Mobility and echelon are mutually exclusive; try mobility first.
   // TODO: limit to equipment
@@ -59,6 +67,8 @@ const IDENTITY = {
   FAKER: ['K']
 }
 
+const PENDING = ['P', 'A', 'S', 'G', 'M']
+
 const AFFILIATION = {
   H: 'HOSTILE', J: 'HOSTILE', K: 'HOSTILE', S: 'HOSTILE',
   A: 'FRIEND', F: 'FRIEND', D: 'FRIEND', M: 'FRIEND',
@@ -68,7 +78,7 @@ const AFFILIATION = {
 
 const DIMENSION = [
   [/^..[AP]/, 'AIR'],
-  [/^SFG.E/, 'EQUIPMENT'],
+  [/^S[AF]G.E/, 'EQUIPMENT'], // (ASSUMED) FRIEND
   [/^.FS/, 'EQUIPMENT'],
   [/^I.G/, 'EQUIPMENT'], // SIGINT
   [/^E.O.(AB|AE|AF|BB|CB|CC|DB|D.B|E.)/, 'EQUIPMENT'], // EMS EQUIPMENT
@@ -122,16 +132,20 @@ const ECHELON = {
   COMMAND: 'N'
 }
 
-// HQ, TF, F/D
+// HQ (0x01), TF (0x02), F/D (0x04)
 const INDICATOR = {
-  1: 'A',
-  3: 'B',
-  5: 'C',
-  7: 'D',
-  2: 'E',
-  4: 'F',
-  6: 'G'
+  1: 'A', // HQ
+  3: 'B', // TF, HQ
+  5: 'C', // FD, HQ
+  7: 'D', // FD, TF, HQ
+  2: 'E', // TF
+  4: 'F', // FD
+  6: 'G'  // FD, TF
 }
+
+const FEINT_DUMMY = ['C', 'D', 'F', 'G']
+const HEADQUARTERS = ['A', 'B', 'C', 'D']
+const TASK_FORCE = ['B', 'D', 'E', 'G']
 
 const OVERLAYS = [
   options => options.identity && overlay(

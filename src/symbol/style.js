@@ -20,7 +20,13 @@ export const Style = function (sidc, options) {
 
   const offWhite = 'rgb(239,239,239)'
 
-  this.default = {
+  this['style:debug'] = {
+    stroke: 'red',
+    'stroke-width': 2,
+    'stroke-dasharray': [10, 10]
+  }
+
+  this['style:default'] = {
     'stroke-width': options.strokeWidth,
     stroke: options.strokeColor,
     fill: 'none',
@@ -45,11 +51,11 @@ export const Style = function (sidc, options) {
 
   this['style:text-amplifiers/bottom'] = {}
 
-  this['style:frame/outline'] = {
+  this['style:outline'] = {
     'stroke': options.outlineColor,
     'stroke-width': options.strokeWidth + options.outlineWidth * 2,
-    fill: 'none',
-    'stroke-linejoin': 'round'
+    'stroke-linejoin': 'round',
+    'stroke-linecap': 'round'
    }
 
   this['style:frame/shape'] = {
@@ -70,14 +76,7 @@ export const Style = function (sidc, options) {
     'fill': options.strokeColor
    }
 
-   this['style:echelon/outline'] = {
-    'stroke': options.outlineColor,
-    'stroke-width': options.strokeWidth + options.outlineWidth * 2,
-    'fill': options.outlineColor,
-    'stroke-linejoin': 'round',
-    'stroke-linecap': 'round'
-   }
-
+   this['style:installation'] = this['style:echelon']
 }
 
 Style.of = (sidc, options) => new Style(sidc, options)
@@ -92,22 +91,9 @@ Style.prototype.frameFill = function () {
   return FRAME_FILL[key][colorIndex]
 }
 
-/**
- * @deprecated
- */
-Style.prototype.bbox = function ([children, bbox]) {
-  const styledBox = BBox.resize([
-    this.default['stroke-width'] + (this.default['outline-width'] || 0),
-    this.default['stroke-width'] + (this.default['outline-width'] || 0),
-  ], bbox)
-
-  return [children, styledBox]
-}
-
-Style.prototype.padding = function (styleId) {
-  if (!this[styleId]) return [0, 0]
-  const width = this[styleId]['stroke-width'] || 0
-  return [width / 2, width / 2]
+Style.prototype.strokeWidth = function (styleId) {
+  if (!this[styleId]) return 0
+  return this[styleId]['stroke-width'] || 0
 }
 
 Style.prototype.textExtent = function (lines, styleId) {
@@ -116,6 +102,21 @@ Style.prototype.textExtent = function (lines, styleId) {
   const factor = fontSize / 30
   const widths = lines.map(line => textWidth(line) * factor)
   return [Math.max(...widths), lines.length * fontSize]
+}
+
+Style.prototype.rect = function (bbox, styleId) {
+  const style = this[styleId] || {}
+  return { type: 'rect', ...BBox.xywh(bbox), ...style }
+}
+
+Style.prototype.style = function (node, styleId) {
+  const style = this[styleId] || {}
+  return { ...style, ...node }
+}
+
+Style.prototype.path = function (d, styleId) {
+  const style = this[styleId] || {}
+  return { type: 'path', ...style, d }
 }
 
 const MODE = { dark: 0, medium: 1, light: 2 }

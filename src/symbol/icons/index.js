@@ -15,13 +15,13 @@ const sId = {
   ...landequipment
 }
 
-export const icon = ({ sidc }) => {
+/* eslint-disable import/no-anonymous-default-export */
+export default ({ generic, affiliation }) => {
   return bbox => {
-    const { generic, affiliation } = sidc
     const fn = (acc, key) => acc || sId[key]
     const keys = [generic, `${affiliation}:${generic}`]
     const parts = keys.reduce(fn, null)
     const icon = (parts || []).flatMap(key => icn[key])
-    return [icon, bbox]
+    return [bbox, icon]
   }
 }

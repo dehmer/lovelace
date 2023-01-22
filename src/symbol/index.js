@@ -1,12 +1,14 @@
 import * as Frame from './frame'
+import * as Echelon from './echelon'
+import * as Installation from './installation'
+import * as Mobility from './mobility'
+import * as Modifiers from './modifiers'
 import { Style } from './style'
 import * as BBox from './bbox'
-import { icon } from './icons'
-import * as Echelon from './echelon'
-import * as Mobility from './mobility'
-import * as Labels from './modifiers'
+import icon from './icons'
+import labels from './labels'
 import SIDC from './sidc'
-import { overlay, compose } from './layout'
+import * as Layout from './layout'
 
 export const Symbol = function (options) {
   const sidc = SIDC.of(options.sidc)
@@ -27,27 +29,39 @@ export const Symbol = function (options) {
     ...options,
     ...effectiveOptions,
     styles,
-    sidc
+    ...sidc
   }
 
-  const fns = [
-    Frame.outline(context),
-    Frame.shape(context),
+  const padding = 2 + Math.max(
+    styles.strokeWidth('style:default'),
+    styles.strokeWidth('style:outline')
+  ) / 2
+
+  const [bbox, children] = Layout.compose([
+    Frame.frame(context),
     Frame.overlay(context),
+    Frame.outline(context),
     icon(context),
-    overlay(
+    // // bbox => [[styles.rect(bbox, 'style:debug')], bbox],
+    Layout.overlay(
       Echelon.outline(context),
       Echelon.echelon(context),
-      Labels.modifiers(context),
+      Installation.installation(context),
       Mobility.mobility(context),
-    )
-  ]
+      Modifiers.taskForce(context),
+      Modifiers.feintDummy(context),
+      Modifiers.headquartersStaff(context)
+    ),
+    // Adjust bbox according stroke/outline width:
+    bbox => [BBox.resize([padding, padding], bbox), []]
+  ])
 
-  const [children, bbox] = compose(fns)
   const [width, height] = BBox.extent(bbox)
-  this.width = width
-  this.height = height
   const viewBox = [bbox[0], bbox[1], width, height]
+  this.size = { width, height }
+
+  // Poor man's (SVG) layers:
+  children.sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0))
 
   const document = {
     type: 'svg',
@@ -58,11 +72,11 @@ export const Symbol = function (options) {
     height,
     viewBox,
     children,
-    style: 'default'
+    style: 'style:default'
   }
 
   const xml = document => {
-    const { type, children, style, ...properties } = document
+    const { type, children, style, zIndex, ...properties } = document
     const props = { ...properties, ...(styles[style] || {}) }
 
     const propertyList = Object.entries(props).map(([key, value]) => {
@@ -87,10 +101,7 @@ export const Symbol = function (options) {
 Symbol.of = (options) => new Symbol(options)
 
 Symbol.prototype.getSize = function () {
-  return {
-    width: this.width,
-    height: this.height
-  }
+  return this.size
 }
 
 Symbol.prototype.asSVG = function () {

@@ -18,15 +18,18 @@ const SIDC = function (code) {
     modifier2: code.substring(18, 20)
   }
 
-  console.log(parts)
-
   this.generic = parts.symbolSet + ':' + parts.function
   this.affiliation = AFFILIATION[parts.affiliation]
   this.context = CONTEXT[parts.context]
   this.status = Object.entries(STATUS).find(([_, code]) => code === parts.status)[0]
   this.dimension = DIMENSION.find(([regex]) => code.match(regex))[1]
   this.civilian = CIVILIAN.some(regex => code.match(regex))
+  // TODO: PENDING - ETC/POSCON tracks, fused tracks
   this.pending = PENDING.includes(parts.affiliation)
+  this.installation = this.dimension === 'UNIT' && parts.symbolSet === '20'
+  this.taskForce = TASK_FORCE.includes(parts.indicator)
+  this.headquarters = HEADQUARTERS.includes(parts.indicator)
+  this.feintDummy = FEINT_DUMMY.includes(parts.indicator)
 
   this.mobility = (() => {
     const lookup = ([_, code]) => code === parts.amplifier
@@ -39,7 +42,6 @@ const SIDC = function (code) {
     const echelon = Object.entries(ECHELON).find(lookup)
     return echelon ? echelon[0] : false
   })()
-
 }
 
 SIDC.format = function (options, code) {
@@ -51,7 +53,7 @@ export default SIDC
 
 const CONTEXT = ['REALITY', 'EXERCISE', 'SIMULATION']
 
-const IDENTITY = {
+export const IDENTITY = {
   PENDING: '0',
   UNKNOWN: '1',
   ASSUMED_FRIEND: '2',
@@ -97,24 +99,24 @@ const STATUS = {
   FULL_TO_CAPACITY: '5'
 }
 
-const ECHELON = {
-  TEAM: '11', CREW: '11',
+export const ECHELON = {
+  TEAM: '11', // CREW: '11',
   SQUAD: '12',
   SECTION: '13',
-  PLATOON: '14', DETACHMENT: '14',
-  COMPANY: '15', BATTERY: '15', TROOP: '15',
-  BATTALION: '16', SQUADRON: '16',
-  REGIMENT: '17', GROUP: '17',
+  PLATOON: '14', // DETACHMENT: '14',
+  COMPANY: '15', // BATTERY: '15', TROOP: '15',
+  BATTALION: '16', // SQUADRON: '16',
+  REGIMENT: '17', // GROUP: '17',
   BRIGADE: '18',
   DIVISION: '21',
-  CORPS: '22', MEF: '22',
+  CORPS: '22', // MEF: '22',
   ARMY: '23',
-  ARMY_GROUP: '24', FRONT: '24',
-  REGION: '25', THEATER: '25',
+  ARMY_GROUP: '24', // FRONT: '24',
+  REGION: '25', // THEATER: '25',
   COMMAND: '26'
 }
 
-const MOBILITY = {
+export const MOBILITY = {
   WHEELED_LIMITED: '31',
   WHEELED: '32',
   TRACKED: '33',
@@ -140,6 +142,10 @@ const INDICATOR = {
   3: '6',
   7: '7'
 }
+
+const FEINT_DUMMY = ['1', '3', '5', '7']
+const HEADQUARTERS = ['2', '3', '6', '7']
+const TASK_FORCE = ['4', '5', '6', '7']
 
 const OVERLAYS = [
   // mutually exclusive: reality, exercise and simulation

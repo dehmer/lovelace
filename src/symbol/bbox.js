@@ -34,11 +34,24 @@ export const NULL = [
   Number.NEGATIVE_INFINITY
 ]
 
-const bboxfns = {
-  path: ({ d }) => pathbbox(d),
-  circle: ({ cx, cy, r }) => [cx - r, cy - r, cx + r, cy + r]
-}
+export const xywh = bbox => ({
+  x: bbox[0],
+  y: bbox[1],
+  width: bbox[2] - bbox[0],
+  height: bbox[3] - bbox[1]
+})
 
-export const of = instruction => Array.isArray(instruction)
-  ? instruction.map(of).reduce(merge)
-  : bboxfns[instruction.type](instruction)
+// const path = ({ d, 'stroke-width': w = 0 }) => resize([w / 2, w / 2], pathbbox(d))
+// const circle = ({ cx, cy, r, 'stroke-width': w = 0 }) => resize([w / 2, w / 2], [cx - r, cy - r, cx + r, cy + r])
+// const group = ({ children, 'stroke-width': w = 0 }) => resize([w / 2, w / 2], children.map(of).reduce(merge))
+
+const path = ({ d }) => pathbbox(d)
+const circle = ({ cx, cy, r }) => [cx - r, cy - r, cx + r, cy + r]
+const group = ({ children }) => children.map(of).reduce(merge)
+
+export const of = R.cond([
+  [R.is(Array), xs => xs.map(of).reduce(merge)],
+  [R.propEq('type', 'path'), path],
+  [R.propEq('type', 'circle'), circle],
+  [R.propEq('type', 'g'), group]
+])

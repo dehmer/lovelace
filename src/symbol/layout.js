@@ -1,16 +1,18 @@
 import * as R from 'ramda'
 import * as BBox from './bbox'
 
-export const overlay = (...parts) => bbox => {
-  const overlays = parts.map(part => part(bbox))
-  const box = overlays.map(R.prop(1)).reduce(BBox.merge, bbox)
-  const instructions = overlays.map(R.prop(0)).flat()
-  return [instructions, box]
+export const overlay = (...parts) => box => {
+  const overlays = parts.map(part => part(box)).filter(Boolean)
+  const bbox = overlays.map(R.prop(0)).reduce(BBox.merge, box)
+  const instructions = overlays.map(R.prop(1)).flat()
+  return [bbox, instructions]
 }
 
-export const compose = fns => {
-  return fns.reduce(([acc, bbox], fn) => {
-    const [instruction = [], box] = fn(bbox)
-    return [acc.concat(instruction), BBox.merge(bbox, box)]
-  }, [[], BBox.NULL])
-}
+export const compose = fns =>
+  fns.reduce(([box, acc], fn) => R.ifElse(
+    Boolean,
+    ([bbox, instruction]) => [BBox.merge(box, bbox), acc.concat(instruction)],
+    () => [box, acc]
+  )(fn(box)),
+  [BBox.NULL, []]
+)
