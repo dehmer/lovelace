@@ -3,6 +3,7 @@ import * as Echelon from './echelon'
 import * as Installation from './installation'
 import * as Mobility from './mobility'
 import * as Modifiers from './modifiers'
+import * as Engagement from './engagement'
 import { Style } from './style'
 import * as BBox from './bbox'
 import icon from './icons'
@@ -11,11 +12,10 @@ import SIDC from './sidc'
 import * as Layout from './layout'
 
 export const Symbol = function (options) {
-  performance.mark('[Symbol/CTOR:ENTER]')
   const sidc = SIDC.of(options.sidc)
 
   // Normalize options:
-  const effectiveOptions = {}
+  const effectiveOptions = { ...options }
   effectiveOptions.frame = options.frame === true || false
   effectiveOptions.strokeWidth = options.strokeWidth || 4
   effectiveOptions.strokeColor = options.strokeColor || 'black'
@@ -24,6 +24,7 @@ export const Symbol = function (options) {
   effectiveOptions.outline = (options.outline === false || effectiveOptions.outlineWidth === 0 || !effectiveOptions.outlineColor)
     ? false
     : true
+
 
   const styles = Style.of(sidc, effectiveOptions)
   const context = {
@@ -45,17 +46,22 @@ export const Symbol = function (options) {
     icon(context),
     Layout.overlay(
       Echelon.outline(context),
-      Echelon.echelon(context),
+      Echelon.echelon(context)
+    ),
+    Layout.overlay(
+      // Echelon.outline(context),
+      // Echelon.echelon(context),
+      Engagement.engagement(context),
       Installation.installation(context),
       Mobility.mobility(context),
       Modifiers.taskForce(context),
       Modifiers.feintDummy(context),
       Modifiers.headquartersStaff(context),
       labels(context),
-      bbox => [bbox, styles.rect(bbox, 'style:debug')]
+      // bbox => [bbox, styles.rect(bbox, 'style:debug')]
     ),
-    bbox => [bbox, styles.rect(bbox, 'style:debug')],
-    // // Adjust bbox according stroke/outline width:
+    // bbox => [bbox, styles.rect(bbox, 'style:debug')],
+    // Adjust bbox according stroke/outline width:
     bbox => [BBox.resize([padding, padding], bbox), []]
   ])
 

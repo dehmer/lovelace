@@ -24,7 +24,7 @@ templates['SUBSURFACE'] = {
 
 // TODO: also depends on label font size
 /* eslint-disable import/no-anonymous-default-export */
-export default ({ dimension, styles, ...modifiers }) => {
+export default ({ dimension, styles, outline, ...modifiers }) => {
   if (!modifiers) return box => [box, []]
   if (!templates[dimension]) return box => [box, []]
 
@@ -54,11 +54,12 @@ export default ({ dimension, styles, ...modifiers }) => {
       'dominant-baseline': 'hanging'
     })
 
-    const makeGroup = (box, children, style) => ({
+    const makeGroup = (box, children, style, zIndex) => ({
       type: 'g',
       children,
       transform: `translate(${box[0]},${box[1]})`,
-      ...styles[style]
+      ...style,
+      zIndex
     })
 
     const line = slots => slots.map(key => modifiers[key]).filter(Boolean).join('/')
@@ -66,6 +67,10 @@ export default ({ dimension, styles, ...modifiers }) => {
       .entries(templates[dimension])
       .reduce((acc, [placement, slots]) => {
         const lines = slots.map(line)
+
+        // No lines -> nothing to do.
+        if (lines.filter(Boolean).length === 0) return acc
+
         const style = `style:text-amplifiers/${placement}`
         const extent = styles.textExtent(lines, style)
         const box = boxes[placement](extent)
@@ -73,7 +78,8 @@ export default ({ dimension, styles, ...modifiers }) => {
         const dy = extent[1] / lines.length
         const text = (line, index) => makeText(x, index * dy, line)
         const children = lines.map(text)
-        acc[1].push(makeGroup(box, children, style))
+        acc[1].push(makeGroup(box, children, styles[style], 0 ))
+        if (outline) acc[1].push(makeGroup(box, children, { ...styles[style], ...styles['style:outline'] }, -1))
         return [BBox.merge(acc[0], box), acc[1]]
       }, [BBox.NULL, []])
 
@@ -82,7 +88,7 @@ export default ({ dimension, styles, ...modifiers }) => {
 }
 
 export const aliases = {
-  quantity: 'D',
+  // quantity: 'D',
   reinforcedReduced: 'F',
   staffComments: 'G',
   additionalInformation: 'H',
@@ -107,5 +113,17 @@ export const aliases = {
   commonIdentifier: 'AF',
   auxiliaryEquipmentIndicator: 'AG',
   // headquartersElement: 'AH',
-  installationComposition: 'AI'
+  installationComposition: 'AI',
+
+  // A:BBB-CC
+  // engagementBar: 'AO',
+
+  /**
+   * Non-standard.
+   * Target designation for hostile tracks.
+   * Values: 'TARGET', 'NON-TARGET', 'EXPIRED'
+   * See engagement bar.
+   *
+   */
+  engagementType: 'AT'
 }

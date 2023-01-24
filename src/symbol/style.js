@@ -1,8 +1,8 @@
 import * as BBox from './bbox'
-import charwidth from './charwidth.json'
+import charWidth from './charwidth.json'
 
-const defaulCharWidth = charwidth['W']
-const textWidth = s => [...s].reduce((acc, c) => acc + charwidth[c] || defaulCharWidth, 0)
+const defaulCharWidth = charWidth['W']
+const textWidth = s => [...s].reduce((acc, c) => acc + charWidth[c] || defaulCharWidth, 0)
 
 const colors = {
   'FRAME-FILL+DARK': {
@@ -11,6 +11,11 @@ const colors = {
     HOSTILE: "rgb(200,0,0)",
     NEUTRAL: "rgb(0,160,0)",
     UNKNOWN: "rgb(225,220,0)"
+  },
+  ENGAGEMENT: {
+    TARGET: 'rgb(255, 0, 0)',
+    'NON-TARGET': 'rgb(255, 255, 255)',
+    EXPIRED: 'rgb(255, 120, 0)'
   }
 }
 
@@ -77,6 +82,19 @@ export const Style = function (sidc, options) {
    }
 
    this['style:installation'] = this['style:echelon']
+
+   this['style:engagement/text'] = {
+    'text-anchor': "middle",
+    'font-size': 22,
+    'font-weight': "bold",
+    'stroke-width': 4,
+    stroke: 'none',
+    fill: 'black'
+   }
+
+   this['style:engagement/bar'] = {
+    fill: colors.ENGAGEMENT[options.AT] || this.frameFill(options),
+   }
 }
 
 Style.of = (sidc, options) => new Style(sidc, options)

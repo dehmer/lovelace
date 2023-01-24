@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/alt-text */
-import * as R from 'ramda'
 import ms from 'milsymbol'
 import { Symbol } from './symbol'
 import SIDC from './symbol/sidc'
@@ -27,8 +26,17 @@ const MODIFIERS = xprod(
 ).map(assign)
 
 const modifiers = legacy
-  ? Object.entries(aliases).reduce((acc, [key, value]) => { acc[key] = value; return acc })
-  : Object.entries(aliases).reduce((acc, [key, value]) => { acc[value] = value; return acc })
+  ? Object.entries(aliases).reduce((acc, [key, value]) => { acc[key] = value; return acc }, {})
+  : Object.entries(aliases).reduce((acc, [key, value]) => { acc[value] = value; return acc }, {})
+
+if (legacy) {
+  modifiers.engagementBar = 'A:BBB-CC'
+  modifiers.engagementType = 'TARGET'
+}
+else {
+  modifiers['AO'] = 'A:BBB-CC'
+  modifiers['AT'] = 'TARGET'
+}
 
 const assorted = [
   '10000100000000000000', // AIR, SPACE
@@ -74,11 +82,11 @@ const installation = [
 const codes = [
   ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => SIDC.format(options, code)),
   ...xprod(dimensions, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
-  ...xprod(installation, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
-  ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
-  ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => SIDC.format(options, code)),
-  ...assorted.map(code => SIDC.format({ identity: 'FRIEND' }, code)),
-  ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => SIDC.format(options, code)),
+  // ...xprod(installation, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
+  // ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
+  // ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => SIDC.format(options, code)),
+  // ...assorted.map(code => SIDC.format({ identity: 'FRIEND' }, code)),
+  // ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => SIDC.format(options, code)),
 ]
 
 console.time('symbols')
@@ -86,12 +94,13 @@ const symbols = codes.map(sidc => symbol({
   sidc,
   frame: true,
   outline: true,
-  outlineColor: 'red',
-  outlineWidth: 0, /* default 0 */
+  outlineColor: 'rgb(200, 200, 200)',
+  outlineWidth: 2, /* default 0 */
   strokeWidth: 4, /* default 4 */
   strokeColor: 'black',
   ...modifiers,
   fill: true,
+  // standard: 'APP6',
 })).map(symbol => ({ ...symbol.getSize(), src: 'data:image/svg+xml;utf8,' + symbol.asSVG() }))
 console.timeEnd('symbols')
 
