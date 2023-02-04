@@ -77,7 +77,9 @@ const AFFILIATION = {
 }
 
 const DIMENSION = [
+  [/^[^O].P/, 'SPACE'],
   [/^..[AP]/, 'AIR'],
+  [/^O.[VOR]/, 'ACTIVITY'],
   [/^S[AF]G.E/, 'EQUIPMENT'], // (ASSUMED) FRIEND
   [/^.FS/, 'EQUIPMENT'],
   [/^I.G/, 'EQUIPMENT'], // SIGINT

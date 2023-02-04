@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import * as BBox from './bbox'
 import charWidth from './charwidth.json'
 
@@ -75,6 +76,11 @@ export const Style = function (sidc, options) {
     'stroke-dasharray': sidc.pending ? '4,4' : sidc.status === 'PLANNED' ? '8,12' : 'none'
    }
 
+   this['style:frame/decoration'] = {
+    fill: options.strokeColor,
+    stroke: 'none'
+   }
+
    this['style:echelon'] = {
     'stroke': options.strokeColor,
     'stroke-width': options.strokeWidth,
@@ -102,9 +108,14 @@ Style.of = (sidc, options) => new Style(sidc, options)
 Style.prototype.frameFill = function () {
   const colorMode = (this.options.colorMode || 'light').toLowerCase()
   const colorIndex = MODE[colorMode] || 0
-  const key = (this.sidc.civilian && this.sidc.affiliation !== 'HOSTILE')
-    ? 'CIVILIAN'
-    : this.sidc.affiliation
+  const isCivilian = () => this.sidc.civilian && this.sidc.affiliation !== 'HOSTILE'
+  const isJoker = () => this.sidc.joker || this.sidc.faker
+
+  const key = R.cond([
+    [isCivilian, R.always('CIVILIAN')],
+    [isJoker, R.always('HOSTILE')],
+    [R.T, R.always(this.sidc.affiliation)]
+  ])()
 
   return FRAME_FILL[key][colorIndex]
 }

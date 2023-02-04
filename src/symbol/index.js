@@ -10,8 +10,10 @@ import icon from './icons'
 import labels from './labels'
 import SIDC from './sidc'
 import * as Layout from './layout'
+import * as Times from './times'
 
 export const Symbol = function (options) {
+  Times.enter('CTOR')
   const sidc = SIDC.of(options.sidc)
 
   // Normalize options:
@@ -38,6 +40,9 @@ export const Symbol = function (options) {
     styles.strokeWidth('style:default'),
     styles.strokeWidth('style:outline')
   ) / 2
+
+  Times.exit('CTOR')
+  Times.enter('LAYOUT')
 
   const [bbox, children] = Layout.compose([
     Frame.frame(context),
@@ -68,6 +73,9 @@ export const Symbol = function (options) {
   const [width, height] = BBox.extent(bbox)
   const viewBox = [bbox[0], bbox[1], width, height]
   this.size = { width, height }
+
+  Times.exit('LAYOUT')
+  Times.enter('SVG')
 
   // Poor man's (SVG) layers:
   children.sort((a, b) => (a.zIndex || 0) - (b.zIndex || 0))
@@ -101,6 +109,8 @@ export const Symbol = function (options) {
 
     return `<${type} ${propertyList}>${childList}</${type}>`
   }
+
+  Times.exit('SVG')
 
   this.svg = xml(document)
 }

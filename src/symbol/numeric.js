@@ -19,13 +19,19 @@ const SIDC = function (code) {
   }
 
   this.generic = parts.symbolSet + ':' + parts.function
-  this.affiliation = AFFILIATION[parts.affiliation]
   this.context = CONTEXT[parts.context]
+  this.affiliation =
+    AFFILIATION[parts.context + parts.affiliation] ||
+    AFFILIATION[parts.affiliation]
+
+  // FIXME: wrong shape for joker
+  this.joker = this.context === 'EXERCISE' && parts.affiliation === '5' // SUSPECT
+  this.faker = this.context === 'EXERCISE' && parts.affiliation === '6' // HOSTILE
   this.status = Object.entries(STATUS).find(([_, code]) => code === parts.status)[0]
   this.dimension = DIMENSION.find(([regex]) => code.match(regex))[1]
   this.civilian = CIVILIAN.some(regex => code.match(regex))
   // TODO: PENDING - ETC/POSCON tracks, fused tracks
-  this.pending = PENDING.includes(parts.affiliation)
+  this.pending = !this.joker && PENDING.includes(parts.affiliation)
   this.installation = this.dimension === 'UNIT' && parts.symbolSet === '20'
   this.taskForce = TASK_FORCE.includes(parts.indicator)
   this.headquarters = HEADQUARTERS.includes(parts.indicator)
@@ -65,19 +71,23 @@ export const IDENTITY = {
 
 const PENDING = ['0', '2', '5']
 
-const AFFILIATION = [
-  'UNKNOWN', 'UNKNOWN',
-  'FRIEND', 'FRIEND',
-  'NEUTRAL',
-  'HOSTILE', 'HOSTILE'
-]
+const AFFILIATION = {
+  '15': 'FRIEND',
+  '16': 'FRIEND',
+  '0': 'UNKNOWN', '1': 'UNKNOWN',
+  '2': 'FRIEND', '3': 'FRIEND',
+  '4': 'NEUTRAL',
+  '5': 'HOSTILE', '6': 'HOSTILE'
+}
 
 const DIMENSION = [
   [/^...[23]27/, 'DISMOUNTED'], // FRIEND only
   [/^...[23](15|30)/, 'EQUIPMENT'], // FRIEND only
-  [/^....(01|02|05|06|50|51)/, 'AIR'],
+  [/^....(05|06|50)/, 'SPACE'],
+  [/^....(01|02|51)/, 'AIR'],
   [/^....(35|36|39|45)/, 'SUBSURFACE'],
-  [/^....(10|11|12|15|20|27|40|52|60)/, 'UNIT'], // incl. DISMOUNTED
+  [/^....40/, 'ACTIVITY'],
+  [/^....(10|11|12|15|20|27|30|52|60)/, 'UNIT'], // incl. DISMOUNTED
 ]
 
 const CIVILIAN = [
