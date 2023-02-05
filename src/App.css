@@ -1,6 +1,18 @@
+.app {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.pair {
+  display: flex;
+  flex-direction: row;
+}
+
 .symbol {
   height: 6em;
-  margin: 0.5em;
+  /* margin: 0.5em; */
   background-color: aliceblue;
   border: 1px black solid;
 }

@@ -49,22 +49,21 @@ export const Symbol = function (options) {
     Frame.overlay(context),
     Frame.outline(context),
     icon(context),
+    Installation.installation(context),
     Layout.overlay(
       Echelon.outline(context),
       Echelon.echelon(context)
     ),
+    Engagement.engagement(context),
+    Frame.context(context),
     Layout.overlay(
-      // Echelon.outline(context),
-      // Echelon.echelon(context),
-      Engagement.engagement(context),
-      Installation.installation(context),
       Mobility.mobility(context),
       Modifiers.taskForce(context),
       Modifiers.feintDummy(context),
       Modifiers.headquartersStaff(context),
-      labels(context),
-      // bbox => [bbox, styles.rect(bbox, 'style:debug')]
+      labels(context)
     ),
+
     // bbox => [bbox, styles.rect(bbox, 'style:debug')],
     // Adjust bbox according stroke/outline width:
     bbox => [BBox.resize([padding, padding], bbox), []]

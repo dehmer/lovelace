@@ -16,9 +16,11 @@ const SIDC = function (code) {
     modifiers: this.code.substring(10, 12)
   }
 
+  this.type = 'legacy'
   this.affiliation = AFFILIATION[parts.identity]
   this.joker = parts.identity === 'J'
   this.faker = parts.identity === 'K'
+  this.exercise = EXERCISE.includes(parts.identity)
   this.status = Object.entries(STATUS).find(([_, code]) => code === parts.status)[0]
   this.dimension = DIMENSION.find(([regex]) => this.code.match(regex))[1]
   this.civilian = CIVILIAN.some(regex => this.code.match(regex))
@@ -60,17 +62,18 @@ const IDENTITY = {
 
   // Joker. A friendly track acting as a suspect for exercise purposes.
   SUSPECT: ['S', 'J'],
-  JOKER: ['J'],
+  JOKER: ['J', 'J'],
 
   // Faker. A friendly track acting as a hostile for exercise purposes.
   HOSTILE: ['H', 'K'],
-  FAKER: ['K']
+  FAKER: ['K', 'K']
 }
 
 const PENDING = ['P', 'A', 'S', 'G', 'M']
+const EXERCISE = ['G', 'W', 'M', 'D', 'L']
 
 const AFFILIATION = {
-  H: 'HOSTILE', J: 'HOSTILE', K: 'HOSTILE', S: 'HOSTILE',
+  H: 'HOSTILE', J: 'FRIEND', K: 'FRIEND', S: 'HOSTILE',
   A: 'FRIEND', F: 'FRIEND', D: 'FRIEND', M: 'FRIEND',
   L: 'NEUTRAL', N: 'NEUTRAL',
   G: 'UNKNOWN', P: 'UNKNOWN', U: 'UNKNOWN', W: 'UNKNOWN'
@@ -80,7 +83,7 @@ const DIMENSION = [
   [/^[^O].P/, 'SPACE'],
   [/^..[AP]/, 'AIR'],
   [/^O.[VOR]/, 'ACTIVITY'],
-  [/^S[AF]G.E/, 'EQUIPMENT'], // (ASSUMED) FRIEND
+  [/^S[ADF]G.E/, 'EQUIPMENT'], // (ASSUMED) FRIEND
   [/^.FS/, 'EQUIPMENT'],
   [/^I.G/, 'EQUIPMENT'], // SIGINT
   [/^E.O.(AB|AE|AF|BB|CB|CC|DB|D.B|E.)/, 'EQUIPMENT'], // EMS EQUIPMENT

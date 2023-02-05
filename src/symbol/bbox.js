@@ -1,5 +1,6 @@
 import * as R from 'ramda'
 import pathbbox from 'svg-path-bbox'
+import { width as textWidth } from './measure'
 
 export const resize = R.curry(([dx, dy], bbox) => [
   bbox[0] - dx,
@@ -41,17 +42,26 @@ export const xywh = bbox => ({
   height: bbox[3] - bbox[1]
 })
 
-// const path = ({ d, 'stroke-width': w = 0 }) => resize([w / 2, w / 2], pathbbox(d))
-// const circle = ({ cx, cy, r, 'stroke-width': w = 0 }) => resize([w / 2, w / 2], [cx - r, cy - r, cx + r, cy + r])
-// const group = ({ children, 'stroke-width': w = 0 }) => resize([w / 2, w / 2], children.map(of).reduce(merge))
-
 const path = ({ d }) => pathbbox(d)
 const circle = ({ cx, cy, r }) => [cx - r, cy - r, cx + r, cy + r]
 const group = ({ children }) => children.map(of).reduce(merge)
+
+const text = ({ x, y, text, ...rest}) => {
+  const fontSize = rest['font-size'] || 40
+  const textAnchor = rest['text-anchor'] || 'start'
+  const factor = fontSize / 30
+  const width = textWidth(text) * factor
+  return textAnchor === 'start'
+    ? [x, y - fontSize, x + width, y]
+    : textAnchor === 'end'
+      ? [x - width, y - fontSize, x, y]
+      : [x - width / 2, y - fontSize, x + width / 2, y] // middle
+}
 
 export const of = R.cond([
   [R.is(Array), xs => xs.map(of).reduce(merge)],
   [R.propEq('type', 'path'), path],
   [R.propEq('type', 'circle'), circle],
+  [R.propEq('type', 'text'), text],
   [R.propEq('type', 'g'), group]
 ])

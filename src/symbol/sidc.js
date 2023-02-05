@@ -1,18 +1,18 @@
 import * as R from 'ramda'
-import Alpha from './alpha'
-import Numeric from './numeric'
+import Legacy from './legacy'
+import Modern from './modern'
 
 const SIDC = {}
 
 SIDC.of = code =>
   code.length === 20
-    ? new Numeric(code)
-    : new Alpha(code)
+    ? new Modern(code)
+    : new Legacy(code)
 
 SIDC.format = R.curry((options, code) =>
   code.length === 20
-    ? Numeric.format(options, code)
-    : Alpha.format(options, code)
+    ? Modern.format(options, code)
+    : Legacy.format(options, code)
 )
 
 export default SIDC

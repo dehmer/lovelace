@@ -12,7 +12,7 @@ export const installation = ({ installation, affiliation, outline, styles }) => 
 
   const strokeWidth = styles.strokeWidth('style:installation')
   const { y1, y2 } = heights(strokeWidth)[affiliation]
-  const d = `M85,${y1} 85,-10 115,-10 115,${y1} 100,${y2} Z`
+  const d = `M85,${y1} 85,-12 115,-12 115,${y1} 100,${y2} Z`
   const path = { type: 'path', d }
 
   return box => {

@@ -18,6 +18,7 @@ const SIDC = function (code) {
     modifier2: code.substring(18, 20)
   }
 
+  this.type = 'modern'
   this.generic = parts.symbolSet + ':' + parts.function
   this.context = CONTEXT[parts.context]
   this.affiliation =

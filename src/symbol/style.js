@@ -1,9 +1,6 @@
 import * as R from 'ramda'
 import * as BBox from './bbox'
-import charWidth from './charwidth.json'
-
-const defaulCharWidth = charWidth['W']
-const textWidth = s => [...s].reduce((acc, c) => acc + charWidth[c] || defaulCharWidth, 0)
+import { width as textWidth } from './measure'
 
 const colors = {
   'FRAME-FILL+DARK': {
@@ -101,6 +98,16 @@ export const Style = function (sidc, options) {
    this['style:engagement/bar'] = {
     fill: colors.ENGAGEMENT[options.AT] || this.frameFill(options),
    }
+
+   this['style:frame/context'] = {
+    'font-family': 'Arial',
+    'font-size': 35,
+    'font-weight': 'bold',
+    'text-anchor': 'start',
+    'stroke-width': 0,
+    fill: 'black'
+  }
+
 }
 
 Style.of = (sidc, options) => new Style(sidc, options)

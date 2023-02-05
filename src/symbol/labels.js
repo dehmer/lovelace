@@ -24,9 +24,10 @@ templates['SUBSURFACE'] = {
 
 // TODO: also depends on label font size
 /* eslint-disable import/no-anonymous-default-export */
-export default ({ dimension, styles, outline, ...modifiers }) => {
+export default ({ dimension, infoFields, styles, outline, ...modifiers }) => {
   if (!modifiers) return box => [box, []]
   if (!templates[dimension]) return box => [box, []]
+  if (!infoFields) return box => [box, []]
 
   return box => {
     const gap = 16
@@ -125,5 +126,5 @@ export const aliases = {
    * See engagement bar.
    *
    */
-  engagementType: 'AT'
+  // engagementType: 'AT'
 }
