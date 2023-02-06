@@ -7,7 +7,7 @@ import * as Engagement from './engagement'
 import { Style } from './style'
 import * as BBox from './bbox'
 import icon from './icons'
-import labels from './labels'
+import fields from './fields'
 import SIDC from './sidc'
 import * as Layout from './layout'
 import * as Times from './times'
@@ -61,7 +61,7 @@ export const Symbol = function (options) {
       Modifiers.taskForce(context),
       Modifiers.feintDummy(context),
       Modifiers.headquartersStaff(context),
-      labels(context)
+      fields(context)
     ),
 
     // bbox => [bbox, styles.rect(bbox, 'style:debug')],

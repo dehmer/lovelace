@@ -2,29 +2,27 @@ import * as BBox from './bbox'
 
 const templates = {}
 
-templates['AIR'] = {
-  right: [['T'], ['P'], ['V'], ['Z', 'X'], ['G', 'H']]
-}
+templates['AIR'] = { right: [['T'], ['P'], ['V'], ['Z', 'X'], ['G', 'H']] }
+templates['SEA'] = { right: [['T'], ['P'], ['V'], ['Z', 'X'], ['G', 'H']] }
+templates['SUBSURFACE'] = { right: [['T'], ['V'], ['X'], ['G'], ['H']] }
 
 templates['UNIT'] = {
   left: [['W'], ['X', 'Y'], ['V', 'AD', 'AF', 'AI'], ['T'], ['Z']],
   right: [['AC'], ['G'], ['H'], ['M'], ['J', 'K', 'L', 'N', 'P']]
 }
 
+templates['SPACE'] = templates['AIR']
 templates['EQUIPMENT'] = templates['UNIT']
+templates['ACTIVITY'] = templates['UNIT']
 templates['DISMOUNTED'] = templates['UNIT']
 
-templates['SEA'] = {
-  right: [['T'], ['P'], ['V'], ['Z', 'X'], ['G', 'H']]
-}
-
-templates['SUBSURFACE'] = {
-  right: [['T'], ['V'], ['X'], ['G'], ['H']]
-}
 
 // TODO: also depends on label font size
 /* eslint-disable import/no-anonymous-default-export */
 export default ({ dimension, infoFields, styles, outline, ...modifiers }) => {
+
+  console.log('fields', dimension, templates[dimension])
+
   if (!modifiers) return box => [box, []]
   if (!templates[dimension]) return box => [box, []]
   if (!infoFields) return box => [box, []]
