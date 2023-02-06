@@ -16,7 +16,7 @@ const SIDC = function (code) {
     modifiers: this.code.substring(10, 12)
   }
 
-  this.type = 'legacy'
+  this.type = 'LEGACY'
   this.affiliation = AFFILIATION[parts.identity]
   this.joker = parts.identity === 'J'
   this.faker = parts.identity === 'K'
@@ -83,7 +83,7 @@ const DIMENSION = [
   [/^[^O].P/, 'SPACE'],
   [/^..[AP]/, 'AIR'],
   [/^O.[VOR]/, 'ACTIVITY'],
-  [/^S[ADF]G.E/, 'EQUIPMENT'], // (ASSUMED) FRIEND
+  [/^S.G.E/, 'EQUIPMENT'],
   [/^.FS/, 'EQUIPMENT'],
   [/^I.G/, 'EQUIPMENT'], // SIGINT
   [/^E.O.(AB|AE|AF|BB|CB|CC|DB|D.B|E.)/, 'EQUIPMENT'], // EMS EQUIPMENT

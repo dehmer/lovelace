@@ -80,7 +80,7 @@ const dimensions = [
   // '10001000000000000000', // UNIT (LAND)
   // '10001500000000000000', // EQUIPMENT (LAND)
   // '10032000000000000000', // INSTALLATION
-  '10003000000000000000', // SEA SURFACE
+  // '10003000000000000000', // SEA SURFACE
   // '10003500000000000000', // SEA SUBSURFACE
   // '10004000000000000000', // ACTIVITY
   // '10002700001100000000', // DISMOUNTED (LAND)
@@ -93,7 +93,7 @@ const dimensions = [
   // 'SUGP------H****',      // INSTALLATION
   // 'SUSP------*****',      // SEA SURFACE
   // 'IUUP------*****',      // SEA SUBSURFACE
-  // 'OUVP------*****',      // ACTIVITY/EVENT
+  'OUVP------*****',      // ACTIVITY/EVENT
 ]
 
 const codes = [

@@ -18,7 +18,7 @@ const SIDC = function (code) {
     modifier2: code.substring(18, 20)
   }
 
-  this.type = 'modern'
+  this.type = 'MODERN'
   this.generic = parts.symbolSet + ':' + parts.function
   this.context = CONTEXT[parts.context]
   this.affiliation =
@@ -82,10 +82,12 @@ const AFFILIATION = {
 }
 
 const DIMENSION = [
-  [/^...[23]27/, 'DISMOUNTED'], // FRIEND only
-  [/^...[23](15|30)/, 'EQUIPMENT'], // FRIEND only
+  [/^....(15)/, 'EQUIPMENT'],
   [/^....(05|06|50)/, 'SPACE'],
   [/^....(01|02|51)/, 'AIR'],
+  [/^....20/, 'INSTALLATION'],
+  [/^....27/, 'DISMOUNTED'],
+  [/^....30/, 'SEA'],
   [/^....(35|36|39|45)/, 'SUBSURFACE'],
   [/^....40/, 'ACTIVITY'],
   [/^....(10|11|12|15|20|27|30|52|60)/, 'UNIT'], // incl. DISMOUNTED

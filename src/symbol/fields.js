@@ -1,31 +1,13 @@
 import * as BBox from './bbox'
+import templates from './templates.json'
 
-const templates = {}
-
-templates['AIR'] = { right: [['T'], ['P'], ['V'], ['Z', 'X'], ['G', 'H']] }
-templates['SEA'] = { right: [['T'], ['P'], ['V'], ['Z', 'X'], ['G', 'H']] }
-templates['SUBSURFACE'] = { right: [['T'], ['V'], ['X'], ['G'], ['H']] }
-
-templates['UNIT'] = {
-  left: [['W'], ['X', 'Y'], ['V', 'AD', 'AF', 'AI'], ['T'], ['Z']],
-  right: [['AC'], ['G'], ['H'], ['M'], ['J', 'K', 'L', 'N', 'P']]
-}
-
-templates['SPACE'] = templates['AIR']
-templates['EQUIPMENT'] = templates['UNIT']
-templates['ACTIVITY'] = templates['UNIT']
-templates['DISMOUNTED'] = templates['UNIT']
-
-
-// TODO: also depends on label font size
 /* eslint-disable import/no-anonymous-default-export */
-export default ({ dimension, infoFields, styles, outline, ...modifiers }) => {
-
-  console.log('fields', dimension, templates[dimension])
-
-  if (!modifiers) return box => [box, []]
-  if (!templates[dimension]) return box => [box, []]
+export default ({ type, dimension, infoFields, styles, outline, ...modifiers }) => {
   if (!infoFields) return box => [box, []]
+  if (!modifiers) return box => [box, []]
+
+  const template = templates[`${type}+${dimension}`]
+  if (!template) return box => [box, []]
 
   return box => {
     const gap = 16
@@ -63,7 +45,7 @@ export default ({ dimension, infoFields, styles, outline, ...modifiers }) => {
 
     const line = slots => slots.map(key => modifiers[key]).filter(Boolean).join('/')
     const [bbox, instructions] = Object
-      .entries(templates[dimension])
+      .entries(template)
       .reduce((acc, [placement, slots]) => {
         const lines = slots.map(line)
 
@@ -124,5 +106,7 @@ export const aliases = {
    * See engagement bar.
    *
    */
-  // engagementType: 'AT'
+  // engagementType: 'AT',
+  guardedUnit: 'AQ',
+  specialDesignator: 'AR'
 }
