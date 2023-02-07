@@ -1,29 +1,30 @@
 import * as R from 'ramda'
 import { overlay } from './common'
 
-const SIDC = function (code) {
-  this.code = code.replaceAll('*', '-')
-  this.generic = this.code[0] + '-' + this.code[2] + '-' + (this.code.substring(4, 10) || '------')
+const SIDC = function (sidc, standard = '2525') {
+  this.type = 'LEGACY'
+  this.sidc = sidc.replaceAll('*', '-')
+  this.standard = standard
+  this.generic = this.sidc[0] + '-' + this.sidc[2] + '-' + (this.sidc.substring(4, 10) || '------')
 
   const parts = {
-    scheme: this.code[0],
-    identity: this.code[1],
-    dimension: this.code[2],
-    status: this.code[3],
-    function: this.code.substring(4, 10),
-    modifier10: this.code[10],
-    modifier11: this.code[11],
-    modifiers: this.code.substring(10, 12)
+    scheme: this.sidc[0],
+    identity: this.sidc[1],
+    dimension: this.sidc[2],
+    status: this.sidc[3],
+    function: this.sidc.substring(4, 10),
+    modifier10: this.sidc[10],
+    modifier11: this.sidc[11],
+    modifiers: this.sidc.substring(10, 12)
   }
 
-  this.type = 'LEGACY'
   this.affiliation = AFFILIATION[parts.identity]
   this.joker = parts.identity === 'J'
   this.faker = parts.identity === 'K'
-  this.exercise = EXERCISE.includes(parts.identity)
+  this.context = EXERCISE.includes(parts.identity) ? 'EXERCISE' : 'REALITY'
   this.status = Object.entries(STATUS).find(([_, code]) => code === parts.status)[0]
-  this.dimension = DIMENSION.find(([regex]) => this.code.match(regex))[1]
-  this.civilian = CIVILIAN.some(regex => this.code.match(regex))
+  this.dimension = DIMENSION.find(([regex]) => this.sidc.match(regex))[1]
+  this.civilian = CIVILIAN.some(regex => this.sidc.match(regex))
   this.pending = PENDING.includes(parts.identity)
   this.installation = this.dimension === 'UNIT' && parts.modifiers === 'H-'
   this.taskForce = TASK_FORCE.includes(parts.modifier10)
@@ -70,7 +71,7 @@ const IDENTITY = {
 }
 
 const PENDING = ['P', 'A', 'S', 'G', 'M']
-const EXERCISE = ['G', 'W', 'M', 'D', 'L']
+const EXERCISE = ['D', 'G', 'J', 'K', 'L', 'M', 'W']
 
 const AFFILIATION = {
   H: 'HOSTILE', J: 'FRIEND', K: 'FRIEND', S: 'HOSTILE',

@@ -1,21 +1,23 @@
 import * as R from 'ramda'
 import { overlay } from './common'
 
-const SIDC = function (code) {
-  this.code = code
+const SIDC = function (sidc, standard = '2525') {
+  this.sidc = sidc
+  this.standard = standard
+
   const parts = {
-    context: code[2],
-    affiliation: code[3],
-    symbolSet: code.substring(4, 6),
-    status: code[6],
-    indicator: code[7],
-    amplifier: code.substring(8, 10),
-    entity: code.substring(10, 12),
-    type: code.substring(12, 14),
-    subtype: code.substring(14, 16),
-    function: code.substring(10, 16),
-    modifier1: code.substring(16, 18),
-    modifier2: code.substring(18, 20)
+    context: sidc[2],
+    affiliation: sidc[3],
+    symbolSet: sidc.substring(4, 6),
+    status: sidc[6],
+    indicator: sidc[7],
+    amplifier: sidc.substring(8, 10),
+    entity: sidc.substring(10, 12),
+    type: sidc.substring(12, 14),
+    subtype: sidc.substring(14, 16),
+    function: sidc.substring(10, 16),
+    modifier1: sidc.substring(16, 18),
+    modifier2: sidc.substring(18, 20)
   }
 
   this.type = 'MODERN'
@@ -29,8 +31,8 @@ const SIDC = function (code) {
   this.joker = this.context === 'EXERCISE' && parts.affiliation === '5' // SUSPECT
   this.faker = this.context === 'EXERCISE' && parts.affiliation === '6' // HOSTILE
   this.status = Object.entries(STATUS).find(([_, code]) => code === parts.status)[0]
-  this.dimension = DIMENSION.find(([regex]) => code.match(regex))[1]
-  this.civilian = CIVILIAN.some(regex => code.match(regex))
+  this.dimension = DIMENSION.find(([regex]) => sidc.match(regex))[1]
+  this.civilian = CIVILIAN.some(regex => sidc.match(regex))
   // TODO: PENDING - ETC/POSCON tracks, fused tracks
   this.pending = !this.joker && PENDING.includes(parts.affiliation)
   this.installation = this.dimension === 'UNIT' && parts.symbolSet === '20'

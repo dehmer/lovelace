@@ -25,7 +25,6 @@ const frames = Object.entries(FRAME).reduce((acc, [key, frame]) => {
 const instruction =
   (type, style, zIndex = 0) =>
     ({ dimension, affiliation, styles }) => {
-      // TODO: respect JOKER/FAKER -> FRIEND
       const key = `${dimension}+${affiliation}`
       const frame = frames[key]
       const instructions = [{ ...frame[type], ...styles[style], zIndex }]
@@ -56,8 +55,8 @@ export const context = ({ dimension, affiliation, outline, styles, ...rest }) =>
   const text = R.cond([
     [R.propEq('joker', true), R.always('J')],
     [R.propEq('faker', true), R.always('K')],
-    [R.propEq('exercise', true), R.always('X')],
-    [R.propEq('simulation', true), R.always('S')],
+    [R.propEq('context', 'EXERCISE'), R.always('X')],
+    [R.propEq('context', 'SIMULATION'), R.always('S')],
     [R.T, R.always(undefined)]
   ])(rest)
 
@@ -69,11 +68,7 @@ export const context = ({ dimension, affiliation, outline, styles, ...rest }) =>
   return box => {
     const instructions = []
     const instruction = { type: 'text', text, x: box[2] + spacing, y: 60, ...styles['style:frame/context'] }
-
-    // const bbox = BBox.of(regular)
-    // bbox = new ms.BBox({ x2: bbox.x2 + spacing + 22, y1: 60 - 25 });
     const bbox = [box[0], 60 - 25, box[2] + spacing + 22, box[3]]
-
     instructions.push(instruction)
     if (outline) instructions.push({ ...instruction, ...styles['style:outline'], zIndex: -1 })
     return [bbox, instructions]

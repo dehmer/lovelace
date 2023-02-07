@@ -4,15 +4,20 @@ import Modern from './modern'
 
 const SIDC = {}
 
-SIDC.of = code =>
-  code.length === 20
-    ? new Modern(code)
-    : new Legacy(code)
+SIDC.of = code => {
+  const [sidc, standard] = code.split('+')
+  return sidc.length === 20
+    ? new Modern(sidc, standard)
+    : new Legacy(sidc, standard)
+}
 
-SIDC.format = R.curry((options, code) =>
-  code.length === 20
-    ? Modern.format(options, code)
-    : Legacy.format(options, code)
-)
+
+SIDC.format = R.curry((options, code) => {
+  const [sidc, standard] = code.split('+')
+  const formatted = sidc.length === 20
+    ? Modern.format(options, sidc)
+    : Legacy.format(options, sidc)
+  return standard ? `${formatted}+${standard}` : formatted
+})
 
 export default SIDC
