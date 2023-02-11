@@ -17,7 +17,7 @@ export const Symbol = function (options) {
   const sidc = SIDC.of(options.sidc)
 
   // Normalize options:
-  const effectiveOptions = { ...options }
+  const effectiveOptions = { ...options, ...sidc }
   effectiveOptions.frame = options.frame === true || false
   effectiveOptions.strokeWidth = options.strokeWidth || 4
   effectiveOptions.strokeColor = options.strokeColor || 'black'
@@ -92,8 +92,9 @@ export const Symbol = function (options) {
   }
 
   const xml = document => {
-    const { type, children, zIndex, ...properties } = document
-    const propertyList = Object.entries(properties).map(([key, value]) => {
+    const { type, children, zIndex, style, ...properties } = document
+    const props = { ...properties, ...(styles[style] || {}) }
+    const propertyList = Object.entries(props).map(([key, value]) => {
       if (key === 'text') return ''
       const type = typeof value
       if (type === 'string') return `${key}="${value}"`

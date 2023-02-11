@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
+import * as R from 'ramda'
 import ms from 'milsymbol'
 import { Symbol } from './symbol'
 import SIDC from './symbol/sidc'
@@ -6,6 +7,7 @@ import * as Numeric from './symbol/modern'
 import { aliases } from './symbol/fields'
 import './App.css'
 import * as Times from './symbol/times'
+import legacySIDC from './sidc-legacy.json'
 
 const engagement = false
 
@@ -17,7 +19,7 @@ const common = {
   strokeWidth: 4, /* default 4 */
   strokeColor: 'black',
   fill: true,
-  infoFields: true
+  infoFields: false
 }
 
 const modern = options => {
@@ -33,15 +35,16 @@ const modern = options => {
 }
 
 const legacy = options => {
-  const initial = engagement ? { engagementBar:  'A:BBB-CC', engagementType: 'TARGET' } : {}
+  const initial = engagement ? { engagementBar: 'A:BBB-CC', engagementType: 'TARGET' } : {}
   const fn = (acc, [key, value]) => { acc[key] = value; return acc }
   const modifiers = Object.entries(aliases).reduce(fn, initial)
-  const { sidc, ...rest } = options
-
-  return new ms.Symbol(sidc.split('+')[0], {
+  const { sidc: code, ...rest } = options
+  const [sidc, standard] = code.split('+')
+  return new ms.Symbol(sidc, {
     ...common,
     ...rest,
-    ...modifiers
+    ...modifiers,
+    standard
   })
 }
 
@@ -53,15 +56,15 @@ const CONTEXT = [{}, { exercise: true }, { simulation: true }]
 const ECHELON = Object.keys(Numeric.ECHELON).map(echelon => ({ echelon }))
 
 const IDENTITY = [
-  { identity: 'PENDING' },
+  // { identity: 'PENDING' },
   { identity: 'UNKNOWN' },
   { identity: 'FRIEND' },
   { identity: 'NEUTRAL' },
   { identity: 'HOSTILE' },
-  { identity: 'ASSUMED_FRIEND' },
-  { identity: 'SUSPECT' },
-  { identity: 'JOKER' },
-  { identity: 'FAKER' }
+  // { identity: 'ASSUMED_FRIEND' },
+  // { identity: 'SUSPECT' },
+  // { identity: 'JOKER' },
+  // { identity: 'FAKER' }
 ]
 
 const MOBILITY = Object.keys(Numeric.MOBILITY).map(mobility => ({ mobility }))
@@ -73,33 +76,38 @@ const MODIFIERS = xprod(
 ).map(assign)
 
 
-const dimensions = [
-  // APP6-D
-  // '10000100000000000000+APP6', // AIR
-  // '10000500000000000000+2525', // SPACE
-  // '10001000000000000000', // UNIT (LAND)
-  // '10001500000000000000', // EQUIPMENT (LAND)
-  // '10032000000000000000', // INSTALLATION
-  // '10003000000000000000', // SEA SURFACE
-  // '10003500000000000000', // SEA SUBSURFACE
-  // '10004000000000000000', // ACTIVITY
-  // '10002700001100000000', // DISMOUNTED (LAND)
+// const dimensions = [
+//   APP6-D
+//   '10000100000000000000+APP6', // AIR
+//   '10000500000000000000+2525', // SPACE
+//   '10001000000000000000', // UNIT (LAND)
+//   '10001500000000000000', // EQUIPMENT (LAND)
+//   '10032000000000000000', // INSTALLATION
+//   '10003000000000000000', // SEA SURFACE
+//   '10003500000000000000', // SEA SUBSURFACE
+//   '10004000000000000000', // ACTIVITY
+//   '10002700001100000000', // DISMOUNTED (LAND)
 
-  // 2525-C
-  'SUAP------*****+APP6',      // AIR
-  // 'SUPP------*****+2525',      // SPACE
-  // 'SUGP------*****',      // UNIT (LAND)
-  // 'SUGPE-----*****',      // EQUIPMENT (LAND)
-  // 'SUGP------H****',      // INSTALLATION
-  // 'SUSP------*****',      // SEA SURFACE
-  // 'IUUP------*****',      // SEA SUBSURFACE
-  // 'OUVP------*****',      // ACTIVITY/EVENT
-]
+//   2525-C
+//   'SUAP------*****+APP6',      // AIR
+//   'SUPP------*****+2525',      // SPACE
+//   'SUGP------*****',      // UNIT (LAND)
+//   'SUGPE-----*****',      // EQUIPMENT (LAND)
+//   'SUGP------H****',      // INSTALLATION
+//   'SUSP------*****',      // SEA SURFACE
+//   'IUUP------*****',      // SEA SUBSURFACE
+//   'OUVP------*****',      // ACTIVITY/EVENT
+// ]
+
+// problem: 515-517 (incl.)
+const checked = 515
+const dimensions = R.take(1, R.drop(checked, legacySIDC))
+console.log('dimensions', dimensions)
 
 const codes = [
   // ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => SIDC.format(options, code)),
-  // ...xprod(dimensions, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
-  ...xprod(dimensions, xprod(IDENTITY, CONTEXT).map(assign)).map(([code, options]) => SIDC.format(options, code)),
+  ...xprod(dimensions, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
+  // ...xprod(dimensions, xprod(IDENTITY, CONTEXT).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(xprod(CONTEXT, IDENTITY).map(assign), dimensions).map(([options, code]) => SIDC.format(options, code)),
   // ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => SIDC.format(options, code)),

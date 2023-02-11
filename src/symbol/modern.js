@@ -2,6 +2,7 @@ import * as R from 'ramda'
 import { overlay } from './common'
 
 const SIDC = function (sidc, standard = '2525') {
+  this.type = 'MODERN'
   this.sidc = sidc
   this.standard = standard
 
@@ -20,7 +21,6 @@ const SIDC = function (sidc, standard = '2525') {
     modifier2: sidc.substring(18, 20)
   }
 
-  this.type = 'MODERN'
   this.generic = parts.symbolSet + ':' + parts.function
   this.context = CONTEXT[parts.context]
   this.affiliation =

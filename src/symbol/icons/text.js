@@ -14,6 +14,7 @@ export const text = text => {
     stroke: 'none',
     fill: 'black',
     'text-anchor': 'middle',
-    'font-size': size
+    'font-size': size,
+    'font-weight': "bold"
   }
 }

@@ -2,6 +2,7 @@ import * as R from 'ramda'
 import * as BBox from './bbox'
 import { width as textWidth } from './measure'
 
+const offWhite = 'rgb(239,239,239)'
 const colors = {
   'FRAME-FILL+DARK': {
     CIVILIAN: "rgb(80,0,80)",
@@ -21,7 +22,10 @@ export const Style = function (sidc, options) {
   this.sidc = sidc
   this.options = options
 
-  const offWhite = 'rgb(239,239,239)'
+  const frameFill = this.frameFill(options)
+
+  // Numeric APP6 is considered MODERN.
+  const legacy = options.type === 'LEGACY' && options.standard === 'APP6'
 
   this['style:debug'] = {
     stroke: 'red',
@@ -63,7 +67,7 @@ export const Style = function (sidc, options) {
 
   this['style:frame/shape'] = {
     'stroke-width': options.strokeWidth,
-    fill: this.frameFill(options)
+    fill: frameFill
    }
 
    this['style:frame/overlay'] = {
@@ -96,7 +100,7 @@ export const Style = function (sidc, options) {
    }
 
    this['style:engagement/bar'] = {
-    fill: colors.ENGAGEMENT[options.AT] || this.frameFill(options),
+    fill: colors.ENGAGEMENT[options.AT] || frameFill
    }
 
    this['style:frame/context'] = {
@@ -108,6 +112,9 @@ export const Style = function (sidc, options) {
     fill: 'black'
   }
 
+  this['style:icon/civilian-fill'] = legacy
+    ? { stroke: 'black', 'stroke-width': 3, fill: frameFill }
+    : { stroke: 'black', 'stroke-width': 3, fill: offWhite }
 }
 
 Style.of = (sidc, options) => new Style(sidc, options)
