@@ -102,9 +102,8 @@ const MODIFIERS = xprod(
 // problem: 795 - 804 
 // problem: 836 - 888
 // problem: 927 - tactical points
-const checked = 927
-const dimensions = R.take(1, R.drop(checked, legacySIDC))
-console.log('dimensions', dimensions)
+const checked = 0
+const dimensions = R.take(20, R.drop(checked, legacySIDC))
 
 const codes = [
   // ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => SIDC.format(options, code)),
@@ -115,6 +114,8 @@ const codes = [
   // ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => SIDC.format(options, code)),
 ]
+
+console.log(codes)
 
 const Symbols = () => codes.map((sidc, index) => {
   const pair = [legacy({ sidc }), modern({ sidc })]
