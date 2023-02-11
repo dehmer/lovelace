@@ -24,6 +24,7 @@ const SIDC = function (sidc, standard = '2525') {
   this.context = EXERCISE.includes(parts.identity) ? 'EXERCISE' : 'REALITY'
   this.status = Object.entries(STATUS).find(([_, code]) => code === parts.status)[0]
   this.dimension = DIMENSION.find(([regex]) => this.sidc.match(regex))[1]
+  console.log(this.dimension)
   this.civilian = CIVILIAN.some(regex => this.sidc.match(regex))
   this.pending = PENDING.includes(parts.identity)
   this.installation = this.dimension === 'UNIT' && parts.modifiers === 'H-'
@@ -89,7 +90,8 @@ const DIMENSION = [
   [/^I.G/, 'EQUIPMENT'], // SIGINT
   [/^E.O.(AB|AE|AF|BB|CB|CC|DB|D.B|E.)/, 'EQUIPMENT'], // EMS EQUIPMENT
   [/^..[EFGOSXZ]/, 'UNIT'], // incl. SOF, EMS
-  [/^..U/, 'SUBSURFACE' ]
+  [/^..U/, 'SUBSURFACE' ],
+  [/^G/, 'CONTROL'] // control measures aka tactical graphics
 ]
 
 const CIVILIAN = [/^..A.C/, /^..G.EVC/, /^..S.X/]

@@ -91,6 +91,12 @@ export const Symbol = function (options) {
     ...styles['style:default']
   }
 
+  const array = x => x ? Array.isArray(x) ? x : [x] : []
+  const escape = s => s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+
   const xml = document => {
     const { type, children, zIndex, style, ...properties } = document
     const props = { ...properties, ...(styles[style] || {}) }
@@ -104,8 +110,8 @@ export const Symbol = function (options) {
     }).join(' ')
 
     const childList = type !== 'text'
-      ? (children || []).map(child => xml(child)).join('')
-      : properties.text
+      ? (array(children)).map(child => xml(child)).join('')
+      : escape(properties.text)
 
     return `<${type} ${propertyList}>${childList}</${type}>`
   }

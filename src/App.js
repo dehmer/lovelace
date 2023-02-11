@@ -99,8 +99,10 @@ const MODIFIERS = xprod(
 //   'OUVP------*****',      // ACTIVITY/EVENT
 // ]
 
-// problem: 515-517 (incl.)
-const checked = 515
+// problem: 795 - 804 
+// problem: 836 - 888
+// problem: 927 - tactical points
+const checked = 927
 const dimensions = R.take(1, R.drop(checked, legacySIDC))
 console.log('dimensions', dimensions)
 
