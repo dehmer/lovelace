@@ -15,6 +15,13 @@ const colors = {
     TARGET: 'rgb(255, 0, 0)',
     'NON-TARGET': 'rgb(255, 255, 255)',
     EXPIRED: 'rgb(255, 120, 0)'
+  },
+  frameColor: {
+    CIVILIAN: "rgb(255,0,255)",
+    FRIEND: "rgb(0, 255, 255)",
+    HOSTILE: "rgb(255, 0, 0)",
+    NEUTRAL: "rgb(0, 255, 0)",
+    UNKNOWN: "rgb(255, 255, 0)"
   }
 }
 
@@ -22,7 +29,28 @@ export const Style = function (sidc, options) {
   this.sidc = sidc
   this.options = options
 
-  const frameFill = this.frameFill(options)
+  const colorMode = (options.colorMode || 'light').toLowerCase()
+  const colorIndex = MODE[colorMode] || 0
+  const isCivilian = () => sidc.civilian && sidc.affiliation !== 'HOSTILE'
+  const isJoker = () => sidc.joker || sidc.faker
+
+  const key = R.cond([
+    [isCivilian, R.always('CIVILIAN')],
+    [isJoker, R.always('HOSTILE')],
+    [R.T, R.always(this.sidc.affiliation)]
+  ])()
+
+  const frameFill = FRAME_FILL[key][colorIndex]
+
+  Object.entries(FRAME_FILL).forEach(([key, value]) => {
+    const iconFill = options.frameless ? value[colorIndex] : offWhite
+    const colorIcon = options.unfilled ? colors.frameColor[key] : 'black'
+    this[`color:icon-fill/${key.toLowerCase()}`] = iconFill
+    this[`color:icon/${key.toLowerCase()}`] = colorIcon
+    this[`color:icon-white/${key.toLowerCase()}`] = offWhite
+    this[`color:icon-black/${key.toLowerCase()}`] = 'black'
+  })
+
 
   // Numeric APP6 is considered MODERN.
   const legacy = options.type === 'LEGACY' && options.standard === 'APP6'
@@ -65,10 +93,9 @@ export const Style = function (sidc, options) {
     'stroke-linecap': 'round'
    }
 
-  this['style:frame/shape'] = {
-    'stroke-width': options.strokeWidth,
-    fill: frameFill
-   }
+  this['style:frame/shape'] = options.unfilled
+    ? { 'stroke-width': options.strokeWidth, fill: "none", stroke: colors.frameColor[key] }
+    : { 'stroke-width': options.strokeWidth, fill: frameFill }
 
    this['style:frame/overlay'] = {
     'stroke': offWhite,
@@ -119,20 +146,6 @@ export const Style = function (sidc, options) {
 
 Style.of = (sidc, options) => new Style(sidc, options)
 
-Style.prototype.frameFill = function () {
-  const colorMode = (this.options.colorMode || 'light').toLowerCase()
-  const colorIndex = MODE[colorMode] || 0
-  const isCivilian = () => this.sidc.civilian && this.sidc.affiliation !== 'HOSTILE'
-  const isJoker = () => this.sidc.joker || this.sidc.faker
-
-  const key = R.cond([
-    [isCivilian, R.always('CIVILIAN')],
-    [isJoker, R.always('HOSTILE')],
-    [R.T, R.always(this.sidc.affiliation)]
-  ])()
-
-  return FRAME_FILL[key][colorIndex]
-}
 
 Style.prototype.strokeWidth = function (styleId) {
   if (!this[styleId]) return 0

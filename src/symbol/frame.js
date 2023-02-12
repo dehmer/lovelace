@@ -40,7 +40,7 @@ export const outline = R.ifElse(
 )
 
 export const frame = R.ifElse(
-  ({ frame }) => frame,
+  ({ frame, dimension }) => frame && dimension !== 'CONTROL',
   instruction('open', 'style:frame/shape', 0),
   NOOP
 )

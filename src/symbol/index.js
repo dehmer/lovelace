@@ -18,7 +18,7 @@ export const Symbol = function (options) {
 
   // Normalize options:
   const effectiveOptions = { ...options, ...sidc }
-  effectiveOptions.frame = options.frame === true || false
+  effectiveOptions.frame = (options.frame === true && !sidc.frameless) || false
   effectiveOptions.strokeWidth = options.strokeWidth || 4
   effectiveOptions.strokeColor = options.strokeColor || 'black'
   effectiveOptions.outlineWidth = options.outlineWidth || 0
@@ -96,6 +96,8 @@ export const Symbol = function (options) {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
+    .replace(/#/g, "%23")
+
 
   const xml = document => {
     const { type, children, zIndex, style, ...properties } = document

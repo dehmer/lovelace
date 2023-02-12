@@ -6,6 +6,12 @@ import ground from './icons-ground'
 import landunit from './icons-landunit'
 import landequipment from './icons-landequipment'
 import icons from './icons'
+import * as BBox from '../bbox'
+
+const boxes = Object.entries(icons).reduce((acc, [key, icon]) => {
+  acc[key] = icon.length ? BBox.of(icon) : [100, 100, 100, 100]
+  return acc
+}, {})
 
 const sId = {
   ...airAlpha,
@@ -27,7 +33,23 @@ const sId = {
 //   }
 // }
 
-export default ({ generic, affiliation }) => {
+const icon = (key, styles) => {
+  const instructions = (icons[key] || []).map(instruction => {
+    const { stroke, fill, ...rest } = instruction
+    // console.log('stroke', stroke, 'fill', fill)
+    return {
+      stroke: styles[stroke] || stroke,
+      fill: styles[fill] || fill,
+      ...rest
+    }
+  })
+
+  return instructions
+}
+
+export default ({ generic, affiliation, styles }) => {
   const key = `${generic}+${affiliation}`
-  return box => [box, (icons[key] || []).flat()]
+  return box => {
+    return [boxes[key] || box, icon(key, styles)]
+  }
 }

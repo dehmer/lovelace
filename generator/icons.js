@@ -24,37 +24,40 @@ const AFFILIATON = [{ affiliation: 'Unknown' }, { affiliation: 'Friend' }, { aff
 
 const colors = {
   none: {
-    Unknown: 'none',
-    Friend: 'none',
-    Neutral: 'none',
-    Hostile: 'none'
+    Unknown: 'color:icon-none/unknown',
+    Friend: 'color:icon-none/friend',
+    Neutral: 'color:icon-none/neutral',
+    Hostile: 'color:icon-none/hostile'
   },
   black: {
-    Unknown: 'black',
-    Friend: 'black',
-    Neutral: 'black',
-    Hostile: 'black'
+    Unknown: 'color:icon-black/unknown',
+    Friend: 'color:icon-black/friend',
+    Neutral: 'color:icon-black/neutral',
+    Hostile: 'color:icon-black/hostile'
   },
   white: {
-    Unknown: 'rgb(239, 239, 239)',
-    Friend: 'rgb(239, 239, 239)',
-    Neutral: 'rgb(239, 239, 239)',
-    Hostile: 'rgb(239, 239, 239)'
+    Unknown: 'color:icon-white/unknown',
+    Friend: 'color:icon-white/friend',
+    Neutral: 'color:icon-white/neutral',
+    Hostile: 'color:icon-white/hostile'
   },
   iconColor: {
-    Unknown: 'black',
-    Friend: 'black',
-    Neutral: 'black',
-    Hostile: 'black',
+    Unknown: 'color:icon/unknown',
+    Friend: 'color:icon/friend',
+    Neutral: 'color:icon/neutral',
+    Hostile: 'color:icon/hostile'
   },
   iconFillColor: {
-    Unknown: 'rgb(239, 239, 239)',
-    Friend: 'rgb(239, 239, 239)',
-    Neutral: 'rgb(239, 239, 239)',
-    Hostile: 'rgb(239, 239, 239)'
+    Unknown: 'color:icon-fill/unknown',
+    Friend: 'color:icon-fill/friend',
+    Neutral: 'color:icon-fill/neutral',
+    Hostile: 'color:icon-fill/hostile'
   },
   fillColor: {
-    Unknown: 'rgb(255,255,0)'
+    Unknown: 'color:fill/unknown',
+    Friend: 'color:fill/friend',
+    Neutral: 'color:fill/neutral',
+    Hostile: 'color:fill/hostile'
   }
 }
 
@@ -74,15 +77,6 @@ const options = keys.reduce((acc, { standard, type, affiliation }) => {
   }
   return acc
 }, {})
-
-const SPACE = 0
-const AIR = 1
-const GROUND = 2
-const SEA = 3
-const SUBSURFACE = 4
-const TACTICAL_POINT = 5
-const SIGINT = 6
-const _2525B = 7
 
 const replaceKey = (instruction, from, to) => {
   if (!instruction[from]) return instruction
@@ -107,15 +101,15 @@ const removeKey = (instruction, key) => {
 }
 
 /*
-matrix    (sx 0 0 sy tx ty) 
-identity  ( 1 0 0 1  0  0 )
-translate ( 1 0 0 1  tx ty)
-scale     (sx 0 0 sy 0  0 )
-*/ 
+  matrix    (sx 0 0 sy tx ty)
+  identity  ( 1 0 0 1  0  0 )
+  translate ( 1 0 0 1  tx ty)
+  scale     (sx 0 0 sy 0  0 )
+*/
 
 const translate = (v, tx, ty) => [v[0], v[1], v[2], v[3], v[4] + tx, v[5] + ty]
 const scale = (v, f) => [v[0] * f, v[1], v[2], v[3] * f, v[4], v[5]]
-const flat = xs => Array.isArray(xs) ? xs.flat() : xs
+const flat = xs => Array.isArray(xs) ? xs.flat(2) : [xs]
 
 const transform = (instructions, v) => {
   const draw = instructions.draw
@@ -130,19 +124,19 @@ const transform = (instructions, v) => {
     default: return {
       type: 'g',
       transform: `matrix(${v.join(' ')})`,
-      children: flat(instructions) 
+      children: flat(instructions)
     }
   }
 }
 
 const sanitize = (instructions) => {
   if (Array.isArray(instructions)) {
-    return instructions.map(sanitize)
+    return instructions.map(sanitize).filter(Boolean)
   }
   else {
     if (instructions.type === 'translate') {
       return transform(instructions, [1, 0, 0, 1, 0, 0])
-    }
+    } else if (instructions === '') return null
 
     replaceKey(instructions, 'strokewidth', 'stroke-width')
     replaceKey(instructions, 'textanchor', 'text-anchor')
@@ -174,13 +168,10 @@ const icons = Object.values(options).reduce((acc, options) => {
   }, {})
 
   Object.entries(icons).forEach(([sidc, instructions]) => {
-    // console.log('sidc', sidc)
     acc[`${sidc}+${affiliation}`] = flat(sanitize(instructions))
-    // if (sidc === 'S-G-EWMAT-') console.log(acc[`${sidc}+${affiliation}`])
   })
 
   return acc
 }, {})
-
 
 console.log(JSON.stringify(icons, null, 2))
