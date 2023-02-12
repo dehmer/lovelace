@@ -99,13 +99,9 @@ const MODIFIERS = xprod(
 //   'OUVP------*****',      // ACTIVITY/EVENT
 // ]
 
-// problem: 878, 882, 883
-// problem: 955, 956, ...
-// problem: 1022
-// problem: 1283
-// problem: 1303 - ...
-// problem: 1544 - ...
-const checked = 1544
+// problem: 1283 (TODO: shape/friend)
+// problem: 1576 - ... (TODO: fill, stroke: descent children)
+const checked = 1422
 const dimensions = R.take(20, R.drop(checked, legacySIDC))
 
 console.log(dimensions)

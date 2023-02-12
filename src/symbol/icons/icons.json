@@ -16316,10 +16316,10 @@
   "S-U-WMGR--+UNKNOWN": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/unknown",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -16488,10 +16488,10 @@
   "S-U-WMMR--+UNKNOWN": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/unknown",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -16660,10 +16660,10 @@
   "S-U-WMFR--+UNKNOWN": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/unknown",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -16833,10 +16833,10 @@
   "S-U-WMR---+UNKNOWN": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/unknown",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -17100,10 +17100,10 @@
   "S-U-X-----+UNKNOWN": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "none",
       "stroke": "color:icon/hostile",
-      "d": "m 85,65 30,0 20,20 0,30 -20,20 -30,0 -20,-20 0,-30 z"
+      "d": "m 85,65 30,0 20,20 0,30 -20,20 -30,0 -20,-20 0,-30 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -18075,9 +18075,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "M 115,91.75 200,45 M 0,155 85,108.25",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,5"
     },
     {
       "type": "text",
@@ -18232,9 +18232,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,10",
       "d": "M 160,60 100,-5 M 40,60 100,-5",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "15,10"
     }
   ],
   "G-C-MMPT--+UNKNOWN": [
@@ -18386,9 +18386,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "5,5",
       "d": "m 100,70 0,-60",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -18423,9 +18423,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,15",
       "d": "m 40,65 0,70 120,0 0,-70 z",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "15,15"
     },
     {
       "type": "path",
@@ -18642,10 +18642,10 @@
   "G-C-BWI---+UNKNOWN": [
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "rgb(255,255,0)",
       "d": "m 85,25 0,75 30,0 0,-75 m -50,0 c 0,-50 70,-50 70,0 z",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "text",
@@ -18662,10 +18662,10 @@
   "G-C-BWF---+UNKNOWN": [
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "rgb(255,255,0)",
       "d": "m 85,25 0,75 30,0 0,-75 m -50,0 c 0,-50 70,-50 70,0 z",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "text",
@@ -19609,9 +19609,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "m 50,100 40,-10 10,-40 10,40 40,10 -40,10 -10,40 -10,-40 -40,-10",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,5"
     }
   ],
   "G-C-OXY---+UNKNOWN": [
@@ -20997,8 +20997,8 @@
       "type": "path",
       "stroke": "color:icon/unknown",
       "fill": "none",
-      "strokedasharray": "5,5",
-      "d": "m 73,67 60,60 m -66,-54 60,60"
+      "d": "m 73,67 60,60 m -66,-54 60,60",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -25368,10 +25368,10 @@
     },
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "none",
       "d": "m 156.547,100 c 0,16.382 -25.162,29.662 -56.202,29.662 -31.0395,0 -56.2019,-13.28 -56.2017,-29.662 0,-16.3818 25.1624,-29.6618 56.2017,-29.6618 31.039,-1e-4 56.202,13.28 56.202,29.6618 z",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "5,5"
     }
   ],
   "G-T-D-----+UNKNOWN": [
@@ -25422,9 +25422,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "M 115,91.75 200,45 M 0,155 85,108.25",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,5"
     },
     {
       "type": "text",
@@ -26200,9 +26200,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "m 50,100 40,-10 10,-40 10,40 40,10 -40,10 -10,40 -10,-40 -40,-10",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,5"
     }
   ],
   "G-G-GPF---+UNKNOWN": [
@@ -27329,9 +27329,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "circle",
@@ -27352,9 +27352,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -27373,9 +27373,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -27405,9 +27405,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -27437,9 +27437,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -27469,9 +27469,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "text",
@@ -27501,9 +27501,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -27613,9 +27613,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,10",
       "d": "M 160,60 100,-5 M 40,60 100,-5",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "15,10"
     }
   ],
   "G-G-DPT---+UNKNOWN": [
@@ -27777,9 +27777,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "5,5",
       "d": "m 100,70 0,-60",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -28864,10 +28864,10 @@
     },
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "none",
       "d": "m 156.547,100 c 0,16.382 -25.162,29.662 -56.202,29.662 -31.0395,0 -56.2019,-13.28 -56.2017,-29.662 0,-16.3818 25.1624,-29.6618 56.2017,-29.6618 31.039,-1e-4 56.202,13.28 56.202,29.6618 z",
-      "stroke": "color:icon/unknown"
+      "stroke": "color:icon/unknown",
+      "stroke-dasharray": "5,5"
     }
   ],
   "G-O-SM----+UNKNOWN": [
@@ -48131,10 +48131,10 @@
   "S-U-WMGR--+FRIEND": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/friend",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -48303,10 +48303,10 @@
   "S-U-WMMR--+FRIEND": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/friend",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -48475,10 +48475,10 @@
   "S-U-WMFR--+FRIEND": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/friend",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -48648,10 +48648,10 @@
   "S-U-WMR---+FRIEND": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/friend",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -48915,10 +48915,10 @@
   "S-U-X-----+FRIEND": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "none",
       "stroke": "color:icon/hostile",
-      "d": "m 85,65 30,0 20,20 0,30 -20,20 -30,0 -20,-20 0,-30 z"
+      "d": "m 85,65 30,0 20,20 0,30 -20,20 -30,0 -20,-20 0,-30 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -49890,9 +49890,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "M 115,91.75 200,45 M 0,155 85,108.25",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,5"
     },
     {
       "type": "text",
@@ -50047,9 +50047,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,10",
       "d": "M 160,60 100,-5 M 40,60 100,-5",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "15,10"
     }
   ],
   "G-C-MMPT--+FRIEND": [
@@ -50201,9 +50201,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "5,5",
       "d": "m 100,70 0,-60",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -50238,9 +50238,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,15",
       "d": "m 40,65 0,70 120,0 0,-70 z",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "15,15"
     },
     {
       "type": "path",
@@ -50457,10 +50457,10 @@
   "G-C-BWI---+FRIEND": [
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "rgb(255,255,0)",
       "d": "m 85,25 0,75 30,0 0,-75 m -50,0 c 0,-50 70,-50 70,0 z",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "text",
@@ -50477,10 +50477,10 @@
   "G-C-BWF---+FRIEND": [
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "rgb(255,255,0)",
       "d": "m 85,25 0,75 30,0 0,-75 m -50,0 c 0,-50 70,-50 70,0 z",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "text",
@@ -51424,9 +51424,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "m 50,100 40,-10 10,-40 10,40 40,10 -40,10 -10,40 -10,-40 -40,-10",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,5"
     }
   ],
   "G-C-OXY---+FRIEND": [
@@ -52812,8 +52812,8 @@
       "type": "path",
       "stroke": "color:icon/friend",
       "fill": "none",
-      "strokedasharray": "5,5",
-      "d": "m 73,67 60,60 m -66,-54 60,60"
+      "d": "m 73,67 60,60 m -66,-54 60,60",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -57183,10 +57183,10 @@
     },
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "none",
       "d": "m 156.547,100 c 0,16.382 -25.162,29.662 -56.202,29.662 -31.0395,0 -56.2019,-13.28 -56.2017,-29.662 0,-16.3818 25.1624,-29.6618 56.2017,-29.6618 31.039,-1e-4 56.202,13.28 56.202,29.6618 z",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "5,5"
     }
   ],
   "G-T-D-----+FRIEND": [
@@ -57237,9 +57237,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "M 115,91.75 200,45 M 0,155 85,108.25",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,5"
     },
     {
       "type": "text",
@@ -58015,9 +58015,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "m 50,100 40,-10 10,-40 10,40 40,10 -40,10 -10,40 -10,-40 -40,-10",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,5"
     }
   ],
   "G-G-GPF---+FRIEND": [
@@ -59144,9 +59144,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "circle",
@@ -59167,9 +59167,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -59188,9 +59188,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -59220,9 +59220,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -59252,9 +59252,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -59284,9 +59284,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "text",
@@ -59316,9 +59316,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -59428,9 +59428,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,10",
       "d": "M 160,60 100,-5 M 40,60 100,-5",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "15,10"
     }
   ],
   "G-G-DPT---+FRIEND": [
@@ -59592,9 +59592,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "5,5",
       "d": "m 100,70 0,-60",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -60679,10 +60679,10 @@
     },
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "none",
       "d": "m 156.547,100 c 0,16.382 -25.162,29.662 -56.202,29.662 -31.0395,0 -56.2019,-13.28 -56.2017,-29.662 0,-16.3818 25.1624,-29.6618 56.2017,-29.6618 31.039,-1e-4 56.202,13.28 56.202,29.6618 z",
-      "stroke": "color:icon/friend"
+      "stroke": "color:icon/friend",
+      "stroke-dasharray": "5,5"
     }
   ],
   "G-O-SM----+FRIEND": [
@@ -79946,10 +79946,10 @@
   "S-U-WMGR--+NEUTRAL": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/neutral",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -80118,10 +80118,10 @@
   "S-U-WMMR--+NEUTRAL": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/neutral",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -80290,10 +80290,10 @@
   "S-U-WMFR--+NEUTRAL": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/neutral",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -80463,10 +80463,10 @@
   "S-U-WMR---+NEUTRAL": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/neutral",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -80730,10 +80730,10 @@
   "S-U-X-----+NEUTRAL": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "none",
       "stroke": "color:icon/hostile",
-      "d": "m 85,65 30,0 20,20 0,30 -20,20 -30,0 -20,-20 0,-30 z"
+      "d": "m 85,65 30,0 20,20 0,30 -20,20 -30,0 -20,-20 0,-30 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -81705,9 +81705,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "M 115,91.75 200,45 M 0,155 85,108.25",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,5"
     },
     {
       "type": "text",
@@ -81862,9 +81862,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,10",
       "d": "M 160,60 100,-5 M 40,60 100,-5",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "15,10"
     }
   ],
   "G-C-MMPT--+NEUTRAL": [
@@ -82016,9 +82016,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "5,5",
       "d": "m 100,70 0,-60",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -82053,9 +82053,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,15",
       "d": "m 40,65 0,70 120,0 0,-70 z",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "15,15"
     },
     {
       "type": "path",
@@ -82272,10 +82272,10 @@
   "G-C-BWI---+NEUTRAL": [
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "rgb(255,255,0)",
       "d": "m 85,25 0,75 30,0 0,-75 m -50,0 c 0,-50 70,-50 70,0 z",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "text",
@@ -82292,10 +82292,10 @@
   "G-C-BWF---+NEUTRAL": [
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "rgb(255,255,0)",
       "d": "m 85,25 0,75 30,0 0,-75 m -50,0 c 0,-50 70,-50 70,0 z",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "text",
@@ -83239,9 +83239,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "m 50,100 40,-10 10,-40 10,40 40,10 -40,10 -10,40 -10,-40 -40,-10",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,5"
     }
   ],
   "G-C-OXY---+NEUTRAL": [
@@ -84627,8 +84627,8 @@
       "type": "path",
       "stroke": "color:icon/neutral",
       "fill": "none",
-      "strokedasharray": "5,5",
-      "d": "m 73,67 60,60 m -66,-54 60,60"
+      "d": "m 73,67 60,60 m -66,-54 60,60",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -88998,10 +88998,10 @@
     },
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "none",
       "d": "m 156.547,100 c 0,16.382 -25.162,29.662 -56.202,29.662 -31.0395,0 -56.2019,-13.28 -56.2017,-29.662 0,-16.3818 25.1624,-29.6618 56.2017,-29.6618 31.039,-1e-4 56.202,13.28 56.202,29.6618 z",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "5,5"
     }
   ],
   "G-T-D-----+NEUTRAL": [
@@ -89052,9 +89052,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "M 115,91.75 200,45 M 0,155 85,108.25",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,5"
     },
     {
       "type": "text",
@@ -89830,9 +89830,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "m 50,100 40,-10 10,-40 10,40 40,10 -40,10 -10,40 -10,-40 -40,-10",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,5"
     }
   ],
   "G-G-GPF---+NEUTRAL": [
@@ -90959,9 +90959,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "circle",
@@ -90982,9 +90982,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -91003,9 +91003,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -91035,9 +91035,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -91067,9 +91067,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -91099,9 +91099,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "text",
@@ -91131,9 +91131,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -91243,9 +91243,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,10",
       "d": "M 160,60 100,-5 M 40,60 100,-5",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "15,10"
     }
   ],
   "G-G-DPT---+NEUTRAL": [
@@ -91407,9 +91407,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "5,5",
       "d": "m 100,70 0,-60",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -92494,10 +92494,10 @@
     },
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "none",
       "d": "m 156.547,100 c 0,16.382 -25.162,29.662 -56.202,29.662 -31.0395,0 -56.2019,-13.28 -56.2017,-29.662 0,-16.3818 25.1624,-29.6618 56.2017,-29.6618 31.039,-1e-4 56.202,13.28 56.202,29.6618 z",
-      "stroke": "color:icon/neutral"
+      "stroke": "color:icon/neutral",
+      "stroke-dasharray": "5,5"
     }
   ],
   "G-O-SM----+NEUTRAL": [
@@ -111761,10 +111761,10 @@
   "S-U-WMGR--+HOSTILE": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/hostile",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -111933,10 +111933,10 @@
   "S-U-WMMR--+HOSTILE": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/hostile",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -112105,10 +112105,10 @@
   "S-U-WMFR--+HOSTILE": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/hostile",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -112278,10 +112278,10 @@
   "S-U-WMR---+HOSTILE": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "rgb(255,255,0)",
       "stroke": "color:icon-black/hostile",
-      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z"
+      "d": "m 113.8,127.6 -27.6,0 -13.8,-13.8 0,-27.6 13.8,-13.8 27.6,0 13.8,13.8 0,27.6 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -112545,10 +112545,10 @@
   "S-U-X-----+HOSTILE": [
     {
       "type": "path",
-      "strokedasharray": "8,4",
       "fill": "none",
       "stroke": "color:icon/hostile",
-      "d": "m 85,65 30,0 20,20 0,30 -20,20 -30,0 -20,-20 0,-30 z"
+      "d": "m 85,65 30,0 20,20 0,30 -20,20 -30,0 -20,-20 0,-30 z",
+      "stroke-dasharray": "8,4"
     },
     {
       "type": "text",
@@ -113520,9 +113520,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "M 115,91.75 200,45 M 0,155 85,108.25",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,5"
     },
     {
       "type": "text",
@@ -113677,9 +113677,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,10",
       "d": "M 160,60 100,-5 M 40,60 100,-5",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "15,10"
     }
   ],
   "G-C-MMPT--+HOSTILE": [
@@ -113831,9 +113831,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "5,5",
       "d": "m 100,70 0,-60",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -113868,9 +113868,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,15",
       "d": "m 40,65 0,70 120,0 0,-70 z",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "15,15"
     },
     {
       "type": "path",
@@ -114087,10 +114087,10 @@
   "G-C-BWI---+HOSTILE": [
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "rgb(255,255,0)",
       "d": "m 85,25 0,75 30,0 0,-75 m -50,0 c 0,-50 70,-50 70,0 z",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "text",
@@ -114107,10 +114107,10 @@
   "G-C-BWF---+HOSTILE": [
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "rgb(255,255,0)",
       "d": "m 85,25 0,75 30,0 0,-75 m -50,0 c 0,-50 70,-50 70,0 z",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "text",
@@ -115054,9 +115054,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "m 50,100 40,-10 10,-40 10,40 40,10 -40,10 -10,40 -10,-40 -40,-10",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,5"
     }
   ],
   "G-C-OXY---+HOSTILE": [
@@ -116442,8 +116442,8 @@
       "type": "path",
       "stroke": "color:icon/hostile",
       "fill": "none",
-      "strokedasharray": "5,5",
-      "d": "m 73,67 60,60 m -66,-54 60,60"
+      "d": "m 73,67 60,60 m -66,-54 60,60",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -120813,10 +120813,10 @@
     },
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "none",
       "d": "m 156.547,100 c 0,16.382 -25.162,29.662 -56.202,29.662 -31.0395,0 -56.2019,-13.28 -56.2017,-29.662 0,-16.3818 25.1624,-29.6618 56.2017,-29.6618 31.039,-1e-4 56.202,13.28 56.202,29.6618 z",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "5,5"
     }
   ],
   "G-T-D-----+HOSTILE": [
@@ -120867,9 +120867,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "M 115,91.75 200,45 M 0,155 85,108.25",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,5"
     },
     {
       "type": "text",
@@ -121645,9 +121645,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,5",
       "d": "m 50,100 40,-10 10,-40 10,40 40,10 -40,10 -10,40 -10,-40 -40,-10",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,5"
     }
   ],
   "G-G-GPF---+HOSTILE": [
@@ -122774,9 +122774,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "circle",
@@ -122797,9 +122797,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -122818,9 +122818,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -122850,9 +122850,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -122882,9 +122882,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -122914,9 +122914,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "text",
@@ -122946,9 +122946,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "12,4",
       "d": "m 30,60 140,0",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "12,4"
     },
     {
       "type": "path",
@@ -123058,9 +123058,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "15,10",
       "d": "M 160,60 100,-5 M 40,60 100,-5",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "15,10"
     }
   ],
   "G-G-DPT---+HOSTILE": [
@@ -123222,9 +123222,9 @@
     {
       "type": "path",
       "fill": "none",
-      "strokedasharray": "5,5",
       "d": "m 100,70 0,-60",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "5,5"
     },
     {
       "type": "path",
@@ -124309,10 +124309,10 @@
     },
     {
       "type": "path",
-      "strokedasharray": "5,5",
       "fill": "none",
       "d": "m 156.547,100 c 0,16.382 -25.162,29.662 -56.202,29.662 -31.0395,0 -56.2019,-13.28 -56.2017,-29.662 0,-16.3818 25.1624,-29.6618 56.2017,-29.6618 31.039,-1e-4 56.202,13.28 56.202,29.6618 z",
-      "stroke": "rgb(255, 0, 0)"
+      "stroke": "rgb(255, 0, 0)",
+      "stroke-dasharray": "5,5"
     }
   ],
   "G-O-SM----+HOSTILE": [

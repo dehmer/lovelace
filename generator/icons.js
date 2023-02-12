@@ -143,6 +143,7 @@ const sanitize = (instructions) => {
     replaceKey(instructions, 'fontfamily', 'font-family')
     replaceKey(instructions, 'fontweight', 'font-weight')
     replaceKey(instructions, 'fontsize', 'font-size')
+    replaceKey(instructions, 'strokedasharray', 'stroke-dasharray')
     replaceValue(instructions, 'stroke', false, 'none')
     replaceValue(instructions, 'fill', false, 'none')
     removeValue(instructions, 'font-family', 'Arial')

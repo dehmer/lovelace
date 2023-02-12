@@ -99,13 +99,18 @@ const DIMENSION = [
 
 const FRAMELESS = [
   /^S...(O-----|ED----|EP----|EV----|ZM----|ZN----|ZI----)/,
+  /^E.N.(AA----|AB----|AC----|AD----|AE----|AG----|BB----|BC----|BF----|BM----|CA----|CB----|CC----|CD----|CE----)/,
+  /^W.S.(WSVE--|WSD-LI|WSFGSO|WSGRL-|WSR-LI|WSDSLM|WSS-LI|WSTMH-|WST-FC|WSTSS-)/,
+  /^..U.(ND----|NBS---|NBR---|NBW---|NM----|NA----)/,
+  /^G.O.(SBWD--)/,
+  /^G.G.(GP|APP|APC|APU|APD|PN|DPT|DPO|OPP)/
 ]
 
 // With unfilled frames.
 const UNFILLED = [
   /^..U.(WM----|WMD---|WMG---|WMGD--|WMGX--|WMGE--|WMGC--|WMGR--|WMGO--|WMM---|WMMD--|WMMX--|WMME--|WMMC--|WMMR--|WMMO--|WMF---)/,
   /^..U.(WMFD--|WMFX--|WMFE--|WMFC--|WMFR--|WMFO--|WMO---|WMOD--|WMX---|WME---|WMA---|WMC---|WMR---|WMB---|WMBD--|WMN---|WMS---)/,
-  /^..U.(WMSX--|WMSD--|WD----|WDM---|WDMG--|WDMM--|ND----|E-----|V-----|X-----|NBS---|NBR---|NBW---|NM----|NA----)/
+  /^..U.(WMSX--|WMSD--|WD----|WDM---|WDMG--|WDMM--|E-----|V-----|X-----)/
 ]
 
 const CIVILIAN = [/^..A.C/, /^..G.EVC/, /^..S.X/]

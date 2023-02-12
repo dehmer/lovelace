@@ -35,6 +35,7 @@ const sId = {
 
 const icon = (key, styles) => {
   const instructions = (icons[key] || []).map(instruction => {
+    // TODO: descent children
     const { stroke, fill, ...rest } = instruction
     // console.log('stroke', stroke, 'fill', fill)
     return {
