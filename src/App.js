@@ -43,7 +43,7 @@ const legacy = options => {
   return new ms.Symbol(sidc, {
     ...common,
     ...rest,
-    // ...modifiers,
+    ...modifiers,
     standard
   })
 }
@@ -99,19 +99,15 @@ const MODIFIERS = xprod(
 //   'OUVP------*****',      // ACTIVITY/EVENT
 // ]
 
-// problem: 1283 (TODO: shape/friend)
-// problem: 1576 - ... (TODO: fill, stroke: descent children)
-const checked = 1576
-const dimensions = R.take(20, R.drop(checked, legacySIDC))
-
-console.log(dimensions)
+const checked = 1200
+const dimensions = R.take(10, R.drop(checked, legacySIDC))
 
 const codes = [
   // ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => SIDC.format(options, code)),
-  ...xprod(dimensions, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
+  // ...xprod(dimensions, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, CONTEXT).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(xprod(CONTEXT, IDENTITY).map(assign), dimensions).map(([options, code]) => SIDC.format(options, code)),
-  // ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
+  ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => SIDC.format(options, code)),
 ]
@@ -119,7 +115,6 @@ const codes = [
 
 const Symbols = () => codes.map((sidc, index) => {
   const pair = [legacy({ sidc }), modern({ sidc })]
-  // console.log(pair[0].asSVG())
   return (
     <div className='pair' key={index} >
       <img width={120} src={'data:image/svg+xml;utf8,' + pair[0].asSVG()} className="symbol"/>

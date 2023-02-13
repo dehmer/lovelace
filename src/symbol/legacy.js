@@ -84,7 +84,7 @@ const AFFILIATION = {
 
 const DIMENSION = [
   [/^[^O].P/, 'SPACE'],
-  [/^..[AP]/, 'AIR'],
+  [/^[^O].[AP]/, 'AIR'],
   [/^O.[VOR]/, 'ACTIVITY'], // precedence over SO
   [/^O/, 'UNIT'], // SO => GROUND/UNIT
   [/^S.G.E/, 'EQUIPMENT'],

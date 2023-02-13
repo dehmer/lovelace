@@ -175,4 +175,4 @@ const icons = Object.values(options).reduce((acc, options) => {
   return acc
 }, {})
 
-console.log(JSON.stringify(icons, null, 2))
+console.log(JSON.stringify(icons))
