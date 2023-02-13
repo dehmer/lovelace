@@ -101,7 +101,7 @@ const MODIFIERS = xprod(
 
 // problem: 1283 (TODO: shape/friend)
 // problem: 1576 - ... (TODO: fill, stroke: descent children)
-const checked = 1422
+const checked = 1576
 const dimensions = R.take(20, R.drop(checked, legacySIDC))
 
 console.log(dimensions)

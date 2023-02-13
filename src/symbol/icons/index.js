@@ -33,19 +33,25 @@ const sId = {
 //   }
 // }
 
+
 const icon = (key, styles) => {
-  const instructions = (icons[key] || []).map(instruction => {
-    // TODO: descent children
+
+  const resolve = instruction => {
     const { stroke, fill, ...rest } = instruction
-    // console.log('stroke', stroke, 'fill', fill)
     return {
       stroke: styles[stroke] || stroke,
       fill: styles[fill] || fill,
       ...rest
     }
+  }
+  
+  return (icons[key] || []).map(instruction => {
+    // TODO: descent children
+    const { children, ...rest } = instruction
+    return children 
+      ? { children: children.map(resolve), ...rest }
+      : { ...resolve(rest) }
   })
-
-  return instructions
 }
 
 export default ({ generic, affiliation, styles }) => {
