@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 require('@babel/register')
 const R = require('ramda')
-const ms = require('milsymbol/dist/milsymbol.development')
+const ms = require('milsymbol')
 
 const frameBoxes = {
   'Unknown': { x1: 30.75, y1: 30.75, x2: 169.25, y2: 169.25 },

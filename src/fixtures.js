@@ -1,10 +1,9 @@
-import * as R from 'ramda'
 import ms from 'milsymbol'
 import SIDC from './symbol/sidc'
 import { Symbol } from './symbol'
 import { aliases } from './symbol/fields'
 import * as Numeric from './symbol/modern'
-import legacySIDC from './sidc-legacy.json'
+import legacySIDC from './sidc-2525c.json'
 
 const engagement = false
 
@@ -54,10 +53,10 @@ const ECHELON = Object.keys(Numeric.ECHELON).map(echelon => ({ echelon }))
 
 const IDENTITY = [
   // { identity: 'PENDING' },
-  { identity: 'UNKNOWN' },
+  // { identity: 'UNKNOWN' },
   { identity: 'FRIEND' },
-  { identity: 'NEUTRAL' },
-  { identity: 'HOSTILE' },
+  // { identity: 'NEUTRAL' },
+  // { identity: 'HOSTILE' },
   // { identity: 'ASSUMED_FRIEND' },
   // { identity: 'SUSPECT' },
   // { identity: 'JOKER' },
@@ -96,15 +95,12 @@ const MODIFIERS = xprod(
 //   'OUVP------*****',      // ACTIVITY/EVENT
 // ]
 
-const checked = 1200
-const dimensions = R.take(10, R.drop(checked, legacySIDC))
-
 export const codes = [
   // ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => SIDC.format(options, code)),
-  // ...xprod(dimensions, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
+  ...xprod(legacySIDC, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, CONTEXT).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(xprod(CONTEXT, IDENTITY).map(assign), dimensions).map(([options, code]) => SIDC.format(options, code)),
-  ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
+  // ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => SIDC.format(options, code)),
 ]
