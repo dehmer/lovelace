@@ -97,13 +97,14 @@ const DIMENSION = [
   [/^G/, 'CONTROL'] // control measures aka tactical graphics
 ]
 
+// G.F.PCS---*****
+
 const FRAMELESS = [
   /^S...(O-----|ED----|EP----|EV----|ZM----|ZN----|ZI----)/,
   /^E.N.(AA----|AB----|AC----|AD----|AE----|AG----|BB----|BC----|BF----|BM----|CA----|CB----|CC----|CD----|CE----)/,
   /^W.S.(WSVE--|WSD-LI|WSFGSO|WSGRL-|WSR-LI|WSDSLM|WSS-LI|WSTMH-|WST-FC|WSTSS-)/,
   /^..U.(ND----|NBS---|NBR---|NBW---|NM----|NA----)/,
-  /^G.O.(SBWD--)/,
-  /^G.G.(GP|APP|APC|APU|APD|PN|DPT|DPO|OPP)/
+  /^G/,
 ]
 
 // With unfilled frames.
