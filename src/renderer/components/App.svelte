@@ -5,15 +5,14 @@
   import { codes, legacy, modern } from '../../fixtures'
 
   const ignore = [
-    // 'GFMPNEC---*****',
-    'GFCPSPQG--*****'
+    'GFMPOFS---*****',
   ]
 
-  // const options = codes.map(sidc => ({ sidc }))
-  // const options = R.drop(572, codes.map(sidc => ({ sidc })))
+  const options = codes.map(sidc => ({ sidc }))
+  // const options = R.take(1, codes.map(sidc => ({ sidc })))
   // const options = codes.filter(s => s.match(/^G.O/)).map(sidc => ({ sidc }))
   // const options = codes.filter(sidc => !ignore.includes(sidc)).map(sidc => ({ sidc }))
-  const options = codes.filter(sidc => ignore.includes(sidc)).map(sidc => ({ sidc }))
+  // const options = codes.filter(sidc => ignore.includes(sidc)).map(sidc => ({ sidc }))
 
   let state = { index: -1, worst: 1000, threshold: 5000 }
   let imageLegacy
@@ -153,8 +152,8 @@
   </div>
 
   <div class='row'>
-    <canvas bind:this={canvasLegacy} hidden/>
-    <canvas bind:this={canvasModern} hidden/>
+    <canvas bind:this={canvasLegacy}/>
+    <canvas bind:this={canvasModern}/>
   </div>
   <span>{state.index} {state.difference}</span>
 </main>

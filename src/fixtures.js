@@ -1,9 +1,10 @@
 import ms from 'milsymbol'
 import SIDC from './symbol/sidc'
 import { Symbol } from './symbol'
-import { aliases } from './symbol/fields'
+import { aliases } from './symbol/aliases'
 import * as Numeric from './symbol/modern'
-import legacySIDC from './sidc-2525c.json'
+import sidc2525c from './sidc-2525c.json'
+import sidcControl from './sidc-control.json'
 
 const engagement = false
 
@@ -15,7 +16,7 @@ const common = {
   strokeWidth: 4, /* default 4 */
   strokeColor: 'black',
   fill: true,
-  infoFields: false
+  infoFields: true
 }
 
 export const modern = options => {
@@ -97,10 +98,11 @@ const MODIFIERS = xprod(
 
 export const codes = [
   // ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => SIDC.format(options, code)),
-  ...xprod(legacySIDC, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
+  // ...xprod(sidc2525c, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, CONTEXT).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(xprod(CONTEXT, IDENTITY).map(assign), dimensions).map(([options, code]) => SIDC.format(options, code)),
   // ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => SIDC.format(options, code)),
+  ...xprod(sidcControl, xprod(IDENTITY, [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => SIDC.format(options, code))
 ]
