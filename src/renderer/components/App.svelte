@@ -5,20 +5,17 @@
   import { codes, legacy, modern } from '../../fixtures'
 
   const ignore = [
-    'SFGPUH----*****', // 16260
-    'SFGPEV----*****', // 10713
-    'SFUPWD----*****', // 9136
-    'GFCPBOAIS-*****', // 3486
-    'GFCPBWN---*****', // 5037
-    'GFFPPCS---*****', // 19627
+    // 'GFMPNEC---*****',
+    'GFCPSPQG--*****'
   ]
 
-  // const options = R.take(500, codes.map(sidc => ({ sidc })))
   // const options = codes.map(sidc => ({ sidc }))
+  // const options = R.drop(572, codes.map(sidc => ({ sidc })))
+  // const options = codes.filter(s => s.match(/^G.O/)).map(sidc => ({ sidc }))
   // const options = codes.filter(sidc => !ignore.includes(sidc)).map(sidc => ({ sidc }))
   const options = codes.filter(sidc => ignore.includes(sidc)).map(sidc => ({ sidc }))
 
-  let state = { index: -1, worst: 1000 }
+  let state = { index: -1, worst: 1000, threshold: 5000 }
   let imageLegacy
   let imageModern
   let canvasLegacy
@@ -72,6 +69,7 @@
       setSource(imageModern, canvasModern, 'data:image/svg+xml;utf8,' + modern(options[index]).asSVG())
     } else {
       console.timeEnd('compare')
+      console.log('suspicions', (state.suspicions || []).sort((a, b) => b[0] - a[0]))
       return { index: 'EOF', difference: '' }
     }
   }
@@ -118,9 +116,16 @@
       const difference = pixelmatch(img1.data, img2.data, null, width, height, { threshold: 0.1 })
       state = { ...state, difference }
 
-      if (difference > state.worst) {
+      // if (difference > state.worst) {
+      //   console.log('ups', difference, state.index, options[state.index])
+      //   state = { ...state, worst: difference }
+      // }
+
+      if (difference > state.threshold) {
+        const sidc = options[state.index].sidc
         console.log('ups', difference, state.index, options[state.index])
-        state = { ...state, worst: difference }
+        const suspicions = [...state.suspicions || [], [difference, sidc]]
+        state = { ...state, suspicions }
       }
 
       next()

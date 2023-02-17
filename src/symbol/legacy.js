@@ -91,27 +91,30 @@ const DIMENSION = [
   [/^.FS/, 'EQUIPMENT'],
   [/^I.G/, 'EQUIPMENT'], // SIGINT
   [/^E.O.(AB|AE|AF|BB|CB|CC|DB|D.B|E.)/, 'EQUIPMENT'], // EMS EQUIPMENT
+  [/^E.F.(BA|MA|MC)/, 'EQUIPMENT'],
   [/^E/, 'UNIT'], // EMS tactical symbols
   [/^..[EFGOSXZ]/, 'UNIT'], // incl. SOF, EMS
   [/^..U/, 'SUBSURFACE' ],
   [/^G/, 'CONTROL'] // control measures aka tactical graphics
 ]
 
-// G.F.PCS---*****
+// G.O.SBW---*****
 
 const FRAMELESS = [
-  /^S...(O-----|ED----|EP----|EV----|ZM----|ZN----|ZI----)/,
+  /^..S.(O-----|ED----|EP----|EV----|ZM----|ZN----|ZI----)/,
   /^E.N.(AA----|AB----|AC----|AD----|AE----|AG----|BB----|BC----|BF----|BM----|CA----|CB----|CC----|CD----|CE----)/,
   /^W.S.(WSVE--|WSD-LI|WSFGSO|WSGRL-|WSR-LI|WSDSLM|WSS-LI|WSTMH-|WST-FC|WSTSS-)/,
   /^..U.(ND----|NBS---|NBR---|NBW---|NM----|NA----)/,
-  /^G/,
+  /^G.(?!O.[VLPI])/,
 ]
+
+// SFUPWD----*****
 
 // With unfilled frames.
 const UNFILLED = [
   /^..U.(WM----|WMD---|WMG---|WMGD--|WMGX--|WMGE--|WMGC--|WMGR--|WMGO--|WMM---|WMMD--|WMMX--|WMME--|WMMC--|WMMR--|WMMO--|WMF---)/,
   /^..U.(WMFD--|WMFX--|WMFE--|WMFC--|WMFR--|WMFO--|WMO---|WMOD--|WMX---|WME---|WMA---|WMC---|WMR---|WMB---|WMBD--|WMN---|WMS---)/,
-  /^..U.(WMSX--|WMSD--|WD----|WDM---|WDMG--|WDMM--|E-----|V-----|X-----)/
+  /^..U.(WMSX--|WMSD--|WDM---|WDMG--|WDMM--|E-----|V-----|X-----)/
 ]
 
 const CIVILIAN = [/^..A.C/, /^..G.EVC/, /^..S.X/]
