@@ -1,4 +1,5 @@
 import icons from './icons.json'
+import previews from './previews.json'
 import * as BBox from './bbox'
 
 const boxes = Object.entries(icons).reduce((acc, [key, icon]) => {
@@ -25,6 +26,12 @@ const icon = (key, styles) =>
   })
 
 export default ({ generic, affiliation, styles }) => {
+
+  // Check tactical graphocs previews first:
+  if (previews[generic]) {
+    return () => [[0, 0, 200, 200], previews[generic]]
+  }
+
   const key = `${generic}+${affiliation}`
   return box => {
     return [boxes[key] || box, icon(key, styles)]

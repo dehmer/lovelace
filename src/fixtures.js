@@ -5,6 +5,7 @@ import { aliases } from './symbol/aliases'
 import * as Numeric from './symbol/modern'
 import sidc2525c from './sidc-2525c.json'
 import sidcControl from './sidc-control.json'
+import sidcPreview from './sidc-preview.json'
 
 const engagement = false
 
@@ -16,7 +17,7 @@ const common = {
   strokeWidth: 4, /* default 4 */
   strokeColor: 'black',
   fill: true,
-  infoFields: true
+  infoFields: false
 }
 
 export const modern = options => {
@@ -40,7 +41,7 @@ export const legacy = options => {
   return new ms.Symbol(sidc, {
     ...common,
     ...rest,
-    ...modifiers,
+    // ...modifiers,
     standard
   })
 }
@@ -104,5 +105,6 @@ export const codes = [
   // ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => SIDC.format(options, code)),
-  ...xprod(sidcControl, xprod(IDENTITY, [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => SIDC.format(options, code))
+  ...xprod(sidcControl, xprod(IDENTITY, [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => SIDC.format(options, code)),
+  // ...xprod(sidcTacgfx, xprod([{ identity: 'FRIEND' }], [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => SIDC.format(options, code)),
 ]

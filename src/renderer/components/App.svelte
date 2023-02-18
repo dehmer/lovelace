@@ -5,7 +5,7 @@
   import { codes, legacy, modern } from '../../fixtures'
 
   const ignore = [
-    'GFMPOFS---*****',
+    'GFMPOHTL--',
   ]
 
   const options = codes.map(sidc => ({ sidc }))
@@ -14,7 +14,7 @@
   // const options = codes.filter(sidc => !ignore.includes(sidc)).map(sidc => ({ sidc }))
   // const options = codes.filter(sidc => ignore.includes(sidc)).map(sidc => ({ sidc }))
 
-  let state = { index: -1, worst: 1000, threshold: 5000 }
+  let state = { index: -1, worst: 1000, threshold: 200 }
   let imageLegacy
   let imageModern
   let canvasLegacy
