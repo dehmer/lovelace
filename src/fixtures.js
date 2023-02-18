@@ -1,11 +1,10 @@
 import ms from 'milsymbol'
-import SIDC from './symbol/sidc'
-import { Symbol } from './symbol'
-import { aliases } from './symbol/aliases'
-import * as Numeric from './symbol/modern'
+import { Symbol, SIDC, aliases } from '@syncpoint/signs'
 import sidc2525c from './sidc-2525c.json'
 import sidcControl from './sidc-control.json'
 import sidcPreview from './sidc-preview.json'
+
+console.log('SIDC', SIDC)
 
 const engagement = false
 
@@ -51,7 +50,11 @@ const xprod = (...xss) =>
   xss.reduce((acc, xs) => acc.flatMap(a => xs.map(x => [...a, x])), [[]])
 
 const CONTEXT = [{}, { exercise: true }, { simulation: true }]
-const ECHELON = Object.keys(Numeric.ECHELON).map(echelon => ({ echelon }))
+const ECHELON = [
+  'TEAM', 'SQUAD', 'SECTION', 'PLATOON', 'COMPANY',
+  'BATTALION', 'REGIMENT', 'BRIGADE', 'DIVISION',
+  'CORPS', 'ARMY', 'ARMY_GROUP', 'REGION', 'COMMAND'
+].map(echelon => ({ echelon }))
 
 const IDENTITY = [
   // { identity: 'PENDING' },
@@ -65,7 +68,12 @@ const IDENTITY = [
   // { identity: 'FAKER' }
 ]
 
-const MOBILITY = Object.keys(Numeric.MOBILITY).map(mobility => ({ mobility }))
+const MOBILITY = [
+  'WHEELED_LIMITED', 'WHEELED', 'TRACKED', 'HALF_TRACK',
+  'TOWED', 'RAIL', 'PACK_ANIMALS', 'OVER_SNOW', 'SLED',
+  'BARGE', 'AMPHIBIOUS', 'TOWED_ARRAY_SHORT', 'TOWED_ARRAY_LONG'
+].map(mobility => ({ mobility }))
+
 const HEADQUARTERS = [{ headquarters: true }]
 const MODIFIERS = xprod(
   [{ headquarters: false }, { headquarters: true }],
