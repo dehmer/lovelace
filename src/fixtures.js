@@ -58,10 +58,10 @@ const ECHELON = [
 
 const IDENTITY = [
   // { identity: 'PENDING' },
-  // { identity: 'UNKNOWN' },
+  { identity: 'UNKNOWN' },
   { identity: 'FRIEND' },
-  // { identity: 'NEUTRAL' },
-  // { identity: 'HOSTILE' },
+  { identity: 'NEUTRAL' },
+  { identity: 'HOSTILE' },
   // { identity: 'ASSUMED_FRIEND' },
   // { identity: 'SUSPECT' },
   // { identity: 'JOKER' },
@@ -107,12 +107,12 @@ const MODIFIERS = xprod(
 
 export const codes = [
   // ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => SIDC.format(options, code)),
-  // ...xprod(sidc2525c, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
+  ...xprod(sidc2525c, IDENTITY).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, CONTEXT).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(xprod(CONTEXT, IDENTITY).map(assign), dimensions).map(([options, code]) => SIDC.format(options, code)),
   // ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => SIDC.format(options, code)),
-  ...xprod(sidcControl, xprod(IDENTITY, [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => SIDC.format(options, code)),
+  // ...xprod(sidcControl, xprod(IDENTITY, [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => SIDC.format(options, code)),
   // ...xprod(sidcTacgfx, xprod([{ identity: 'FRIEND' }], [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => SIDC.format(options, code)),
 ]

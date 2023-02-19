@@ -8,33 +8,34 @@
     'GFMPOHTL--',
   ]
 
-  const options = codes.map(sidc => ({ sidc }))
-  // const options = R.take(1, codes.map(sidc => ({ sidc })))
+  // const options = codes.map(sidc => ({ sidc }))
+  const options = R.take(100, codes.map(sidc => ({ sidc })))
   // const options = codes.filter(s => s.match(/^G.O/)).map(sidc => ({ sidc }))
   // const options = codes.filter(sidc => !ignore.includes(sidc)).map(sidc => ({ sidc }))
   // const options = codes.filter(sidc => ignore.includes(sidc)).map(sidc => ({ sidc }))
 
-  let state = { index: -1, worst: 1000, threshold: 200 }
+  let state = { index: -1, worst: 1000, threshold: 0 }
   let imageLegacy
   let imageModern
   let canvasLegacy
   let canvasModern
 
-  const trim = (width, height, data, threshold = 0) => {
+  onMount(() => {
+    console.time('compare')
+    next()
+  })
+
+  const trim = (width, height, data) => {
+    let x, y
+    const xs = data.data
     const box = { x1: width + 1, y1: height + 1, x2: -1, y2: -1 }
-
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        if (data.data[((y * width + x) * 4) + 3] <= threshold) continue
-        box.x1 = Math.min(x - 1, box.x1)
-        box.y1 = Math.min(y - 1, box.y1)
-        box.x2 = Math.max(x + 1, box.x2)
-        box.y2 = Math.max(y + 1, box.y2)
-      }
-    }
-
+    L1: for (y = 0; y < height; y++) for (x = 0; x < width; x++) if (xs[((y * width + x) * 4) + 3]) { box.y1 = y; break L1; }
+    L2: for (y = height - 1; y > 0; y--) for (x = 0; x < width; x++) if (xs[((y * width + x) * 4) + 3]) { box.y2 = y; break L2; }
+    L3: for (x = 0; x < width; x++) for (y = 0; y < height; y++)  if (xs[((y * width + x) * 4) + 3]) { box.x1 = x; break L3; }
+    L4: for (x = width - 1; x > 0; x--) for (y = 0; y < height; y++)  if (xs[((y * width + x) * 4) + 3]) { box.x2 = x; break L4; }
     return box
   }
+
 
   const crop = (canvas, image) => {
     const { naturalWidth: width, naturalHeight: height } = image
@@ -97,10 +98,6 @@
     if (image.completed) crop(canvas)(image)
   }
 
-  onMount(() => {
-    console.time('compare')
-    next()
-  })
 
   $: {
     if (state.legacy && state.modern) {
@@ -115,14 +112,8 @@
       const difference = pixelmatch(img1.data, img2.data, null, width, height, { threshold: 0.1 })
       state = { ...state, difference }
 
-      // if (difference > state.worst) {
-      //   console.log('ups', difference, state.index, options[state.index])
-      //   state = { ...state, worst: difference }
-      // }
-
       if (difference > state.threshold) {
         const sidc = options[state.index].sidc
-        console.log('ups', difference, state.index, options[state.index])
         const suspicions = [...state.suspicions || [], [difference, sidc]]
         state = { ...state, suspicions }
       }
@@ -152,8 +143,8 @@
   </div>
 
   <div class='row'>
-    <canvas bind:this={canvasLegacy}/>
-    <canvas bind:this={canvasModern}/>
+    <canvas bind:this={canvasLegacy} hidden/>
+    <canvas bind:this={canvasModern} hidden/>
   </div>
   <span>{state.index} {state.difference}</span>
 </main>
