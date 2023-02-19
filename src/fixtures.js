@@ -4,8 +4,6 @@ import sidc2525c from './sidc-2525c.json'
 import sidcControl from './sidc-control.json'
 import sidcPreview from './sidc-preview.json'
 
-console.log('SIDC', SIDC)
-
 const engagement = false
 
 const common = {
