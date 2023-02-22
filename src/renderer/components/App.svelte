@@ -9,7 +9,8 @@
   ]
 
   const options = codes.map(sidc => ({ sidc }))
-  // const options = R.take(100, codes.map(sidc => ({ sidc })))
+  // const options = R.drop(1600, codes.map(sidc => ({ sidc })))
+  // const options = R.take(1, codes.map(sidc => ({ sidc })))
   // const options = codes.filter(s => s.match(/^G.O/)).map(sidc => ({ sidc }))
   // const options = codes.filter(sidc => !ignore.includes(sidc)).map(sidc => ({ sidc }))
   // const options = codes.filter(sidc => ignore.includes(sidc)).map(sidc => ({ sidc }))
@@ -19,7 +20,6 @@
   let imageModern
   let canvas
   let ctx
-
 
   onMount(() => {
     console.time('compare')

@@ -2,7 +2,7 @@
 require('@babel/register')
 const R = require('ramda')
 const ms = require('milsymbol')
-const { aliases } =  require('../src/symbol/aliases')
+const { aliases } =  require('../src/aliases')
 
 const replaceKey = (value, from, to) => {
   if (!value[from]) return value
@@ -47,5 +47,5 @@ const labels = R.compose(
 )(ms._labelOverrides.letter)
 
 
-// console.log(JSON.stringify(labels))
-console.log(JSON.stringify(Object.keys(labels)))
+console.log(JSON.stringify(labels))
+// console.log(JSON.stringify(Object.keys(labels)))

@@ -1,9 +1,13 @@
 import ms from 'milsymbol'
-import { Symbol, aliases } from '@syncpoint/signs'
+import * as Symbol from '@syncpoint/signs/src'
 import { format } from './format'
 import sidc2525c from './sidc-2525c.json'
 import sidcControl from './sidc-control.json'
-import sidcPreview from './sidc-preview.json'
+import sidcSpecial from './sidc-special.json'
+import sidcSKKM from './sidc-skkm.json'
+import { aliases } from './aliases'
+
+console.log('Symbol', Symbol)
 
 const engagement = false
 
@@ -15,7 +19,7 @@ const common = {
   strokeWidth: 4, /* default 4 */
   strokeColor: 'black',
   fill: true,
-  infoFields: false
+  infoFields: true
 }
 
 export const modern = options => {
@@ -26,14 +30,15 @@ export const modern = options => {
   return Symbol.of({
     ...common,
     ...options,
-    ...modifiers
+    strokeWidth: 4,
+    modifiers
   })
 }
 
 export const legacy = options => {
   const initial = engagement ? { engagementBar: 'A:BBB-CC', engagementType: 'TARGET' } : {}
   const fn = (acc, [key, value]) => { acc[key] = value; return acc }
-  const modifiers = Object.entries(aliases).reduce(fn, initial)
+  // const modifiers = Object.entries(aliases).reduce(fn, initial)
   const { sidc: code, ...rest } = options
   const [sidc, standard] = code.split('+')
   return new ms.Symbol(sidc, {
@@ -106,12 +111,13 @@ const MODIFIERS = xprod(
 
 export const codes = [
   // ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => format(options, code)),
-  ...xprod(sidc2525c, IDENTITY).map(([code, options]) => format(options, code)),
+  // ...xprod(sidc2525c, IDENTITY).map(([code, options]) => format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, CONTEXT).map(assign)).map(([code, options]) => format(options, code)),
   // ...xprod(xprod(CONTEXT, IDENTITY).map(assign), dimensions).map(([options, code]) => format(options, code)),
   // ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => format(options, code)),
   // ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS).map(assign)).map(([code, options]) => format(options, code)),
   // ...xprod(sidcControl, xprod(IDENTITY, [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => format(options, code)),
-  // ...xprod(sidcTacgfx, xprod([{ identity: 'FRIEND' }], [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => format(options, code)),
+  ...xprod(sidcSKKM, xprod(IDENTITY, [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => format(options, code)),
+  // ...xprod(sidcSpecial, xprod(IDENTITY, [{ status: 'PRESENT' }]).map(assign)).map(([code, options]) => format(options, code)),
 ]

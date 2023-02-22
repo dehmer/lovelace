@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+require('@babel/register')
+const R = require('ramda')
+const { aliases } =  require('../src/aliases')
 
 const skkmIconParts = function (iconParts, metadata) {
 
@@ -530,8 +533,8 @@ const skkmSIDCIcons = function (existingSIDCs, bbox, iconParts) {
   }
 }
 
-const skkmLabels = function (sidc) {
-
+const skkmLabels = function () {
+  const sidc = {}
   const incidentLabels = {
     dtg: { stroke: false, textanchor: 'end', x: 25, y: 80, fontsize: 40 },
     speed: { stroke: false, textanchor: 'end', x: 25, y: 155, fontsize: 40 },
@@ -544,8 +547,7 @@ const skkmLabels = function (sidc) {
     speed: { stroke: false, textanchor: 'end', x: 25, y: 155, fontsize: 40 },
     uniqueDesignation: { stroke: false, textanchor: 'end', x: 25, y: 120, fontsize: 40 },
     additionalInformation: { stroke: false, textanchor: 'start', x: 180, y: 155, fontsize: 40 },
-    higherFormation: { stroke: false, textanchor: 'start', x: 180, y: 120, fontsize: 40 },
-    echelon: { stroke: false, textanchor: 'start', x: 0, y: -40, fontsize: 40 }
+    higherFormation: { stroke: false, textanchor: 'start', x: 180, y: 120, fontsize: 40 }
   }
 
   const unitEquipmentLabels = {
@@ -625,6 +627,15 @@ const skkmLabels = function (sidc) {
   // formationSIDCs.forEach(code => { sidc[code] = unitEquipmentLabels })
   facilitySIDCs.forEach(code => { sidc[code] = facilityLabels })
   equipmentSIDCs.forEach(code => { sidc[code] = unitEquipmentLabels })
+
+  Object.values(sidc).forEach(value => {
+    Object.values(value).forEach(value => {
+      value.type = "text"
+      value.fill = "black"
+    })
+  })
+
+  return sidc
 }
 
 
@@ -640,8 +651,8 @@ const replaceValue = (value, key, from, to) => {
   value[key] = to
 }
 
-const removeKey = (instruction, key) => {
-  delete instruction[key]
+const addValue = (instruction, key, value) => {
+  instruction[key] = value
 }
 
 const removeValue = (instruction, key, value) => {
@@ -702,8 +713,24 @@ const sanitize = value => {
   const sidc = {}
   skkmIconParts(parts)
   skkmSIDCIcons(sidc, bbox, parts)
+
+  const rename = R.compose(
+    entries => Object.fromEntries(entries),
+    R.map(([key, value]) => [aliases[key] || key, sanitize(value)]),
+    value => Object.entries(value)
+  )
+
+  const xyz = R.compose(
+    Object.fromEntries,
+    R.map(([ key, value]) => [key, rename(value)]),
+    Object.entries,
+  )
+
+  console.log(JSON.stringify(xyz(skkmLabels())))
+
   const entries = Object.entries(sidc).map(([key, value]) => {
     return [key, value.map(sanitize)]
   })
-  console.log(JSON.stringify(Object.fromEntries(entries), null, 2))
+
+  // console.log(JSON.stringify(Object.fromEntries(entries), null, 2))
 })()
