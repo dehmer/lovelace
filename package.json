@@ -11,6 +11,7 @@
     "start": "electron . --static"
   },
   "dependencies": {
+    "@syncpoint/signs": "github:syncpoint/signs",
     "level": "^8.0.0",
     "level-read-stream": "^1.1.0",
     "memory-level": "^1.0.0",

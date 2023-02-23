@@ -2,7 +2,7 @@
   import * as R from 'ramda'
   import { codes, legacy, modern } from '../../fixtures'
 
-  const options = codes
+  const options = R.take(100, codes)
     .map(sidc => ({ sidc }))
     .map(options => 'data:image/svg+xml;utf8,' + modern(options).asSVG())
 </script>
