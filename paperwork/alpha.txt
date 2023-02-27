@@ -19,3 +19,12 @@ W - METOC
 I - Intelligence
 O - Stability Operations (SO)
 E - Emergency Management Symbols (EMS)
+
+3 - Status/Operational Condition
+--------------------------------
+A - Anticipated/Planned
+P - Present (Units only)
+C - Present (Fully Capable)
+D - Present/Damaged
+X - Present/Destrpyed
+F - Present/Full to Capacity

@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import ms from 'milsymbol'
 import * as Symbol from '@syncpoint/signs'
 import { format } from './format'
@@ -18,13 +19,17 @@ const common = {
   strokeWidth: 4, /* default 4 */
   strokeColor: 'black',
   fill: true,
-  infoFields: false
+  infoFields: true
 }
+
+const direction = 220
 
 export const modern = options => {
   const fn = (acc, [key, value]) => { acc[value] = value; return acc }
   const initial = engagement ? { AO: 'A:BBB-CC', AT: 'TARGET' } : {}
-  const modifiers = Object.entries(aliases).reduce(fn, initial)
+  // const modifiers = Object.entries(aliases).reduce(fn, initial)
+  const modifiers = {}
+  modifiers.Q = direction
 
   return Symbol.of({
     ...common,
@@ -38,12 +43,14 @@ export const legacy = options => {
   const initial = engagement ? { engagementBar: 'A:BBB-CC', engagementType: 'TARGET' } : {}
   const fn = (acc, [key, value]) => { acc[key] = value; return acc }
   // const modifiers = Object.entries(aliases).reduce(fn, initial)
+  const modifiers = {}
+  modifiers.direction = direction
   const { sidc: code, ...rest } = options
   const [sidc, standard] = code.split('+')
   return new ms.Symbol(sidc, {
     ...common,
     ...rest,
-    // ...modifiers,
+    ...modifiers,
     standard
   })
 }
@@ -60,15 +67,15 @@ const ECHELON = [
 ].map(echelon => ({ echelon }))
 
 const IDENTITY = [
-  { identity: 'PENDING' },
   { identity: 'UNKNOWN' },
   { identity: 'FRIEND' },
   { identity: 'NEUTRAL' },
   { identity: 'HOSTILE' },
-  { identity: 'ASSUMED_FRIEND' },
-  { identity: 'SUSPECT' },
-  { identity: 'JOKER' },
-  { identity: 'FAKER' }
+  // { identity: 'PENDING' },
+  // { identity: 'ASSUMED_FRIEND' },
+  // { identity: 'SUSPECT' },
+  // { identity: 'JOKER' },
+  // { identity: 'FAKER' }
 ]
 
 const MOBILITY = [
@@ -77,13 +84,21 @@ const MOBILITY = [
   'BARGE', 'AMPHIBIOUS', 'TOWED_ARRAY_SHORT', 'TOWED_ARRAY_LONG'
 ].map(mobility => ({ mobility }))
 
-const HEADQUARTERS = [{ headquarters: true }]
+const HEADQUARTERS = [{ headquarters: false }, { headquarters: true }]
 const MODIFIERS = xprod(
   [{ headquarters: false }, { headquarters: true }],
   [{ taskForce: false }, { taskForce: true }],
   [{ feint: false }, { feint: true }]
 ).map(assign)
 
+const STATUS = [
+  'PLANNED',
+  'PRESENT',
+  'FULLY_CAPABLE',
+  'DAMAGED',
+  'DESTROYED',
+  'FULL_TO_CAPACITY'
+].map(status => ({ status }))
 
 const dimensions = [
   // APP6-D
@@ -98,20 +113,22 @@ const dimensions = [
   // '10002700001100000000', // DISMOUNTED (LAND)
 
   // 2525-C
-  // 'SUAP------*****+APP6', // AIR
-  // 'SUPP------*****+2525', // SPACE
-  // 'SUGP------*****',      // UNIT (LAND)
-  // 'SUGPE-----*****',      // EQUIPMENT (LAND)
+  'SUAP------*****+APP6', // AIR
+  'SUPP------*****+2525', // SPACE
+  'SUGP------*****',      // UNIT (LAND)
+  'SUGPE-----*****',      // EQUIPMENT (LAND)
   'SUGP------H****',      // INSTALLATION
-  // 'SUSP------*****',      // SEA SURFACE
-  // 'IUUP------*****',      // SEA SUBSURFACE
-  // 'OUVP------*****',      // ACTIVITY/EVENT
+  'SUSP------*****',      // SEA SURFACE
+  'IUUP------*****',      // SEA SUBSURFACE
+  'OUVP------*****',      // ACTIVITY/EVENT
 ]
 
 export const codes = [
   // ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => format(options, code)),
-  ...xprod(sidc2525c, IDENTITY).map(([code, options]) => format(options, code)),
+  // ...xprod(sidc2525c, IDENTITY).map(([code, options]) => format(options, code)),
+  ...xprod(dimensions, xprod(IDENTITY, HEADQUARTERS, STATUS).map(assign)).map(([code, options]) => format(options, code)),
   // ...xprod(dimensions, xprod(IDENTITY, CONTEXT).map(assign)).map(([code, options]) => format(options, code)),
+  // ...xprod(dimensions, xprod(IDENTITY, STATUS).map(assign)).map(([code, options]) => format(options, code)),
   // ...xprod(xprod(CONTEXT, IDENTITY).map(assign), dimensions).map(([options, code]) => format(options, code)),
   // ...xprod(['S-GPEWMS--*****'], xprod(MOBILITY, IDENTITY).map(assign)).map(([code, options]) => format(options, code)),
   // ...xprod(['SFGPUCIZ--*****'], MODIFIERS).map(([code, options]) => format(options, code)),

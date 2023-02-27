@@ -2,7 +2,7 @@
   import * as R from 'ramda'
   import { onMount } from 'svelte'
   import pixelmatch from 'pixelmatch'
-  import { codes, legacy, modern } from '../../fixtures'
+  import { codes, legacy, modern } from '../fixtures'
 
   const ignore = [
     'GFMPOHTL--',

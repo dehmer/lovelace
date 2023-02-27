@@ -1,8 +1,7 @@
 <script>
-  import * as R from 'ramda'
-  import { codes, legacy, modern } from '../../fixtures'
+  import { codes, legacy, modern } from '../fixtures'
 
-  const options = R.take(100, codes)
+  const options = codes
     .map(sidc => ({ sidc }))
     .map(options => 'data:image/svg+xml;utf8,' + modern(options).asSVG())
 </script>
@@ -15,7 +14,7 @@
 
 <style>
   img {
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
   }
 </style>

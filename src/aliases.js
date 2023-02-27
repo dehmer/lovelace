@@ -10,7 +10,7 @@ export const aliases = {
   higherFormation: 'M',
   hostile: 'N',
   iffSif: 'P',
-  // direction: 'Q',
+  direction: 'Q',
   sigint: 'R2',
   uniqueDesignation: 'T',
   uniqueDesignation1: 'T1',
