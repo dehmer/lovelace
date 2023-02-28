@@ -1,30 +1,41 @@
 <script>
   import * as R from 'ramda'
   import { onMount } from 'svelte'
+  import ProgressBar from 'svelte-progress-bar'
   import pixelmatch from 'pixelmatch'
-  import { codes, legacy, modern } from '../fixtures'
+  import hash from 'object-hash'
+  import { codes } from './fixtures'
+  import { sets, legacy, modern } from './options'
 
-  const ignore = [
-    'GFMPOHTL--',
-  ]
 
-  const options = codes.map(sidc => ({ sidc }))
-  // const options = R.drop(8300, codes.map(sidc => ({ sidc })))
-  // const options = R.take(1, codes.map(sidc => ({ sidc })))
-  // const options = codes.filter(s => s.match(/^G.O/)).map(sidc => ({ sidc }))
-  // const options = codes.filter(sidc => !ignore.includes(sidc)).map(sidc => ({ sidc }))
-  // const options = codes.filter(sidc => ignore.includes(sidc)).map(sidc => ({ sidc }))
+  const options = sets['set:icons/2525c']
+  // const options = sets['set:dimension/present']
+  // const options = sets['set:modifiers']
+  // const options = sets['set:mobility']
+  // const options = sets['set:echelon']
+  // const options = sets['set:engagement']
+  // const options = sets['set:direction']
 
-  let state = { index: -1, worst: 1000, threshold: 200 }
+
+  let state = { index: -1, threshold: 100 }
+  let progress
+  let review = []
   let imageLegacy
   let imageModern
   let canvas
   let ctx
+  let interval
+  let iterations = 0
+  let ops = 0
 
   onMount(() => {
     console.time('compare')
     canvas = new OffscreenCanvas(0, 0)
     ctx = canvas.getContext('2d', { willReadFrequently: true })
+    interval = setInterval(() => {
+      ops = iterations
+      iterations = 0
+    }, 1000)
     next()
   })
 
@@ -79,12 +90,23 @@
 
     if (state.index < options.length - 1) {
       const index = state.index + 1
-      state = { ...state, index, legacy: false, modern: false }
-      setSource(imageLegacy, 'data:image/svg+xml;utf8,' + legacy(options[index]).asSVG())
-      setSource(imageModern, 'data:image/svg+xml;utf8,' + modern(options[index]).asSVG())
+      progress.setWidthRatio(index / options.length)
+      iterations += 1
+
+      state = {
+        ...state,
+        index,
+        legacy: false,
+        modern: false,
+        legacySource: 'data:image/svg+xml;utf8,' + legacy(options[index]).asSVG(),
+        modernSource: 'data:image/svg+xml;utf8,' + modern(options[index]).asSVG()
+      }
+      setSource(imageLegacy, state.legacySource)
+      setSource(imageModern, state.modernSource)
     } else {
       console.timeEnd('compare')
       console.log('suspicions', (state.suspicions || []).sort((a, b) => b[0] - a[0]))
+      clearInterval(interval)
       return { index: 'EOF', difference: '' }
     }
   }
@@ -103,9 +125,13 @@
       state = { ...state, difference }
 
       if (difference > state.threshold) {
-        const sidc = options[state.index].sidc
-        const suspicions = [...state.suspicions || [], [difference, sidc]]
-        state = { ...state, suspicions }
+        review = [...review, {
+          difference,
+          legacySource: state.legacySource,
+          modernSource: state.modernSource,
+          ...options[state.index],
+          hash: hash(options[state.index])
+        }]
       }
 
       next()
@@ -114,7 +140,13 @@
 </script>
 
 <main>
-  <div class='row'>
+  <ProgressBar bind:this={progress} color='red'/>
+  <div class='main'>
+    <div class='status'>
+      <span>symbols/s: {ops}</span>
+      <span>progress: {state.index + 1} / {options.length}</span>
+    </div>
+
     <img
       id='legacy'
       bind:this={imageLegacy}
@@ -131,16 +163,68 @@
       alt=''
     />
   </div>
-  <span>{state.index} {state.difference}</span>
+  <div class='review'>
+    {#each review as entry}
+      <div class='card'>
+        <div class='card-content'>
+          <img class='image--small' src={entry.legacySource} alt=''/>
+          <img class='image--small' src={entry.modernSource} alt=''/>
+        </div>
+        <div class='summary'>{entry.difference}</div>
+        <div class='summary'>{entry.sidc}</div>
+      </div>
+    {/each}
+  </div>
 </main>
 
 <style>
-  .row {
-    display: flex
+  .main {
+    padding: 32px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .status {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+  }
+
+  .review {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
   img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
+    padding: 4px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .summary {
+    display: flex;
+    justify-content: center;
+    border: solid black 0.5px;
+    font-size: 90%;
+  }
+
+  .image--small {
+    width: 60px;
+    height: 60px;
+    background-color: azure;
+    border: dashed black 0.5px;
   }
 </style>

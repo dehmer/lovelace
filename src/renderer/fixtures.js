@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import ms from 'milsymbol'
-import * as Symbol from '@syncpoint/signs'
+import * as Symbol from '@syncpoint/signs/src'
 import { format } from './format'
 import sidc2525c from './sidc-2525c.json'
 import sidcControl from './sidc-control.json'
@@ -29,7 +29,6 @@ export const modern = options => {
   const initial = engagement ? { AO: 'A:BBB-CC', AT: 'TARGET' } : {}
   // const modifiers = Object.entries(aliases).reduce(fn, initial)
   const modifiers = {}
-  modifiers.Q = direction
 
   return Symbol.of({
     ...common,
@@ -122,6 +121,7 @@ const dimensions = [
   'IUUP------*****',      // SEA SUBSURFACE
   'OUVP------*****',      // ACTIVITY/EVENT
 ]
+
 
 export const codes = [
   // ...xprod(['SFGPUCIZ-------'], ECHELON).map(([code, options]) => format(options, code)),

@@ -1,50 +1,58 @@
 const path = require('path')
 const { spawn } = require('child_process')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CopyPlugin = require("copy-webpack-plugin")
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 
-const mode = env => env.production ? 'production' : 'development'
+const mode = process.env.NODE_ENV || 'development'
+const production = mode === 'production'
+const development = mode === 'development'
 
-const rules = (env) => [
-  {
-    test: /\.js$/,
-    exclude: /node_modules/,
-    use: ['babel-loader']
-  },
+const js = {
+  test: /\.js$/,
+  exclude: /node_modules/,
+  use: ['babel-loader']
+}
 
-  {
-    // css-loader: resolve/load required/imported CSS dependencies from JavaScript
-    // style-loader: wrap CSS string from css-loader with <style> tag
-    // Note: loaders are applied from right to left, i.e. css-loader -> style-loader
-    //
-    test: /\.(scss|css)$/,
-    use: ['style-loader', 'css-loader', 'sass-loader']
-  },
+const css = {
+  // css-loader: resolve/load required/imported CSS dependencies from JavaScript
+  // style-loader: wrap CSS string from css-loader with <style> tag
+  // Note: loaders are applied from right to left, i.e. css-loader -> style-loader
+  //
+  test: /\.(scss|css)$/,
+  use: [
+    production
+      ? MiniCssExtractPlugin.loader
+      : 'style-loader',
+    'css-loader',
+    'sass-loader'
+  ]
+}
 
-  {
-    test: /\.(png|svg|jpe?g|gif)$/i,
-    use: [{
-      loader: 'file-loader',
-      options: {
-        name: 'img/[name].[ext]'
-      }
-    }]
-  },
+const image = {
+  test: /\.(png|svg|jpe?g|gif)$/i,
+  use: [{
+    loader: 'file-loader',
+    options: {
+      name: 'img/[name].[ext]'
+    }
+  }]
+}
 
-  {
-    test: /\.(eot|svg|ttf|woff|woff2)$/,
-    type: 'asset/resource'
-  },
+const font = {
+  test: /\.(eot|svg|ttf|woff|woff2)$/,
+  type: 'asset/resource'
+}
 
+const svelte = [
   {
     test: /\.svelte$/,
     use: {
       loader: 'svelte-loader',
       options: {
-        compilerOptions: { dev: mode(env) !== 'production' },
-        emitCss: mode(env) === 'production',
-        hotReload: mode(env) !== 'production'
+        compilerOptions: { dev: development },
+        emitCss: production,
+        hotReload: development
       }
     }
   },
@@ -58,7 +66,10 @@ const rules = (env) => [
   }
 ]
 
-const rendererConfig = (env, argv) => ({
+const rules = [js, css, image, font, ...svelte]
+
+
+const renderer = {
   context: path.resolve(__dirname, 'src/renderer'),
   target: 'electron-renderer',
 
@@ -67,11 +78,10 @@ const rendererConfig = (env, argv) => ({
   // For advanced options: babel-minify-webpack-plugin:
   // https://webpack.js.org/plugins/babel-minify-webpack-plugin
 
-  mode: mode(env),
+  mode,
   stats: 'errors-only',
-  module: { rules: rules(env) },
+  module: { rules },
   entry: { renderer: ['./renderer.js'] },
-
   node: { global: true },
 
   resolve: {
@@ -85,69 +95,61 @@ const rendererConfig = (env, argv) => ({
 
   plugins: [
     new webpack.ExternalsPlugin('commonjs', ['level']),
-    new MiniCssExtractPlugin({ filename: '[name].css' }),
-    new CopyPlugin({
-      patterns: [
-        { from: "index.html" },
-        { from: "global.scss" },
-        { from: "favicon.png" }
-      ]
+
+    // Warning
+    // Source maps works only for source-map,
+    // nosources-source-map, hidden-nosources-source-map,
+    // hidden-source-map values because CSS only supports
+    // source maps with the sourceMappingURL comment
+    // (i.e. //# sourceMappingURL=style.css.map). If you need set
+    // devtool to another value you can enable source maps generation
+    // for extracted CSS using sourceMap: true for css-loader.
+    //
+    new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Electron/Svelte Template'
     })
   ]
-})
+}
 
-const mainConfig = (env, argv) => ({
+const main = {
   context: path.resolve(__dirname, 'src/main'),
   target: 'electron-main',
-  mode: mode(env),
+  mode,
   stats: 'errors-only',
   entry: { main: './main.js' },
   plugins: [
     // NOTE: Required. Else "Error: No native build was found for ..."
     new webpack.ExternalsPlugin('commonjs', ['level'])
   ]
-})
+}
 
-const devServer = env => {
-  if (env.production) return ({}) // no development server for production
-  return ({
-    devServer: {
-      static: {
-        directory: path.resolve(__dirname, 'dist')
-      },
-      setupMiddlewares: (middlewares, devServer) => {
-        spawn(
-          'electron',
-          ['.'],
-          { shell: true, env: process.env, stdio: 'inherit' }
-        )
-          .on('close', code => process.exit(code))
-          .on('error', error => console.error(error))
+const server = {
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist')
+    },
+    setupMiddlewares: (middlewares, devServer) => {
+      spawn(
+        'electron',
+        ['.'],
+        { shell: true, env: process.env, stdio: 'inherit' }
+      )
+        .on('close', code => process.exit(code))
+        .on('error', error => console.error(error))
 
-        return middlewares
-      }
+      return middlewares
     }
-  })
+  }
 }
 
-const devtool = env => {
-  if (env.production) return ({}) // no source maps for production
-  return ({
-    devtool: 'cheap-source-map'
-  })
-}
-
-module.exports = (env, argv) => {
-  env = env || {}
-
-  // Merge development server and devtool to renderer configuration when necessary:
-  const renderer = Object.assign(
+module.exports = [
+  main,
+  Object.assign(
     {},
-    rendererConfig(env, argv),
-    devServer(env),
-    devtool(env)
+    renderer,
+    development ? server : {},
+    // See restrictions on MiniCssExtractPlugin.
+    { devtool: production ? false : 'source-map' }
   )
-
-  const main = mainConfig(env, argv)
-  return [renderer, main]
-}
+]
