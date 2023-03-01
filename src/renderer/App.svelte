@@ -142,11 +142,6 @@
 <main>
   <ProgressBar bind:this={progress} color='red'/>
   <div class='main'>
-    <div class='status'>
-      <span>symbols/s: {ops}</span>
-      <span>progress: {state.index + 1} / {options.length}</span>
-    </div>
-
     <img
       id='legacy'
       bind:this={imageLegacy}
@@ -162,6 +157,11 @@
       on:error={handleError}
       alt=''
     />
+
+    <div class='status'>
+      <span>symbols/s: {ops}</span>
+      <span>progress: {state.index + 1} / {options.length}</span>
+    </div>
   </div>
   <div class='review'>
     {#each review as entry}
