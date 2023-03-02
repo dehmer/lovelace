@@ -1,14 +1,18 @@
 import * as R from 'ramda'
 import ms from 'milsymbol'
-import * as Symbol from '@syncpoint/signs'
+import * as Symbol from '@syncpoint/signs/src'
 import * as SIDC from './format'
 import { aliases } from './aliases'
 import sidc2525c from './sidc-2525c.json'
+import sidcControl from './sidc-control.json'
+import sidcSpecial from './sidc-special.json'
+import sidcSKKM from './sidc-skkm.json'
 
 const assign = xs => xs.reduce((a, b) => Object.assign(a, b), {})
 const xprod = (...xss) =>
   xss.reduce((acc, xs) => acc.flatMap(a => xs.map(x => [...a, x])), [[]])
 
+const sidc = sidc => ({ sidc })
 const format = xs => {
   const { sidc, ...options } = assign(xs)
   return { sidc: SIDC.format(options, sidc) }
@@ -106,9 +110,17 @@ export const legacy = options => {
   })
 }
 
+console.log(xprod(DIMENSION, IDENTITY_BASE, ECHELON, [{ status: 'PRESENT' }]))
+
 export const sets = {
   'set:dimension/present': xprod(DIMENSION, IDENTITY_BASE, [{ status: 'PRESENT' }]).map(format),
-  'set:icons/2525c': xprod(sidc2525c.map(sidc => ({ sidc })), IDENTITY_BASE).map(format),
+  'set:icons/2525c': xprod(sidc2525c.map(sidc), IDENTITY_BASE).map(format),
+  'set:icons/mono':
+    xprod(
+      xprod(sidc2525c.map(sidc), IDENTITY_BASE).map(format),
+      [{ monoColor: 'green' }]
+    ).map(assign),
+
   'set:echelon': xprod(DIMENSION, IDENTITY_BASE, ECHELON, [{ status: 'PRESENT' }]).map(format),
   'set:modifiers': xprod(DIMENSION, IDENTITY, MODIFIERS, [{ status: 'PRESENT' }]).map(format),
   'set:mobility': xprod(DIMENSION, IDENTITY, MOBILITY, [{ status: 'PRESENT' }]).map(format),
@@ -121,6 +133,37 @@ export const sets = {
     xprod(
       xprod(DIMENSION, IDENTITY_BASE, HEADQUARTERS, [{ status: 'PRESENT' }]).map(format),
       DIRECTION
-    ).map(assign)
-
+    ).map(assign),
+  'set:control': xprod(sidcControl.map(sidc), IDENTITY, [{ status: 'PRESENT' }]).map(format),
+  'set:special': xprod(sidcSpecial.map(sidc), [{ identity: 'FRIEND' }], [{ status: 'PRESENT' }]).map(format),
+  'set:variations': [
+    {
+      sidc:
+        SIDC.format(({
+          echelon: 'PLATOON',
+        }), 'SFGAUCVFU-*****'),
+        infoFields: true,
+        modifiers: {
+          T: '1',
+          M: '2',
+        }
+    },
+    {
+      sidc:
+        SIDC.format(({
+          mobility: 'TRACKED'
+        }), 'SFGPEWHL--*****'),
+      modifiers: {
+        Q: 55
+      }
+    },
+    {
+      sidc:'SFGXUCVFU-*****',
+      infoFields: true,
+      modifiers: {
+        AO: 'A:B-CCC',
+        AT: 'EXPIRED'
+      }
+    }
+  ]
 }

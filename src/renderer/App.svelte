@@ -7,17 +7,19 @@
   import { codes } from './fixtures'
   import { sets, legacy, modern } from './options'
 
+  // const set = sets['set:icons/2525c']
+  const set = sets['set:icons/mono']
+  // const set = sets['set:dimension/present']
+  // const set = sets['set:modifiers']
+  // const set = sets['set:mobility']
+  // const set = sets['set:echelon']
+  // const set = sets['set:engagement']
+  // const set = sets['set:direction']
 
-  const options = sets['set:icons/2525c']
-  // const options = sets['set:dimension/present']
-  // const options = sets['set:modifiers']
-  // const options = sets['set:mobility']
-  // const options = sets['set:echelon']
-  // const options = sets['set:engagement']
-  // const options = sets['set:direction']
+  const options = R.drop(3175 + 28, set)
+  // const options = R.take(40, set)
 
-
-  let state = { index: -1, threshold: 100 }
+  let state = { index: -1, threshold: 300 }
   let progress
   let review = []
   let imageLegacy
@@ -130,7 +132,8 @@
           legacySource: state.legacySource,
           modernSource: state.modernSource,
           ...options[state.index],
-          hash: hash(options[state.index])
+          hash: hash(options[state.index]),
+          index: state.index
         }]
       }
 
@@ -170,7 +173,7 @@
           <img class='image--small' src={entry.legacySource} alt=''/>
           <img class='image--small' src={entry.modernSource} alt=''/>
         </div>
-        <div class='summary'>{entry.difference}</div>
+        <div class='summary'>{entry.difference} @ {entry.index}</div>
         <div class='summary'>{entry.sidc}</div>
       </div>
     {/each}
