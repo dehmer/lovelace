@@ -110,7 +110,9 @@ export const legacy = options => {
   })
 }
 
-console.log(xprod(DIMENSION, IDENTITY_BASE, ECHELON, [{ status: 'PRESENT' }]))
+const preset = (sidc, options = {}) => ({
+  sidc: SIDC.format(options, sidc), ...options
+})
 
 export const sets = {
   'set:dimension/present': xprod(DIMENSION, IDENTITY_BASE, [{ status: 'PRESENT' }]).map(format),
@@ -137,33 +139,13 @@ export const sets = {
   'set:control': xprod(sidcControl.map(sidc), IDENTITY, [{ status: 'PRESENT' }]).map(format),
   'set:special': xprod(sidcSpecial.map(sidc), [{ identity: 'FRIEND' }], [{ status: 'PRESENT' }]).map(format),
   'set:variations': [
-    {
-      sidc:
-        SIDC.format(({
-          echelon: 'PLATOON',
-        }), 'SFGAUCVFU-*****'),
-        infoFields: true,
-        modifiers: {
-          T: '1',
-          M: '2',
-        }
-    },
-    {
-      sidc:
-        SIDC.format(({
-          mobility: 'TRACKED'
-        }), 'SFGPEWHL--*****'),
-      modifiers: {
-        Q: 55
-      }
-    },
-    {
-      sidc:'SFGXUCVFU-*****',
-      infoFields: true,
-      modifiers: {
-        AO: 'A:B-CCC',
-        AT: 'EXPIRED'
-      }
-    }
+    preset('SHGPUCFRSS*****', { echelon: 'BRIGADE', modifiers: { Q: 45 } }),
+    preset('SFAPMFB---*****', { modifiers: { Q: 315 } }),
+    preset('SFGPEWHL--*****', { mobility: 'TRACKED' }),
+    preset('SFGPUCII--*****', { headquarters: true, taskForce: true, dummy: true }),
+    preset('SNGPIRNB--H****'),
+    preset('SFGXUCVFU-*****', { modifiers: { AO: 'A:B-CCC', AT: 'EXPIRED' } }),
+    preset('SFGAUCVFU-*****'),
+    preset('SFGPUCIZ--*****', { infoFields: true, modifiers: { T: '1', M: '2', W: 'O/O' } })
   ]
 }
