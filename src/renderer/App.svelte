@@ -4,11 +4,10 @@
   import ProgressBar from 'svelte-progress-bar'
   import pixelmatch from 'pixelmatch'
   import hash from 'object-hash'
-  import { codes } from './fixtures'
   import { sets, legacy, modern } from './options'
 
-  // const set = sets['set:icons/2525c']
-  const set = sets['set:icons/mono']
+  const set = sets['set:icons/2525c']
+  // const set = sets['set:icons/mono']
   // const set = sets['set:dimension/present']
   // const set = sets['set:modifiers']
   // const set = sets['set:mobility']

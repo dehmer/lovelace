@@ -2,7 +2,7 @@
   import * as R from 'ramda'
   import { sets, legacy, modern } from './options'
 
-  const options = sets['set:variations']
+  const options = R.drop(0, sets['set:variations'])
   const sources = options
     .map(modern)
     .map(symbol => symbol.asSVG())
@@ -19,7 +19,6 @@
 
 <style>
   main {
-    padding-top: 200px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;

@@ -146,6 +146,20 @@ export const sets = {
     preset('SNGPIRNB--H****'),
     preset('SFGXUCVFU-*****', { modifiers: { AO: 'A:B-CCC', AT: 'EXPIRED' } }),
     preset('SFGAUCVFU-*****'),
-    preset('SFGPUCIZ--*****', { infoFields: true, modifiers: { T: '1', M: '2', W: 'O/O' } })
+    preset('SFGPUCIZ--*****', { infoFields: true, modifiers: { T: '1', M: '2', W: 'O/O' } }),
+    preset('SFUPND----*****'),
+    preset('SFSPNH----*****'),
+    preset('SFSPXM----*****'),
+    preset('SFSPXMC---*****'),
+    preset('SFPPT-----*****'),
+    preset('SHAPWMS---*****'),
+    preset('SFGPUCFSO-*****'),
+    preset('SHUPWMGD--*****'),
+    preset('SFUPWMG---*****'),
+    preset('SNUPWMGX--*****'),
+    preset('SFUPWMGE--*****'),
+    preset('SFUPWMGC--*****'),
+    preset('SHUPV-----*****'),
+    preset('SHUPX-----*****'),
   ]
 }
