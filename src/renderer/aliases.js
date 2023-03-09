@@ -1,3 +1,5 @@
+import * as R from 'ramda'
+
 export const aliases = {
   quantity: 'D',
   reinforcedReduced: 'F',
@@ -31,7 +33,7 @@ export const aliases = {
   installationComposition: 'AI',
 
   // A:BBB-CC
-  // engagementBar: 'AO',
+  engagementBar: 'AO',
 
   /**
    * Non-standard.
@@ -40,7 +42,12 @@ export const aliases = {
    * See engagement bar.
    *
    */
-  // engagementType: 'AT',
+  engagementType: 'AT',
   guardedUnit: 'AQ',
   specialDesignator: 'AR'
 }
+
+const entries = Object.entries
+const fromEntries = Object.fromEntries
+const flip = R.map(([k, v]) => [v, k])
+export const reverse = R.compose(fromEntries, flip, entries)(aliases)
