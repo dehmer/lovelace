@@ -22,43 +22,18 @@ const STANDARD = [{ standard: '2525' }]
 const TYPE = [{ type: 'LEGACY' }]
 const AFFILIATON = [{ affiliation: 'Unknown' }, { affiliation: 'Friend' }, { affiliation: 'Neutral' }, { affiliation: 'Hostile' }]
 
+const makeColors = prefix => ['Unknown', 'Friend', 'Neutral', 'Hostile'].reduce((acc, affiliation) => {
+  acc[affiliation] = prefix + '/' + affiliation.toLowerCase()
+  return acc
+}, {})
+
 const colors = {
-  none: {
-    Unknown: 'color:icon-none/unknown',
-    Friend: 'color:icon-none/friend',
-    Neutral: 'color:icon-none/neutral',
-    Hostile: 'color:icon-none/hostile'
-  },
-  black: {
-    Unknown: 'color:icon-black/unknown',
-    Friend: 'color:icon-black/friend',
-    Neutral: 'color:icon-black/neutral',
-    Hostile: 'color:icon-black/hostile'
-  },
-  white: {
-    Unknown: 'color:icon-white/unknown',
-    Friend: 'color:icon-white/friend',
-    Neutral: 'color:icon-white/neutral',
-    Hostile: 'color:icon-white/hostile'
-  },
-  iconColor: {
-    Unknown: 'color:icon/unknown',
-    Friend: 'color:icon/friend',
-    Neutral: 'color:icon/neutral',
-    Hostile: 'color:icon/hostile'
-  },
-  iconFillColor: {
-    Unknown: 'color:icon-fill/unknown',
-    Friend: 'color:icon-fill/friend',
-    Neutral: 'color:icon-fill/neutral',
-    Hostile: 'color:icon-fill/hostile'
-  },
-  fillColor: {
-    Unknown: 'color:fill/unknown',
-    Friend: 'color:fill/friend',
-    Neutral: 'color:fill/neutral',
-    Hostile: 'color:fill/hostile'
-  }
+  none: makeColors('color:none'),
+  black: makeColors('color:black'),
+  white: makeColors('color:white'),
+  iconColor: makeColors('color:icon'),
+  iconFillColor: makeColors('color:icon-fill'),
+  fillColor: makeColors('color:fill'),
 }
 
 const keys = xprod(STANDARD, TYPE, AFFILIATON).map(assign)
@@ -146,8 +121,45 @@ const sanitize = (instructions) => {
     replaceKey(instructions, 'strokedasharray', 'stroke-dasharray')
     replaceValue(instructions, 'stroke', false, 'none')
     replaceValue(instructions, 'fill', false, 'none')
+
+    // replace hard-coded color:
+    replaceValue(instructions, 'fill', 'rgb(0, 130, 24)', 'color:icon/fill/008218')
+    replaceValue(instructions, 'fill', 'rgb(0, 128, 0)', 'color:icon/fill/008000')
+    replaceValue(instructions, 'fill', 'rgb(255,255,0)', 'color:icon/fill/ffff00')
+    replaceValue(instructions, 'fill', 'rgb(255, 247, 0)', 'color:icon/fill/fff700')
+    replaceValue(instructions, 'fill', 'rgb(255,141,42)', 'color:icon/fill/ff8d2a')
+    replaceValue(instructions, 'fill', 'rgb(198, 16, 33)', 'color:icon/fill/c61021')
+    replaceValue(instructions, 'fill', 'rgb(255, 0, 0)', 'color:icon/fill/ff0000')
+    replaceValue(instructions, 'fill', 'rgb(173, 105, 75)', 'color:icon/fill/ad694b')
+    replaceValue(instructions, 'stroke', 'rgb(254,203,47)', 'color:icon/stroke/fecb2f')
+    replaceValue(instructions, 'stroke', 'rgb(255, 0, 255)', 'color:icon/stroke/ff00ff')
+    replaceValue(instructions, 'stroke', 'rgb(255, 0, 0)', 'color:icon/stroke/ff0000')
+    replaceValue(instructions, 'stroke', 'red', 'color:icon/stroke/ff0000')
     removeValue(instructions, 'font-family', 'Arial')
     removeKey(instructions, 'icon')
+
+    const type = instructions.type === 'text' ? 'text' : 'path'
+    ;['Unknown', 'Friend', 'Neutral', 'Hostile'].map(s => s.toLowerCase()).forEach(affiliation => {
+      replaceValue(instructions, 'fill', `color:none/${affiliation}`, `fill:none/${type}/${affiliation}`)
+      replaceValue(instructions, 'fill', `color:black/${affiliation}`, `fill:black/${type}/${affiliation}`)
+      replaceValue(instructions, 'fill', `color:white/${affiliation}`, `fill:white/${type}/${affiliation}`)
+      replaceValue(instructions, 'fill', `color:icon/${affiliation}`, `fill:default/${type}/${affiliation}`)
+      replaceValue(instructions, 'fill', `color:icon-fill/${affiliation}`, `fill:icon/${type}/${affiliation}`)
+      replaceValue(instructions, 'fill', `color:fill/${affiliation}`, `fill:${type}/${affiliation}`)
+
+      replaceValue(instructions, 'stroke', `color:none/${affiliation}`, `stroke:none/${type}/${affiliation}`)
+      replaceValue(instructions, 'stroke', `color:black/${affiliation}`, `stroke:black/${type}/${affiliation}`)
+      replaceValue(instructions, 'stroke', `color:white/${affiliation}`, `stroke:white/${type}/${affiliation}`)
+      replaceValue(instructions, 'stroke', `color:icon/${affiliation}`, `stroke:default/${type}/${affiliation}`)
+      replaceValue(instructions, 'stroke', `color:icon-fill/${affiliation}`, `stroke:icon/${type}/${affiliation}`)
+      replaceValue(instructions, 'stroke', `color:fill/${affiliation}`, `stroke:${type}/${affiliation}`)
+
+      replaceValue(instructions, 'stroke', 'black', `stroke:black/${type}/${affiliation}`)
+      replaceValue(instructions, 'fill', 'black', `fill:black/${type}/${affiliation}`)
+    })
+
+    // TODO: "strokewidth":false
+
     return instructions
   }
 }
@@ -157,6 +169,7 @@ const icons = Object.values(options).reduce((acc, options) => {
   const affiliation = metadata.affiliation.toUpperCase()
   const iconParts = {}
   R.range(0, 8).forEach(i => ms._iconParts[i](iconParts, metadata, colors, STD2525))
+
   const sanitized = Object.entries(iconParts).reduce((acc, [key, instructions]) => {
     acc[key] = sanitize(instructions)
     return acc

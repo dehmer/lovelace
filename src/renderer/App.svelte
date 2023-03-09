@@ -6,8 +6,10 @@
   import hash from 'object-hash'
   import { sets, legacy, modern } from './options'
 
-  const set = sets['set:icons/2525c']
-  // const set = sets['set:icons/mono']
+
+  // const set = sets['set:icons/2525c']
+  // const set = sets['set:icons/monochrome']
+  const set = [...sets['set:icons/2525c'], ...sets['set:icons/monochrome']]
   // const set = sets['set:dimension/present']
   // const set = sets['set:modifiers']
   // const set = sets['set:mobility']
@@ -15,8 +17,33 @@
   // const set = sets['set:engagement']
   // const set = sets['set:direction']
 
-  const options = R.drop(3175 + 28, set)
-  // const options = R.take(40, set)
+  const filter = [
+    'SUPPS-----*****',
+    'SUPPT-----*****',
+    'SUPPL-----*****',
+    'SFAPW-----*****',
+    'SUAPC-----*****',
+    'SUSPNH----*****',
+    'SUSPO-----*****',
+    'SUSPED----*****',
+    'SUUPWM----*****',
+    'SHUPWMGX--*****',
+    'SUUPND----*****',
+    'SUUPE-----*****',
+    'SUUPX-----*****',
+    'SUUPNBS---*****',
+    'SUUPNBR---*****',
+    'GUTPGD----*****',
+    'SUSPEV----*****',
+    'SUSPZM----*****',
+    'SUSPZI----*****'
+  ]
+
+  const options = set
+  // const options = R.drop(3400, set)
+  // const options = set.filter(x => filter.includes(x.sidc))
+  // const options = R.take(100, set)
+  // const options = R.take(100, R.drop(3400, set))
 
   let state = { index: -1, threshold: 300 }
   let progress
@@ -111,7 +138,6 @@
       return { index: 'EOF', difference: '' }
     }
   }
-
 
   $: {
     if (state.legacy && state.modern) {
