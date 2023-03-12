@@ -82,6 +82,8 @@ const OVERLAYS = [
   options => options.status && overlay(STATUS[options.status], [3, 4]),
   options => options.mobility && overlay(MOBILITY[options.mobility], [10, 12]),
   options => options.echelon && overlay(ECHELON[options.echelon], [11, 12]),
+  // EFFPB-----H****
+  options => options.installation && overlay('H-', 10, 12),
   options => {
     const indicator =
       (options.headquarters ? 0x01 : 0) |
@@ -93,6 +95,7 @@ const OVERLAYS = [
 ]
 
 export default (options, code) => {
+  console.log('installation', options.installation)
   const overlays = OVERLAYS.map(R.applyTo(options)).filter(Boolean)
   return overlays.length ? R.compose(...overlays)(code) : code
 }

@@ -7,6 +7,7 @@ import sidc2525c from './sidc-2525c.json'
 import sidcControl from './sidc-control.json'
 import sidcSpecial from './sidc-special.json'
 import sidcSKKM from './sidc-skkm.json'
+import mapping from './mapping.json'
 
 const assign = xs => xs.reduce((a, b) => Object.assign(a, b), {})
 const xprod = (...xss) =>
@@ -57,7 +58,7 @@ const MODIFIERS = xprod(
 
 const STATUS_BASE = [
   { status: 'PLANNED'},
-  { status: 'PRESENT'},
+  { status: 'PRESENT' },
 ]
 
 const STATUS_EXTENDED = [
@@ -163,3 +164,8 @@ export const sets = {
     preset('SHUPX-----*****'),
   ]
 }
+
+export const upgrade = Object.entries(mapping).map(([k, v]) => [
+  { sidc: SIDC.format({ identity: 'FRIEND', status: 'PRESENT', installation: v.substring(4, 6) === '20' }, k) },
+  { sidc: SIDC.format({ identity: 'FRIEND', status: 'PRESENT', reality: true }, v) }
+])
