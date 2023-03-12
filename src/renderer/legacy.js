@@ -95,7 +95,6 @@ const OVERLAYS = [
 ]
 
 export default (options, code) => {
-  console.log('installation', options.installation)
   const overlays = OVERLAYS.map(R.applyTo(options)).filter(Boolean)
   return overlays.length ? R.compose(...overlays)(code) : code
 }

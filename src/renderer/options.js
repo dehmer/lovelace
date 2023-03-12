@@ -3,11 +3,40 @@ import ms from 'milsymbol'
 import * as Symbol from '@syncpoint/signs/src'
 import * as SIDC from './format'
 import { aliases } from './aliases'
-import sidc2525c from './sidc-2525c.json'
-import sidcControl from './sidc-control.json'
 import sidcSpecial from './sidc-special.json'
 import sidcSKKM from './sidc-skkm.json'
 import mapping from './mapping.json'
+import { ms2525b, ms2525c } from 'mil-std-2525'
+import { app6b } from 'stanag-app6'
+
+
+const mainIcons = R.curry((filter, arg) => arg.mainIcon
+  ? filter.length 
+    ? filter.includes(arg.name) ? arg.mainIcon : [] 
+    : arg.mainIcon
+  : Object.values(arg).reduce((acc, value) => typeof value === 'object'
+    ? acc.concat(mainIcons(filter, value))
+    : acc
+  , [])
+)
+
+const points = icon => icon.geometry
+  ? icon.geometry === 'POINT'
+  : icon.geometry !== ''
+
+const available = icon => icon.remarks !== 'N/A'
+const makeSIDC = ({ codingscheme, battledimension, functionid }) =>
+  `${codingscheme}*${battledimension}*${functionid}*****`
+
+const fn = collect => R.compose(
+    R.map(makeSIDC), 
+    R.filter(points), 
+    R.filter(available),
+    collect
+)
+
+const sidc2525c = fn(mainIcons([]))(ms2525c)
+const sidcControl = fn(mainIcons(['TACTICAL GRAPHICS']))(ms2525c)
 
 const assign = xs => xs.reduce((a, b) => Object.assign(a, b), {})
 const xprod = (...xss) =>

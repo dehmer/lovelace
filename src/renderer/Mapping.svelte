@@ -5,8 +5,6 @@
   import hash from 'object-hash'
   import { upgrade, legacy, modern } from './options'
   
-  console.log('upgrade', upgrade)
-
   let state = { index: -1, threshold: 300 }
   let progress
   let review = []
