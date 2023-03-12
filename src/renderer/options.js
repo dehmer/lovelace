@@ -2,7 +2,7 @@ import * as R from 'ramda'
 import ms from 'milsymbol'
 import * as Symbol from '@syncpoint/signs/src'
 import * as SIDC from './format'
-import { aliases } from './aliases'
+import * as Modifiers from './aliases'
 import sidcSpecial from './sidc-special.json'
 import sidcSKKM from './sidc-skkm.json'
 import mapping from './mapping.json'
@@ -125,16 +125,19 @@ const DIRECTION = R.range(0, 24).map(i => ({ modifiers: { Q: 15 * i } }))
 export const modern = options => Symbol.of(options)
 
 export const legacy = options => {
-  const fn = (acc, [key, value]) => { acc[key] = value; return acc }
   const { sidc: code, ...rest } = options
   const [sidc, standard] = code.split('+')
-  const modifiers = {}
-  if (options?.modifiers?.AO) modifiers.engagementBar = options.modifiers.AO
-  if (options?.modifiers?.AT) modifiers.engagementType = options.modifiers.AT
-  if (options?.modifiers?.Q) modifiers.direction = options.modifiers.Q
+  const reducer = (acc, [key, value]) => {
+    acc[Modifiers.reverse[key]] = value
+    return acc
+  }
+
+  const modifiers = Object.entries(options.modifiers || {}).reduce(reducer, {})
+  const infoFields = !R.isEmpty(modifiers)
 
   return new ms.Symbol(sidc, {
     standard,
+    infoFields,
     ...modifiers,
     ...rest
   })

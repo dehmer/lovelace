@@ -9,13 +9,14 @@
 
   // const set = sets['set:icons/2525c']
   // const set = sets['set:icons/monochrome']
-  const set = [...sets['set:icons/2525c'], ...sets['set:icons/monochrome']]
+  // const set = [...sets['set:icons/2525c'], ...sets['set:icons/monochrome']]
   // const set = sets['set:dimension/present']
   // const set = sets['set:modifiers']
   // const set = sets['set:mobility']
   // const set = sets['set:echelon']
   // const set = sets['set:engagement']
   // const set = sets['set:direction']
+  const set = sets['set:variations']
 
   const filter = [
     'SUPPS-----*****',
@@ -45,7 +46,7 @@
   // const options = R.take(100, set)
   // const options = R.take(100, R.drop(3400, set))
 
-  let state = { index: -1, threshold: 300 }
+  let state = { index: -1, threshold: -1 }
   let progress
   let review = []
   let imageLegacy
