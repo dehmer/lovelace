@@ -149,10 +149,21 @@ const preset = (sidc, options = {}) => ({
 
 export const sets = {
   'set:dimension/present': xprod(DIMENSION, IDENTITY_BASE, [{ status: 'PRESENT' }]).map(format),
-  'set:icons/2525c': xprod(sidc2525c.map(sidc), IDENTITY_BASE).map(format),
+
+  'set:icons/2525c': 
+    xprod(
+      sidc2525c.map(sidc), 
+      IDENTITY_BASE, 
+      [{ status: 'PRESENT' }]
+    ).map(format),
+
   'set:icons/monochrome':
     xprod(
-      xprod(sidc2525c.map(sidc), IDENTITY_BASE).map(format),
+      xprod(
+        sidc2525c.map(sidc), 
+        IDENTITY_BASE,
+        [{ status: 'PRESENT' }]
+      ).map(format),
       [{ monoColor: 'green' }]
     ).map(assign),
 

@@ -7,7 +7,7 @@
   import { sets, legacy, modern } from './options'
 
 
-  // const set = sets['set:icons/2525c']
+  const set = sets['set:icons/2525c']
   // const set = sets['set:icons/monochrome']
   // const set = [...sets['set:icons/2525c'], ...sets['set:icons/monochrome']]
   // const set = sets['set:dimension/present']
@@ -16,28 +16,25 @@
   // const set = sets['set:echelon']
   // const set = sets['set:engagement']
   // const set = sets['set:direction']
-  const set = sets['set:variations']
+  // const set = sets['set:variations']
 
   const filter = [
-    'SUPPS-----*****',
-    'SUPPT-----*****',
-    'SUPPL-----*****',
-    'SFAPW-----*****',
-    'SUAPC-----*****',
-    'SUSPNH----*****',
-    'SUSPO-----*****',
-    'SUSPED----*****',
-    'SUUPWM----*****',
-    'SHUPWMGX--*****',
-    'SUUPND----*****',
-    'SUUPE-----*****',
-    'SUUPX-----*****',
-    'SUUPNBS---*****',
-    'SUUPNBR---*****',
-    'GUTPGD----*****',
-    'SUSPEV----*****',
-    'SUSPZM----*****',
-    'SUSPZI----*****'
+    // 'SUPPS-----*****',
+    // 'SUPPT-----*****',
+    // 'SUPPL-----*****',
+    // 'SFAPW-----*****', // TODO:
+    // 'SUAPC-----*****',
+    // 'SUSPNH----*****',
+    // 'SUSPO-----*****', // SE.IC.OWN SHIP
+    // 'SUSPED----*****', // DITCHED AIRCRAFT, APP6-B
+    // 'GUOPED----*****', // DITCHED AIRCRAFT, 2525-C
+    // 'SUUPWM----*****',
+    // 'SHUPWMGX--*****',
+    // 'SUUPND----*****', // SU.IC.DIVER, CIVILIAN
+    // 'SUUPE-----*****', // SU.IC.ENVIRONMENTAL REPORT LOCATION
+    // 'SUUPX-----*****', // SU.IC.UNEXPLODED EXPLOSIVE ORDNANCE
+    // 'SUUPNBS---*****', // SEABED INSTALLATION/MANMADE, APP6-B
+    // 'GUOPSBN---*****', // SEABED ROCK/STONE, OBSTACLE, OTHER, 2525-C
   ]
 
   const options = set
@@ -46,7 +43,7 @@
   // const options = R.take(100, set)
   // const options = R.take(100, R.drop(3400, set))
 
-  let state = { index: -1, threshold: -1 }
+  let state = { index: -1, threshold: 200 }
   let progress
   let review = []
   let imageLegacy
