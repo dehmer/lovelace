@@ -8,8 +8,9 @@
 
 
   // const set = sets['set:icons/2525c']
+  const set = sets['set:icons/app6b']
   // const set = sets['set:icons/monochrome']
-  const set = [...sets['set:icons/2525c'], ...sets['set:icons/monochrome']]
+  // const set = [...sets['set:icons/2525c'], ...sets['set:icons/monochrome']]
   // const set = sets['set:dimension/present']
   // const set = sets['set:modifiers']
   // const set = sets['set:mobility']
@@ -19,38 +20,42 @@
   // const set = sets['set:variations']
 
   const filter = [
-    'SUPPS-----*****',
-    'SUPPT-----*****',
-    'SUPPL-----*****',
-    'SFAPW-----*****', // AIR.MISSILE.ICON
-    'SUAPC-----*****',
-    'SUSPNH----*****',
-    'SUSPO-----*****', // SE.IC.OWN SHIP
-    'SUSPED----*****', // DITCHED AIRCRAFT, APP6-B
-    'GUOPED----*****', // DITCHED AIRCRAFT, 2525-C
-    'SUUPWM----*****',
-    'SHUPWMGX--*****',
-    'SUUPND----*****', // SU.IC.DIVER, CIVILIAN
-    'SUUPE-----*****', // SU.IC.ENVIRONMENTAL REPORT LOCATION
-    'SUUPX-----*****', // SU.IC.UNEXPLODED EXPLOSIVE ORDNANCE
-    'SUUPNBS---*****', // SEABED INSTALLATION/MANMADE, APP6-B
-    'GUOPSBN---*****', // SEABED ROCK/STONE, OBSTACLE, OTHER, 2525-C
-    'SUUPWMD---*****', // SU.IC.SEA MINE NEUTRALIZED
-    'SUUPWMG---*****', // SU.IC.SEA MINE - BOTTOM
-    'SUUPV-----*****', // SU.IC.DIVE REPORT LOCATION
-    'GUTPD-----*****', // TP.DESTROY
-    'EFIPDA----*****', // AC.IC.CHEMICAL AGENT
-    'SUGPUCFTS-*****',
-    'EFOPAF----*****',
-    'SUGPUUMRS-*****',
-    'SUGPUULF--*****',
-    'SUFPGPA---*****',
-    'EUIPDA----*****'
+    // 'SUPPS-----*****',
+    // 'SUPPT-----*****',
+    // 'SUPPL-----*****',
+    // 'SFAPW-----*****', // AIR.MISSILE.ICON
+    // 'SUAPC-----*****',
+    // 'SUSPNH----*****',
+    // 'SUSPO-----*****', // SE.IC.OWN SHIP
+    // 'SUSPED----*****', // DITCHED AIRCRAFT, APP6-B
+    // 'GUOPED----*****', // DITCHED AIRCRAFT, 2525-C
+    // 'SUUPWM----*****',
+    // 'SHUPWMGX--*****',
+    // 'SUUPND----*****', // SU.IC.DIVER, CIVILIAN
+    // 'SUUPE-----*****', // SU.IC.ENVIRONMENTAL REPORT LOCATION
+    // 'SUUPX-----*****', // SU.IC.UNEXPLODED EXPLOSIVE ORDNANCE
+    // 'SUUPNBS---*****', // SEABED INSTALLATION/MANMADE, APP6-B
+    // 'GUOPSBN---*****', // SEABED ROCK/STONE, OBSTACLE, OTHER, 2525-C
+    // 'SUUPWMD---*****', // SU.IC.SEA MINE NEUTRALIZED
+    // 'SUUPWMG---*****', // SU.IC.SEA MINE - BOTTOM
+    // 'SUUPV-----*****', // SU.IC.DIVE REPORT LOCATION
+    // 'GUTPD-----*****', // TP.DESTROY
+    // 'EFIPDA----*****', // AC.IC.CHEMICAL AGENT
+    // 'SUGPUCFTS-*****',
+    // 'EFOPAF----*****',
+    // 'SUGPUUMRS-*****',
+    // 'SUGPUULF--*****',
+    // 'SUFPGPA---*****',
+    // 'EUIPDA----*****',
+    'SUAPW-----*****+APP6',
+    'SUUPWM----*****+APP6',
+    'SUUPWD----*****+APP6',
+    'SUUPWDM---*****+APP6'
   ]
 
-  const options = set
+  // const options = set
   // const options = R.drop(3400, set)
-  // const options = set.filter(x => filter.includes(x.sidc))
+  const options = set.filter(x => filter.includes(x.sidc))
   // const options = R.take(100, set)
   // const options = R.take(100, R.drop(3400, set))
 

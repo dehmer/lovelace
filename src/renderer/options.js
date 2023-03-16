@@ -6,7 +6,7 @@ import * as Modifiers from './aliases'
 import sidcSpecial from './sidc-special.json'
 import sidcSKKM from './sidc-skkm.json'
 import mapping from './mapping.json'
-import { ms2525b, ms2525c } from 'mil-std-2525'
+import { ms2525b, ms2525c, ms2525d } from 'mil-std-2525'
 import { app6b } from 'stanag-app6'
 
 
@@ -35,7 +35,8 @@ const fn = collect => R.compose(
     collect
 )
 
-const sidc2525c = fn(mainIcons([]))(ms2525c)
+const sidcSTD2525c = fn(mainIcons([]))(ms2525c).map(s => s + '+2525')
+const sidcAPP6B = fn(mainIcons([]))(app6b).map(s => s + '+APP6')
 const sidcControl = fn(mainIcons(['TACTICAL GRAPHICS']))(ms2525c)
 
 const assign = xs => xs.reduce((a, b) => Object.assign(a, b), {})
@@ -152,7 +153,14 @@ export const sets = {
 
   'set:icons/2525c': 
     xprod(
-      sidc2525c.map(sidc), 
+      sidcSTD2525c.map(sidc), 
+      IDENTITY_BASE, 
+      [{ status: 'PRESENT' }]
+    ).map(format),
+
+  'set:icons/app6b': 
+    xprod(
+      sidcAPP6B.map(sidc), 
       IDENTITY_BASE, 
       [{ status: 'PRESENT' }]
     ).map(format),
@@ -160,7 +168,7 @@ export const sets = {
   'set:icons/monochrome':
     xprod(
       xprod(
-        sidc2525c.map(sidc), 
+        sidcSTD2525c.map(sidc), 
         IDENTITY_BASE,
         [{ status: 'PRESENT' }]
       ).map(format),
