@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import ms from 'milsymbol'
-import * as Symbol from '@syncpoint/signs/src'
+import { Symbol } from '@syncpoint/signs/src'
 import * as SIDC from './format'
 import * as Modifiers from './aliases'
 import sidcSpecial from './sidc-special.json'
@@ -123,7 +123,10 @@ const ENGAGEMENT = [
 
 const DIRECTION = R.range(0, 24).map(i => ({ modifiers: { Q: 15 * i } }))
 
-export const modern = options => Symbol.of(options)
+export const modern = options => {
+  const { sidc, ...rest } = options
+  return new Symbol(sidc, rest)
+}
 
 export const legacy = options => {
   const { sidc: code, ...rest } = options
@@ -165,6 +168,13 @@ export const sets = {
       [{ status: 'PRESENT' }]
     ).map(format),
 
+  'set:icons/skkm': 
+    xprod(
+      sidcSKKM.map(sidc), 
+      IDENTITY_BASE, 
+      [{ status: 'PRESENT' }]
+    ).map(format),
+
   'set:icons/monochrome':
     xprod(
       xprod(
@@ -198,7 +208,12 @@ export const sets = {
     preset('SNGPIRNB--H****'),
     preset('SFGXUCVFU-*****', { modifiers: { AO: 'A:B-CCC', AT: 'EXPIRED' } }),
     preset('SFGAUCVFU-*****'),
-    preset('SFGPUCIZ--*****', { infoFields: true, modifiers: { T: '1', M: '2', W: 'O/O' } }),
+    preset('SFGPUCIZ--*****', { 
+      infoFields: true, 
+      uniqueDesignation: '1', 
+      higherFormation: '2', 
+      dtg: 'O/O' 
+    }),
     preset('SFUPND----*****'),
     preset('SFSPNH----*****'),
     preset('SFSPXM----*****'),
