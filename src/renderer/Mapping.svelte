@@ -2,7 +2,6 @@
   import { onMount } from 'svelte'
   import ProgressBar from 'svelte-progress-bar'
   import pixelmatch from 'pixelmatch'
-  import hash from 'object-hash'
   import { upgrade, legacy, modern } from './options'
   
   let state = { index: -1, threshold: 300 }

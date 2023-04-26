@@ -1,65 +1,12 @@
 <script>
-  import * as R from 'ramda'
   import { onMount } from 'svelte'
   import ProgressBar from 'svelte-progress-bar'
   import pixelmatch from 'pixelmatch'
-  import hash from 'object-hash'
-  import { sets, legacy, modern } from './options'
+  import { legacy, modern } from './options'
+  import database from './database'
 
-
-  // const set = sets['set:icons/2525c']
-  const set = sets['set:icons/app6b']
-  // const set = sets['set:icons/monochrome']
-  // const set = [...sets['set:icons/2525c'], ...sets['set:icons/monochrome']]
-  // const set = sets['set:dimension/present']
-  // const set = sets['set:modifiers']
-  // const set = sets['set:mobility']
-  // const set = sets['set:echelon']
-  // const set = sets['set:engagement']
-  // const set = sets['set:direction']
-  // const set = sets['set:variations']
-
-  const filter = [
-    // 'SUPPS-----*****',
-    // 'SUPPT-----*****',
-    // 'SUPPL-----*****',
-    // 'SFAPW-----*****', // AIR.MISSILE.ICON
-    // 'SUAPC-----*****',
-    // 'SUSPNH----*****',
-    // 'SUSPO-----*****', // SE.IC.OWN SHIP
-    // 'SUSPED----*****', // DITCHED AIRCRAFT, APP6-B
-    // 'GUOPED----*****', // DITCHED AIRCRAFT, 2525-C
-    // 'SUUPWM----*****',
-    // 'SHUPWMGX--*****',
-    // 'SUUPND----*****', // SU.IC.DIVER, CIVILIAN
-    // 'SUUPE-----*****', // SU.IC.ENVIRONMENTAL REPORT LOCATION
-    // 'SUUPX-----*****', // SU.IC.UNEXPLODED EXPLOSIVE ORDNANCE
-    // 'SUUPNBS---*****', // SEABED INSTALLATION/MANMADE, APP6-B
-    // 'GUOPSBN---*****', // SEABED ROCK/STONE, OBSTACLE, OTHER, 2525-C
-    // 'SUUPWMD---*****', // SU.IC.SEA MINE NEUTRALIZED
-    // 'SUUPWMG---*****', // SU.IC.SEA MINE - BOTTOM
-    // 'SUUPV-----*****', // SU.IC.DIVE REPORT LOCATION
-    // 'GUTPD-----*****', // TP.DESTROY
-    // 'EFIPDA----*****', // AC.IC.CHEMICAL AGENT
-    // 'SUGPUCFTS-*****',
-    // 'EFOPAF----*****',
-    // 'SUGPUUMRS-*****',
-    // 'SUGPUULF--*****',
-    // 'SUFPGPA---*****',
-    // 'EUIPDA----*****',
-    'SUAPW-----*****+APP6',
-    'SUUPWM----*****+APP6',
-    'SUUPWD----*****+APP6',
-    'SUUPWDM---*****+APP6'
-  ]
-
-  // const options = set
-  // const options = R.drop(3400, set)
-  const options = set.filter(x => filter.includes(x.sidc))
-  // const options = R.take(100, set)
-  // const options = R.take(100, R.drop(3400, set))
-
-  let state = { index: -1, threshold: 200 }
+  const threshold = 500
+  let state = { index: -1 }
   let progress
   let review = []
   let imageLegacy
@@ -69,6 +16,8 @@
   let interval
   let iterations = 0
   let ops = 0
+  let options = []
+  let db
 
   onMount(() => {
     console.time('compare')
@@ -78,7 +27,15 @@
       ops = iterations
       iterations = 0
     }, 1000)
-    next()
+
+
+    ;(async () => {
+      db = await database('2525C+ISSUE')
+      options = await db.symbols()
+      next()
+    })()
+
+    return () => db.dispose()
   })
 
   const trim = (width, height, data) => {
@@ -128,30 +85,29 @@
   }
 
   const next = () => {
-    if (state.index === 'EOF') return
-
-    if (state.index < options.length - 1) {
-      const index = state.index + 1
-      progress.setWidthRatio(index / options.length)
-      iterations += 1
-
-      state = {
-        ...state,
-        index,
-        legacy: false,
-        modern: false,
-        legacySource: 'data:image/svg+xml;utf8,' + legacy(options[index]).asSVG(),
-        modernSource: 'data:image/svg+xml;utf8,' + modern(options[index]).asSVG()
-      }
-      setSource(imageLegacy, state.legacySource)
-      setSource(imageModern, state.modernSource)
-    } else {
-      console.timeEnd('compare')
-      console.log('suspicions', (state.suspicions || []).sort((a, b) => b[0] - a[0]))
+    if (progress) progress.setWidthRatio((state.index + 1) / options.length)
+    if (state.index === options.length - 1) {
       clearInterval(interval)
-      return { index: 'EOF', difference: '' }
+      state = { ...state, legacy: false, modern: false }
+      return
     }
+
+    const index = state.index + 1
+    iterations += 1
+
+    state = {
+      ...state,
+      index,
+      legacy: false,
+      modern: false,
+      legacySource: 'data:image/svg+xml;utf8,' + legacy(options[index]).asSVG(),
+      modernSource: 'data:image/svg+xml;utf8,' + modern(options[index]).asSVG()
+    }
+
+    setSource(imageLegacy, state.legacySource)
+    setSource(imageModern, state.modernSource)
   }
+
 
   $: {
     if (state.legacy && state.modern) {
@@ -162,21 +118,26 @@
       const img1 = putImage(width, height, 'legacy').getImageData(0, 0, width, height)
       const img2 = putImage(width, height, 'modern').getImageData(0, 0, width, height)
 
-      const difference = pixelmatch(img1.data, img2.data, null, width, height, { threshold: 0.1 })
-      state = { ...state, difference }
+      ;(async () => {
+        const distance = pixelmatch(img1.data, img2.data, null, width, height, { threshold: 0.1 })
+        state = { ...state, distance }
+        const symbol = options[state.index] 
+        const key = symbol.key
 
-      if (difference > state.threshold) {
-        review = [...review, {
-          difference,
-          legacySource: state.legacySource,
-          modernSource: state.modernSource,
-          ...options[state.index],
-          hash: hash(options[state.index]),
-          index: state.index
-        }]
-      }
+        if (distance > threshold) {
+          review = [...review, {
+            legacySource: state.legacySource,
+            modernSource: state.modernSource,
+            ...options[state.index],
+            index: state.index,
+            distance
+          }]
+        }
 
-      next()
+        if (distance !== symbol.distance) console.log(key, distance)
+        if (symbol.distance === undefined && distance < threshold) await db.distance(key, distance)
+        next()
+      })()
     }
   }
 </script>
@@ -212,7 +173,7 @@
           <img class='image--small' src={entry.legacySource} alt=''/>
           <img class='image--small' src={entry.modernSource} alt=''/>
         </div>
-        <div class='summary'>{entry.difference} @ {entry.index}</div>
+        <div class='summary'>{entry.distance} @ {entry.index}</div>
         <div class='summary'>{entry.sidc}</div>
       </div>
     {/each}
@@ -266,7 +227,7 @@
   .image--small {
     width: 60px;
     height: 60px;
-    background-color: azure;
+    background-color: darkgray;
     border: dashed black 0.5px;
   }
 </style>
